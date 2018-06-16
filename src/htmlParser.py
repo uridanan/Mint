@@ -2,6 +2,8 @@ import lxml
 from lxml.html.clean import Cleaner
 from bs4 import BeautifulSoup
 import requests
+from src.myString import myString
+from src.dataEntry import DataEntry
 
 
 class MyClass:
@@ -25,33 +27,6 @@ def example():
     for link in soup.find_all('a'):
         print(link.get('href'))
 
-
-#-----------------------------------------------------------------------------------------------------------------------
-# Helper class for string manipulations
-class myString(object):
-
-    # Remove all \n characters to flatten the string
-    @staticmethod
-    def stripNewLine(s):
-        if (s == None):
-            return ""
-        return s.replace("\n", "")
-
-    # Returns true if the string is empty
-    @staticmethod
-    def isEmpty(s):
-        if (s == None):
-            return True
-        return myString.stripNewLine(s).strip() == ""
-
-    @staticmethod
-    def strip(s):
-        if (s == None):
-            return ""
-        t = s.text.strip()
-        return t
-
-#-----------------------------------------------------------------------------------------------------------------------
 
 #Process Leumi HTML input file
 class LeumiProcessor(object):
@@ -129,37 +104,8 @@ class LeumiProcessor(object):
         return total
 
 
-# This class encapsulates methods to manipulate data entries
-# Including import / export methods
-class DataEntry(object):
-    date = ""
-    action = ""
-    refId = ""
-    credit = ""
-    debit = ""
-    balance = ""
-    isEmpty = False
-
-    def __init__(self,d,a,r,c,de,b):
-        self.date = d
-        self.action = a
-        self.refId = r
-        self.credit = c
-        self.debit = de
-        self.balance = b
-        if(myString.isEmpty(self.date)):
-            self.isEmpty = True
-
-    def toCSV(self):
-        if(self.isEmpty):
-            return
-        set = [self.date,self.action,self.refId,self.credit,self.debit,self.balance]
-        if (len(set) > 0):
-            print(",".join(set))
-
-
 def main():
-    htmlFile = "../inbox/bankleumi11062018.html"
+    htmlFile ='inbox/bankleumi11062018.html'
     processor = LeumiProcessor()
     processor.importFile(htmlFile)
 
