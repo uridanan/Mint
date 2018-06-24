@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import requests
 from src.myString import myString
 from src.dataEntry import DataEntry
+import timestring
+from decimal import Decimal
 
 
 class MyClass:
@@ -53,7 +55,8 @@ class LeumiProcessor(object):
         table = self.getDataTable(soup)
         for row in table.find_all('tr'):
             e = self.processRow(row)
-            e.toCSV()
+            if(e != None):
+                e.toCSV()
 
     def processRow(self,row):
         date = self.extractDate(row)
@@ -62,7 +65,9 @@ class LeumiProcessor(object):
         credit = self.extractCredit(row)
         debit = self.extractDebit(row)
         balance = self.extractBalance(row)
-        entry = DataEntry(date,action,refId,credit,debit,balance)
+        if(myString.isEmpty(date)):
+            return None
+        entry = DataEntry(date=date,partner=action,refId=refId,credit=credit,debit=debit,balance=balance)
         return entry
 
     ####################################################################################################################
@@ -74,7 +79,11 @@ class LeumiProcessor(object):
 
     def extractDate(self,row):
         # In the leumi files, the date is in a td with class=ExtendedActivityColumnDate
-        return myString.strip(row.find("td", {"class": "ExtendedActivityColumnDate"}))
+        dateString = myString.strip(row.find("td", {"class": "ExtendedActivityColumnDate"}))
+        if(myString.isEmpty(dateString)):
+            return None
+        date = timestring.Date(dateString).format("%Y-%m-%d")
+        return date
 
     def extractAction(self,row):
         # In the leumi files, the action is in a td with either class=ActivityTableColumn1 or class=ActivityTableColumn1LTR
@@ -84,15 +93,22 @@ class LeumiProcessor(object):
 
     def extractRefId(self,row):
         # In the leumi files, the refId is in a td with class=ReferenceNumberUniqeClass
-        return myString.strip(row.find("td", {"class": "ReferenceNumberUniqeClass"}))
+        refString = myString.strip(row.find("td", {"class": "ReferenceNumberUniqeClass"}))
+        return refString
 
     def extractCredit(self,row):
         # In the leumi files, the credit is in a td with class=AmountCreditUniqeClass
-        return myString.strip(row.find("td", {"class": "AmountCreditUniqeClass"}))
+        data = myString.strip(row.find("td", {"class": "AmountCreditUniqeClass"})).replace(',','')
+        if (myString.isEmpty(data)):
+            return None
+        return Decimal(data)
 
     def extractDebit(self,row):
         # In the leumi files, the debit is in a td with class=AmountDebitUniqeClass
-        return myString.strip(row.find("td", {"class": "AmountDebitUniqeClass"}))
+        data = myString.strip(row.find("td", {"class": "AmountDebitUniqeClass"})).replace(',','')
+        if (myString.isEmpty(data)):
+            return None
+        return Decimal(data)
 
     def extractBalance(self,row):
         # In the leumi files, the balance is in a td with class=number_column
@@ -100,11 +116,14 @@ class LeumiProcessor(object):
         totals = row.find_all("td", {"class": "number_column"})
         total = ""
         if (len(totals) > 1):
-            total = myString.strip(totals[2])
-        return total
+            total = myString.strip(totals[2]).replace(',','')
+        if(myString.isEmpty(total)):
+            return None
+        return Decimal(total)
 
 
 def main():
+    DataEntry.createTable(ifNotExists=True)
     htmlFile ='inbox/bankleumi11062018.html'
     processor = LeumiProcessor()
     processor.importFile(htmlFile)
