@@ -5,6 +5,8 @@ import requests
 from src.myString import myString
 from src.dataEntry import DataEntry
 import timestring
+from datetime import datetime
+from dateutil.parser import parse
 from decimal import Decimal
 
 
@@ -82,7 +84,8 @@ class LeumiProcessor(object):
         dateString = myString.strip(row.find("td", {"class": "ExtendedActivityColumnDate"}))
         if(myString.isEmpty(dateString)):
             return None
-        date = timestring.Date(dateString).format("%Y-%m-%d")
+
+        date = datetime.strptime(dateString, '%d/%m/%y').date().strftime("%Y-%m-%d")
         return date
 
     def extractAction(self,row):
@@ -124,7 +127,7 @@ class LeumiProcessor(object):
 
 def main():
     DataEntry.createTable(ifNotExists=True)
-    htmlFile ='inbox/bankleumi11062018.html'
+    htmlFile ='inbox/bankleumi30052018.html'
     processor = LeumiProcessor()
     processor.importFile(htmlFile)
 

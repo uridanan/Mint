@@ -7,16 +7,11 @@ import sqlalchemy
 from sqlalchemy import create_engine
 import psycopg2
 
-df = pd.read_csv(
-    'https://gist.githubusercontent.com/chriddyp/'
-    'c78bf172206ce24f77d6363a2d754b59/raw/'
-    'c353e8ef842413cae56ae3920b8fd78468aa4cb2/'
-    'usa-agricultural-exports-2011.csv')
 
 #Refactor data extraction to separate file
 #Format fields per data type
-#Step 1 : combined table from all sources
 #Step 2 : monthly input/output graph in 3 variants: income vs expenses, savings, total
+#Step 1 : combined table from all sources
 #Step 3 : start marking recurring expenses
 #Step 4 : mark expenses by type
 #Step 5 : rename expense (save the new name, re-use when recurring)
