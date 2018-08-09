@@ -50,8 +50,8 @@
       <file leaf-file-name="tableExample.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tableExample.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="101" column="75" lean-forward="true" selection-start-line="101" selection-start-column="75" selection-end-line="101" selection-end-column="75" />
+            <state relative-caret-position="255">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -365,7 +365,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.34668073" side_tool="true" weight="0.28896105" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.63003355" weight="0.32900432" />
       <window_info anchor="bottom" id="Python Console" order="9" weight="0.32900432" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6283557" visible="true" weight="0.32792208" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6283557" weight="0.32792208" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.5906217" weight="0.32900432" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -778,8 +778,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tableExample.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="101" column="75" lean-forward="true" selection-start-line="101" selection-start-column="75" selection-end-line="101" selection-end-column="75" />
+        <state relative-caret-position="255">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

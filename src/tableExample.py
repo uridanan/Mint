@@ -10,11 +10,9 @@ import psycopg2
 
 #Refactor data extraction to separate file
 #Format fields per data type
-#Step 1 : monthly input/output graph in 3 variants: income vs expenses, savings, total
-#Learn to load sql from file
-#"select extract (MONTH from date) as month, extract (YEAR from date) as year, sum(credit) as credit, sum(debit) as debit from data_entry group by month,year order by year, month"
-#"select extract (MONTH from date) as month, extract (YEAR from date) as year, max(balance) as balance from data_entry group by month,year order by year, month"
-
+#Step 1 : monthly input/output graph in 3 variants: income vs expenses, savings, total - done
+#Learn to load sql from file - done
+#REFACTOR
 #Step 2 : combined table from all sources
 #Step 3 : start marking recurring expenses
 #Step 4 : mark expenses by type
