@@ -57,7 +57,15 @@ def getBalanceData():
     df = pd.read_sql_query(query, cnx)
     return df
 
+def getSavingsData():
+    connectionString = "postgres://postgres@localhost:5432/mintdb"
+    cnx = create_engine(connectionString)
+    query = loadSingleQuery('src/querySavingsReport.sql')
+    df = pd.read_sql_query(query, cnx)
+    return df
+
 balanceData = getBalanceData()
+savingsData = getSavingsData()
 
 def generate_balance_graph(dataframe):
     return {
@@ -66,6 +74,20 @@ def generate_balance_graph(dataframe):
         ]
     }
 
+def generate_savings_graph(dataframe):
+    return {
+        'data': [
+        {'x': dataframe.monthname, 'y': dataframe.savings, 'type': 'bar', 'name': 'Savings'}
+        ]
+    }
+
+def generate_income_graph(dataframe):
+    return {
+        'data': [
+        {'x': dataframe.monthname, 'y': dataframe.monthlycredit, 'type': 'bar', 'name': 'Income'},
+        {'x': dataframe.monthname, 'y': dataframe.monthlydebit, 'type': 'bar', 'name': 'Expenses'}
+        ]
+    }
 
 app = dash.Dash()
 
@@ -76,6 +98,8 @@ app.css.append_css({
 app.layout = html.Div(children=[
     html.H4(children='Bank Report - Work In Pogress'),
     dcc.Graph(id='balance-graph',figure=generate_balance_graph(balanceData)),
+    dcc.Graph(id='savings-graph',figure=generate_savings_graph(savingsData)),
+    dcc.Graph(id='income-graph',figure=generate_income_graph(savingsData)),
     generate_table(data)
 ])
 
