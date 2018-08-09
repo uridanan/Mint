@@ -38,8 +38,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+            <state relative-caret-position="652">
+              <caret line="62" column="6" lean-forward="true" selection-start-line="51" selection-start-column="3" selection-end-line="62" selection-end-column="6" />
               <folding>
                 <element signature="e#24#35#0" expanded="true" />
               </folding>
@@ -50,11 +50,20 @@
       <file leaf-file-name="tableExample.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tableExample.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="48" column="186" selection-start-line="48" selection-start-column="186" selection-end-line="48" selection-end-column="186" />
+            <state relative-caret-position="465">
+              <caret line="64" column="30" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="queryBalanceReport.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/queryBalanceReport.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -92,7 +101,7 @@
       <file leaf-file-name="htmlParser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/htmlParser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
+            <state relative-caret-position="1326">
               <caret line="87" selection-start-line="87" selection-end-line="87" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -139,9 +148,10 @@
         <option value="$PROJECT_DIR$/src/connection.py" />
         <option value="$PROJECT_DIR$/src/sqlobjtest.py" />
         <option value="$PROJECT_DIR$/src/dataEntry.py" />
-        <option value="$PROJECT_DIR$/src/app.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/htmlParser.py" />
+        <option value="$PROJECT_DIR$/src/app.py" />
+        <option value="$PROJECT_DIR$/src/queryBalanceReport.sql" />
         <option value="$PROJECT_DIR$/src/tableExample.py" />
       </list>
     </option>
@@ -197,7 +207,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.htmlParser">
+  <component name="RunManager" selected="Python.tableExample">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Mint" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -288,7 +298,7 @@
       <option name="EMULATE_TERMINAL" value="true" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="xlsxParser" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="tableExample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Mint" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -300,26 +310,26 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/xlsxParser.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/tableExample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="true" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
     <list>
-      <item itemvalue="Python.xlsxParser" />
       <item itemvalue="Python.htmlParser" />
       <item itemvalue="Python.sqlobjtest" />
       <item itemvalue="Python.connection" />
       <item itemvalue="Python.app" />
+      <item itemvalue="Python.tableExample" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.tableExample" />
         <item itemvalue="Python.htmlParser" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python.sqlobjtest" />
         <item itemvalue="Python.connection" />
-        <item itemvalue="Python.xlsxParser" />
       </list>
     </recent_temporary>
   </component>
@@ -354,11 +364,11 @@
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.34668073" side_tool="true" weight="0.28896105" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.63003355" weight="0.32900432" />
       <window_info anchor="bottom" id="Python Console" order="9" weight="0.32900432" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6283557" weight="0.32792208" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6283557" visible="true" weight="0.32792208" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.5906217" weight="0.32900432" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Debug" order="5" sideWeight="0.6533193" visible="true" weight="0.28896105" />
+      <window_info anchor="bottom" id="Debug" order="5" sideWeight="0.6533193" weight="0.28896105" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -390,17 +400,30 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="30" />
+      <option name="time" value="33" />
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="dataframe.MONTH" language="Python" />
+        <watch expression="dataframe.month" language="Python" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>dataframe.month</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>dataframe.MONTH</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/myString.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/sqlobject/mysql/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -727,7 +750,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/htmlParser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
+        <state relative-caret-position="1326">
           <caret line="87" selection-start-line="87" selection-end-line="87" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -737,18 +760,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+        <state relative-caret-position="652">
+          <caret line="62" column="6" lean-forward="true" selection-start-line="51" selection-start-column="3" selection-end-line="62" selection-end-column="6" />
           <folding>
             <element signature="e#24#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/queryBalanceReport.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/tableExample.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="48" column="186" selection-start-line="48" selection-start-column="186" selection-end-line="48" selection-end-column="186" />
+        <state relative-caret-position="465">
+          <caret line="64" column="30" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

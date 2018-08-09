@@ -34,6 +34,8 @@ def generate_table(dataframe, max_rows=10):
     )
 
 
+
+
 app = dash.Dash()
 
 app.css.append_css({

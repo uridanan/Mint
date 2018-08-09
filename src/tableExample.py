@@ -20,6 +20,13 @@ import psycopg2
 #Step 4 : mark expenses by type
 #Step 5 : rename expense (save the new name, re-use when recurring)
 
+#This method assumes that the sql file contains only a single command
+def loadSingleQuery(fileName):
+    fd = open(fileName, 'r')
+    sql = fd.read()
+    fd.close()
+    return sql
+
 #Am I better off getting the data via REST API or directly from DB?
 #It seems more direct to use the DB, I see no need for the overhead of APIs just yet
 def getData():
@@ -46,8 +53,18 @@ def generate_table(dataframe, max_rows=200):
 def getBalanceData():
     connectionString = "postgres://postgres@localhost:5432/mintdb"
     cnx = create_engine(connectionString)
-    df = pd.read_sql_query("select extract (MONTH from date) as month, extract (YEAR from date) as year, max(balance) as balance from data_entry group by month,year order by year, month", cnx)
+    query = loadSingleQuery('src/queryBalanceReport.sql')
+    df = pd.read_sql_query(query, cnx)
     return df
+
+balanceData = getBalanceData()
+
+def generate_balance_graph(dataframe):
+    return {
+        'data': [
+        {'x': dataframe.monthname, 'y': dataframe.balance, 'type': 'bar', 'name': 'Balance'}
+        ]
+    }
 
 
 app = dash.Dash()
@@ -58,6 +75,7 @@ app.css.append_css({
 
 app.layout = html.Div(children=[
     html.H4(children='Bank Report - Work In Pogress'),
+    dcc.Graph(id='balance-graph',figure=generate_balance_graph(balanceData)),
     generate_table(data)
 ])
 
