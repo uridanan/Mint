@@ -1,51 +1,28 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import pandas as pd
-
-import sqlalchemy
-from sqlalchemy import create_engine
-import psycopg2
+import src.dbAccess as db
 
 #Am I better off getting the data via REST API or directly from DB?
 #It seems more direct to use the DB, I see no need for the overhead of APIs just yet
 
 
-#Refactor data extraction to separate file
-#Format fields per data type
+#Refactor data extraction to separate file - done
 #Step 1 : monthly input/output graph in 3 variants: income vs expenses, savings, total - done
 #Learn to load sql from file - done
-#REFACTOR
+#REFACTOR - done
+
+#Format fields per data type
+#Make the table scrollable
+#Use a control to select which graph to display
 #Step 2 : combined table from all sources
 #Step 3 : start marking recurring expenses
 #Step 4 : mark expenses by type
 #Step 5 : rename expense (save the new name, re-use when recurring)
 
-#Get connection to DB
-#Use a pattern to only create a new connection if none exists
-def dbConnect():
-    connectionString = "postgres://postgres@localhost:5432/mintdb"
-    cnx = create_engine(connectionString)
-    return cnx
 
-#This method assumes that the sql file contains only a single command
-def loadSingleQuery(fileName):
-    fd = open(fileName, 'r')
-    sql = fd.read()
-    fd.close()
-    return sql
-
-
-def runQuery(cnx, query):
-    return pd.read_sql_query(query, cnx)
-
-
-def getData(sqlFile):
-    cnx = dbConnect()
-    query = loadSingleQuery(sqlFile)
-    return runQuery(cnx, query)
-
-
+#Try an iplot instead
+#https://plot.ly/python/table/
 def generateTable(dataframe, max_rows=200):
     return html.Table(
         # Header
@@ -66,12 +43,13 @@ def generateBarGraph(data, xName, yNames, names):
     }
 
 
-Q_BALANCE = 'src/queryBalanceReport.sql'
-Q_SAVINGS = 'src/querySavingsReport.sql'
+F_BALANCE = 'src/queryBalanceReport.sql'
+F_SAVINGS = 'src/querySavingsReport.sql'
+Q_REPORT = 'SELECT * FROM data_entry'
 
-balanceData = getData(Q_BALANCE)
-savingsData = getData(Q_SAVINGS)
-reportData = runQuery(dbConnect(),"SELECT * FROM data_entry")
+balanceData = db.runQueryFromFile(F_BALANCE)
+savingsData = db.runQueryFromFile(F_SAVINGS)
+reportData = db.runQuery(Q_REPORT)
 
 app = dash.Dash()
 
