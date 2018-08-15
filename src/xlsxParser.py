@@ -1,7 +1,8 @@
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from src.dataEntry import DataEntry
-
+from src.myString import myString
+from datetime import datetime
 
 def example():
     wb = Workbook()
@@ -40,12 +41,33 @@ def processRow(row):
     for cell in row:
         print(cell.internal_value)
 
-    date = str(row[0].internal_value)
+    date = extractDate(row)
     action = row[1].internal_value
-    amount = row[3].internal_value
+    amount = extractAmount(row)
     comment = row[4].internal_value
-    entry = DataEntry(date,action,"7872","",amount,"")
+    #entry = DataEntry(date,action,"7872","",amount,"")
+    entry = DataEntry(date=date, partner=action, refId="7872", credit=0, debit=amount, balance=0)
     entry.toCSV()
+
+
+def extractDate(row):
+    dateString = str(row[0].internal_value)
+    if(myString.isEmpty(dateString)):
+        return None
+    try:
+        date = datetime.strptime(dateString, '%Y-%m-%d %H:%M:%S').date().strftime("%Y-%m-%d")
+    except:
+       date = None
+    return date
+
+def extractAmount(row):
+    amount = row[3].internal_value
+    if(myString.isEmpty(amount)):
+            return None
+    amount = amount.replace(',','')
+    credit = amount[1:len(amount)]
+    return credit
+
 
 #    date = self.extractDate(row)
 #    action = self.extractAction(row)
