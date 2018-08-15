@@ -30,3 +30,5 @@ sum(debit) as monthlydebit
 from data_entry
 group by month
 order by month) as A
+
+select * from data_entry where to_char(date, 'YYYY-MM') = '2018-04'

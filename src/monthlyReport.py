@@ -3,9 +3,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 import src.dbAccess as db
 
-from flask import send_from_directory
-import os
-
 #Am I better off getting the data via REST API or directly from DB?
 #It seems more direct to use the DB, I see no need for the overhead of APIs just yet
 
@@ -17,15 +14,7 @@ import os
 
 #Format fields per data type
 #Make the table scrollable
-#Use my own CSS (would solve the scrollable problem)
-# https://github.com/plotly/dash-docs/blob/master/tutorial/external_css_and_js.py
-#Change the report to the data presented in the graphs
 #Use a control to select which graph to display
-#Use time series instead of working so hard on formatting the dates
-#https://plot.ly/python/time-series/
-#Look at morning star tickers for proper time series?
-#https://dash.plot.ly/gallery
-
 #Step 2 : combined table from all sources
 #Step 3 : start marking recurring expenses
 #Step 4 : mark expenses by type
@@ -45,6 +34,8 @@ def generateTable(dataframe, max_rows=200):
         ]) for i in range(min(len(dataframe), max_rows))]
     )
 
+def generateTablePandas(dataFrame):
+    return dataFrame.describe().to_html()
 
 
 def generateBarGraph(data, xName, yNames, names):
@@ -58,10 +49,11 @@ def generateBarGraph(data, xName, yNames, names):
 F_BALANCE = 'src/queryBalanceReport.sql'
 F_SAVINGS = 'src/querySavingsReport.sql'
 Q_REPORT = 'SELECT * FROM data_entry'
+Q_MONTHLY = "select * from data_entry where to_char(date, 'YYYY-MM') = '2018-04' order by date asc"
 
-balanceData = db.runQueryFromFile(F_BALANCE)
-savingsData = db.runQueryFromFile(F_SAVINGS)
-reportData = db.runQuery(Q_REPORT)
+#balanceData = db.runQueryFromFile(F_BALANCE)
+#savingsData = db.runQueryFromFile(F_SAVINGS)
+reportData = db.runQuery(Q_MONTHLY)
 
 app = dash.Dash()
 
@@ -71,9 +63,9 @@ app.css.append_css({
 
 app.layout = html.Div(children=[
     html.H4(children='Bank Report - Work In Pogress'),
-    dcc.Graph(id='balance-graph',figure=generateBarGraph(balanceData,"monthname",["balance"],["Balance"])),
-    dcc.Graph(id='savings-graph',figure=generateBarGraph(savingsData,"monthname",["savings"],["Savings"])),
-    dcc.Graph(id='income-graph',figure=generateBarGraph(savingsData,"monthname",["monthlycredit","monthlydebit"],["Income","Expenses"])),
+ #   dcc.Graph(id='balance-graph',figure=generateBarGraph(balanceData,"monthname",["balance"],["Balance"])),
+ #   dcc.Graph(id='savings-graph',figure=generateBarGraph(savingsData,"monthname",["savings"],["Savings"])),
+ #   dcc.Graph(id='income-graph',figure=generateBarGraph(savingsData,"monthname",["monthlycredit","monthlydebit"],["Income","Expenses"])),
     generateTable(reportData)
 ])
 
