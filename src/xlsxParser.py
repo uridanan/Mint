@@ -50,6 +50,8 @@ def processRow(row):
     entry.toCSV()
 
 
+#Use date of when the account is charged, not transaction date
+#Figure out how to save and mark total so we can look for it in DB
 def extractDate(row):
     dateString = str(row[0].internal_value)
     if(myString.isEmpty(dateString)):
