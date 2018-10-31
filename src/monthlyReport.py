@@ -11,14 +11,19 @@ import src.dbAccess as db
 #Step 1 : monthly input/output graph in 3 variants: income vs expenses, savings, total - done
 #Learn to load sql from file - done
 #REFACTOR - done
-
 #Format fields per data type
 #Make the table scrollable
 #Use a control to select which graph to display
+
+
 #Step 2 : combined table from all sources
 #Step 3 : start marking recurring expenses
 #Step 4 : mark expenses by type
 #Step 5 : rename expense (save the new name, re-use when recurring)
+
+#==> make a table of all expenses: name, new name, category, refId, replace
+#==> keep bank account and credit cards in separate tables
+#==> each credit card in a separate table? NO
 
 
 #Try an iplot instead
@@ -49,7 +54,7 @@ def generateBarGraph(data, xName, yNames, names):
 F_BALANCE = 'src/queryBalanceReport.sql'
 F_SAVINGS = 'src/querySavingsReport.sql'
 Q_REPORT = 'SELECT * FROM data_entry'
-Q_MONTHLY = "select * from data_entry where to_char(date, 'YYYY-MM') = '2018-04' order by date asc"
+Q_MONTHLY = "select date,partner,ref_id,credit,debit from data_entry where to_char(date, 'YYYY-MM') = '2018-04' order by date asc"
 
 #balanceData = db.runQueryFromFile(F_BALANCE)
 #savingsData = db.runQueryFromFile(F_SAVINGS)

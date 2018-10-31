@@ -30,28 +30,34 @@ def loadFile(fileName):
     sheet = wb.active
     return sheet
 
-def process(sheet):
+def process(sheet, date):
     cells = sheet.values
 
     for row in sheet.iter_rows(min_row=4, min_col=1, max_col=5):
-        processRow(row)
+        processRow(row, date)
 
-
-def processRow(row):
+#TODO: handle credit line items
+#TODO: upon import, prepare all the data that will make queries easier, like month for report etc...
+#TODO: separate tables for monthly expense reports and for account progression
+def processRow(row, date):
     for cell in row:
         print(cell.internal_value)
 
-    date = extractDate(row)
+    #date = ;
+    #replace = ;
+    #refID = ;
+    #date = extractDate(row)
+    dateStr = date.strftime("%Y-%m-%d")
     action = row[1].internal_value
     amount = extractAmount(row)
     comment = row[4].internal_value
     #entry = DataEntry(date,action,"7872","",amount,"")
-    entry = DataEntry(date=date, partner=action, refId="7872", credit=0, debit=amount, balance=0)
+    entry = DataEntry(date=dateStr, partner=action, refId="7872", credit=0, debit=amount, balance=0)
     entry.toCSV()
 
 
-#Use date of when the account is charged, not transaction date
-#Figure out how to save and mark total so we can look for it in DB
+#TODO: Use date of when the account is charged, not transaction date
+#TODO: Figure out how to save and mark total so we can look for it in DB
 def extractDate(row):
     dateString = str(row[0].internal_value)
     if(myString.isEmpty(dateString)):
@@ -82,9 +88,12 @@ def extractAmount(row):
 
 
 def main():
-    fileName = "inbox/7872_Transactions_30_05_2018.xlsx"
+    fileName = "inbox/7872_8547_0205218_Transactions_30_05_2018.xlsx"
     sheet = loadFile(fileName)
-    process(sheet)
+    date = datetime(2018,4,2)
+    cardNum = "7872"
+    refId = "8547" #replace with the actual value
+    process(sheet, date)
 
 
 main()
