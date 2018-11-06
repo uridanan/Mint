@@ -47,13 +47,13 @@ def processRow(row, date):
     #date = ;
     #replace = ;
     #refID = ;
-    #date = extractDate(row)
-    dateStr = date.strftime("%Y-%m-%d")
+    purchaseDate = extractDate(row)
+    reportDate = date.strftime("%Y-%m-%d")
     action = row[1].internal_value
     amount = extractAmount(row)
     comment = row[4].internal_value
     #entry = BankEntry(date,action,"7872","",amount,"")
-    entry = CreditEntry(date=dateStr, business=action, cardNumber="7872", bankId="8547", credit=0, debit=amount, balance=0)
+    entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=action, cardNumber="7872", bankId="8547", credit=0, debit=amount, balance=0)
     entry.toCSV()
     business = BusinessEntry(businessName=action, marketingName="", category="")
 

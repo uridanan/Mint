@@ -53,7 +53,7 @@ def generateBarGraph(data, xName, yNames, names):
 F_BALANCE = 'src/queryBalanceReport.sql'
 F_SAVINGS = 'src/querySavingsReport.sql'
 Q_REPORT = 'SELECT * FROM credit_entry'
-Q_MONTHLY = "select date,business,card_number,credit,debit from credit_entry where to_char(date, 'YYYY-MM') = '2018-04' order by date asc"
+Q_MONTHLY = "select report_date, purchase_date,business,card_number,credit,debit from credit_entry where to_char(report_date, 'YYYY-MM') = '2018-04' order by purchase_date asc"
 
 #balanceData = db.runQueryFromFile(F_BALANCE)
 #savingsData = db.runQueryFromFile(F_SAVINGS)

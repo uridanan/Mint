@@ -7,7 +7,8 @@ from src.myString import myString
 # Including import / export methods
 
 class CreditEntry(SQLObject):
-    date = DateCol()
+    purchaseDate = DateCol()
+    reportDate = DateCol()
     business = StringCol()
     cardNumber = StringCol()
     bankId = StringCol()
@@ -16,6 +17,6 @@ class CreditEntry(SQLObject):
     balance = DecimalCol(size=10, precision=2)
 
     def toCSV(self):
-        set = [self.date, self.business, self.cardNumber, self.bankId, self.credit, self.debit, self.balance]
+        set = [self.purchaseDate, self.reportDate, self.business, self.cardNumber, self.bankId, self.credit, self.debit, self.balance]
         if (len(set) > 0):
             print("") #(",".join(set))
