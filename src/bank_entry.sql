@@ -2,7 +2,7 @@
 extract (MONTH from date) as month,
 extract (YEAR from date) as year,
 max(balance) as balance
-from data_entry
+from bank_entry
 group by month,year
 order by year, month
 
@@ -13,7 +13,7 @@ from
 (select 
 to_char(date, 'YYYY-MM') as month,
 max(balance) as balance
-from data_entry
+from bank_entry
 group by month
 order by month) as A
 
@@ -31,4 +31,4 @@ from data_entry
 group by month
 order by month) as A
 
-select * from data_entry where to_char(date, 'YYYY-MM') = '2018-04'
+select * from bank_entry where to_char(date, 'YYYY-MM') = '2018-04'

@@ -3,7 +3,8 @@ from lxml.html.clean import Cleaner
 from bs4 import BeautifulSoup
 import requests
 from src.myString import myString
-from src.dataEntry import DataEntry
+from src.bankEntry import BankEntry
+from src.businessEntry import BusinessEntry
 import timestring
 from datetime import datetime
 from dateutil.parser import parse
@@ -69,7 +70,8 @@ class LeumiProcessor(object):
         balance = self.extractBalance(row)
         if(myString.isEmpty(date)):
             return None
-        entry = DataEntry(date=date,partner=action,refId=refId,credit=credit,debit=debit,balance=balance)
+        entry = BankEntry(date=date, business=action, refId=refId, credit=credit, debit=debit, balance=balance)
+        business = BusinessEntry(businessName=action, marketingName="", category="")
         return entry
 
     ####################################################################################################################
@@ -126,7 +128,8 @@ class LeumiProcessor(object):
 
 
 def main():
-    DataEntry.createTable(ifNotExists=True)
+    BankEntry.createTable(ifNotExists=True)
+    BusinessEntry.createTable(ifNotExists=True)
     htmlFile ='inbox/bankleumi30052018.html'
     processor = LeumiProcessor()
     processor.importFile(htmlFile)

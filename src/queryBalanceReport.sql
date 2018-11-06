@@ -5,6 +5,6 @@ from
 (select
 to_char(date, 'YYYY-MM') as month,
 max(balance) as balance
-from data_entry
+from bank_entry
 group by month
 order by month) as A

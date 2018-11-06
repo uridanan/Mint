@@ -57,7 +57,7 @@ def generateBarGraph(data, xName, yNames, names):
 
 F_BALANCE = 'src/queryBalanceReport.sql'
 F_SAVINGS = 'src/querySavingsReport.sql'
-Q_REPORT = 'SELECT * FROM data_entry'
+Q_REPORT = 'SELECT * FROM bank_entry'
 
 balanceData = db.runQueryFromFile(F_BALANCE)
 savingsData = db.runQueryFromFile(F_SAVINGS)
