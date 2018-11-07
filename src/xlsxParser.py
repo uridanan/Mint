@@ -2,8 +2,10 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
 from src.creditEntry import CreditEntry
 from src.businessEntry import BusinessEntry
+from src.bankEntry import BankEntry
 from src.myString import myString
 from datetime import datetime
+import src.dbAccess as db
 
 def example():
     wb = Workbook()
@@ -37,9 +39,20 @@ def process(sheet, date):
     for row in sheet.iter_rows(min_row=4, min_col=1, max_col=5):
         processRow(row, date)
 
+
+def postProcess(total, bankId):
+    Q_POSTPROCESS = 'UPDATE bank_entry SET hide=1 where debit='+total+' and refId='+bankId
+    print(Q_POSTPROCESS)
+    #reportData = db.runQuery(Q_POSTPROCESS)
+    bList = BankEntry.selectBy(debit=total, refId=bankId)
+    for b in bList:
+        b.hide = 1
+
 #TODO: handle credit line items
 #TODO: upon import, prepare all the data that will make queries easier, like month for report etc...
 #TODO: separate tables for monthly expense reports and for account progression
+#TODO: make entries in business entry table unique
+#TODO: use stored procedures for post processing?
 def processRow(row, date):
     for cell in row:
         print(cell.internal_value)
@@ -49,13 +62,18 @@ def processRow(row, date):
     #refID = ;
     purchaseDate = extractDate(row)
     reportDate = date.strftime("%Y-%m-%d")
-    action = row[1].internal_value
+    business = row[1].internal_value
     amount = extractAmount(row)
     comment = row[4].internal_value
     #entry = BankEntry(date,action,"7872","",amount,"")
-    entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=action, cardNumber="7872", bankId="8547", credit=0, debit=amount, balance=0)
+    bankId = "8547"
+    entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business, cardNumber="7872", bankId="8547", credit=0, debit=amount, balance=0)
     entry.toCSV()
-    business = BusinessEntry(businessName=action, marketingName="", category="")
+    if(myString.isEmpty(business)):
+        postProcess(amount,bankId) #TODO: mark this entry as total for easy retrieval
+    else:
+        business = BusinessEntry(businessName=business, marketingName="", category="")
+
 
 
 #TODO: Use date of when the account is charged, not transaction date

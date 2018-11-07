@@ -70,7 +70,7 @@ class LeumiProcessor(object):
         balance = self.extractBalance(row)
         if(myString.isEmpty(date)):
             return None
-        entry = BankEntry(date=date, business=action, refId=refId, credit=credit, debit=debit, balance=balance)
+        entry = BankEntry(date=date, business=action, hide=0, refId=refId, credit=credit, debit=debit, balance=balance)
         business = BusinessEntry(businessName=action, marketingName="", category="")
         return entry
 

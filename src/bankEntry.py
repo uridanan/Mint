@@ -10,7 +10,8 @@ class BankEntry(SQLObject):
     date = DateCol()
     business = StringCol()
     refId = StringCol()
-    credit = DecimalCol(size=10, precision=2)
+    hide = IntCol()
+    credit = DecimalCol(size=10, precision=2) #use CurrencyCol?
     debit = DecimalCol(size=10, precision=2)
     balance = DecimalCol(size=10, precision=2)
 
