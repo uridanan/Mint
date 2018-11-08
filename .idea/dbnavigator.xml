@@ -25,6 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1">
+        <schema name="information_schema" object-types="function, table, view" />
         <schema name="pg_catalog" object-types="function, table, view" />
         <schema name="public" object-types="column, function, table, view" />
       </connection>
@@ -42,6 +43,8 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/src/cleanDB.sql" connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1" session-id="MAIN" current-schema="public" />
+    <mapping file-url="file://$PROJECT_DIR$/src/scratchpad.sql" connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1" session-id="MAIN" current-schema="public" />
     <mapping file-url="file://$PROJECT_DIR$/src/queryMonthlyReport.sql" connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1" session-id="MAIN" current-schema="public" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
@@ -79,7 +82,7 @@
           <port value="5432" />
           <database value="mintdb" />
           <os-authentication value="false" />
-          <empty-password value="false" />
+          <empty-password value="true" />
           <user value="postgres" />
           <password value="" />
         </database>
@@ -252,7 +255,7 @@
         <data-length-threshold value="250" />
       </values-list-popup>
       <general>
-        <fetch-block-size value="100" />
+        <fetch-block-size value="500" />
         <fetch-timeout value="30" />
         <trim-whitespaces value="true" />
         <convert-empty-strings-to-null value="true" />

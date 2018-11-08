@@ -21,10 +21,6 @@ import src.dbAccess as db
 #TODO: Step 4 : mark expenses by type
 #TODO: Step 5 : rename expense (save the new name, re-use when recurring)
 
-#TODO: make a table of all expenses: name, new name, category, refId, replace
-#TODO: keep bank account and credit cards in separate tables. each credit card in a separate table? NO
-
-
 #Try an iplot instead
 #https://plot.ly/python/table/
 def generateTable(dataframe, max_rows=200):
@@ -52,12 +48,14 @@ def generateBarGraph(data, xName, yNames, names):
 
 F_BALANCE = 'src/queryBalanceReport.sql'
 F_SAVINGS = 'src/querySavingsReport.sql'
-Q_REPORT = 'SELECT * FROM credit_entry'
-Q_MONTHLY = "select report_date, purchase_date,business,card_number,credit,debit from credit_entry where to_char(report_date, 'YYYY-MM') = '2018-04' order by purchase_date asc"
+F_MONTHLY = 'src/queryMonthlyReport.sql'
+#Q_REPORT = 'SELECT * FROM credit_entry'
+#Q_MONTHLY = "select report_date, purchase_date,business,card_number,credit,debit from credit_entry where to_char(report_date, 'YYYY-MM') = '2018-04' order by purchase_date asc"
 
 #balanceData = db.runQueryFromFile(F_BALANCE)
 #savingsData = db.runQueryFromFile(F_SAVINGS)
-reportData = db.runQuery(Q_MONTHLY)
+#reportData = db.runQuery(Q_MONTHLY)
+reportData = db.runQueryFromFile(F_MONTHLY)
 
 app = dash.Dash()
 

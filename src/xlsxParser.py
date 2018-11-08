@@ -40,19 +40,17 @@ def process(sheet, date):
         processRow(row, date)
 
 
-def postProcess(total, bankId):
-    Q_POSTPROCESS = 'UPDATE bank_entry SET hide=1 where debit='+total+' and refId='+bankId
-    print(Q_POSTPROCESS)
+def handleTotal(total, bankId):
+    #Q_POSTPROCESS = 'UPDATE bank_entry SET hide=1 where debit='+total+' and refId='+bankId
+    #print(Q_POSTPROCESS)
     #reportData = db.runQuery(Q_POSTPROCESS)
     bList = BankEntry.selectBy(debit=total, refId=bankId)
     for b in bList:
         b.hide = 1
 
+
 #TODO: handle credit line items
-#TODO: upon import, prepare all the data that will make queries easier, like month for report etc...
-#TODO: separate tables for monthly expense reports and for account progression
 #TODO: make entries in business entry table unique
-#TODO: use stored procedures for post processing?
 def processRow(row, date):
     for cell in row:
         print(cell.internal_value)
@@ -68,16 +66,14 @@ def processRow(row, date):
     #entry = BankEntry(date,action,"7872","",amount,"")
     bankId = "8547"
     entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business, cardNumber="7872", bankId="8547", credit=0, debit=amount, balance=0)
-    entry.toCSV()
     if(myString.isEmpty(business)):
-        postProcess(amount,bankId) #TODO: mark this entry as total for easy retrieval
+        handleTotal(amount, bankId)
+        entry.business = "__TOTAL__"
     else:
         business = BusinessEntry(businessName=business, marketingName="", category="")
+    entry.toCSV()
 
 
-
-#TODO: Use date of when the account is charged, not transaction date
-#TODO: Figure out how to save and mark total so we can look for it in DB
 def extractDate(row):
     dateString = str(row[0].internal_value)
     if(myString.isEmpty(dateString)):

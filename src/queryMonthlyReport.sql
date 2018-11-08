@@ -10,10 +10,5 @@ and hide = 0
 )
 as U
 where debit > 0
-and length (business) > 0
+and business <> '__TOTAL__'
 order by date asc
-
-
-select c.id, c.debit, b.id, b.debit, b,hide from credit_entry c, bank_entry b
-where c.debit = b.debit
-and c.bank_id = b.ref_id

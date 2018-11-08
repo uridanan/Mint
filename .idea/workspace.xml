@@ -11,23 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="display.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/display.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="59" column="36" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="monthlyReport.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/monthlyReport.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="59" selection-start-line="59" selection-end-line="59" selection-end-column="35" />
+            <state relative-caret-position="172">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -38,8 +26,26 @@
       <file leaf-file-name="queryMonthlyReport.sql" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/queryMonthlyReport.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+            <state relative-caret-position="204">
+              <caret line="12" column="15" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scratchpad.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/scratchpad.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cleanDB.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cleanDB.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="23" lean-forward="true" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -56,8 +62,8 @@
       <file leaf-file-name="dbAccess.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dbAccess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="40" lean-forward="true" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+            <state relative-caret-position="357">
+              <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -65,19 +71,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="querySavingsReport.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/querySavingsReport.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="bankEntry.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/bankEntry.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
+            <state relative-caret-position="289">
               <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="21" />
             </state>
           </provider>
@@ -86,8 +83,11 @@
       <file leaf-file-name="htmlParser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/htmlParser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="35" />
+            <state relative-caret-position="170">
+              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,8 +107,8 @@
       <file leaf-file-name="xlsxParser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/xlsxParser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="73" column="9" lean-forward="true" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+            <state relative-caret-position="172">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -155,12 +155,14 @@
         <option value="$PROJECT_DIR$/src/querySavingsReport.sql" />
         <option value="$PROJECT_DIR$/src/display.py" />
         <option value="$PROJECT_DIR$/src/businessEntry.py" />
-        <option value="$PROJECT_DIR$/src/monthlyReport.py" />
         <option value="$PROJECT_DIR$/src/creditEntry.py" />
         <option value="$PROJECT_DIR$/src/bankEntry.py" />
         <option value="$PROJECT_DIR$/src/htmlParser.py" />
+        <option value="$PROJECT_DIR$/src/scratchpad.sql" />
+        <option value="$PROJECT_DIR$/src/cleanDB.sql" />
         <option value="$PROJECT_DIR$/src/queryMonthlyReport.sql" />
         <option value="$PROJECT_DIR$/src/xlsxParser.py" />
+        <option value="$PROJECT_DIR$/src/monthlyReport.py" />
       </list>
     </option>
   </component>
@@ -175,6 +177,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -191,7 +194,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -215,7 +217,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.xlsxParser">
+  <component name="RunManager" selected="Python.monthlyReport">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Mint" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -333,9 +335,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.monthlyReport" />
         <item itemvalue="Python.xlsxParser" />
         <item itemvalue="Python.htmlParser" />
-        <item itemvalue="Python.monthlyReport" />
         <item itemvalue="Python.display" />
         <item itemvalue="Python.myReports" />
       </list>
@@ -367,9 +369,9 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
+      <window_info active="true" anchor="bottom" id="TODO" order="6" visible="true" weight="0.32900432" />
       <window_info id="DB Browser" order="2" />
-      <window_info active="true" anchor="bottom" id="DB Execution Console" order="7" visible="true" weight="0.58441556" />
+      <window_info anchor="bottom" id="DB Execution Console" order="7" weight="0.58441556" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.34668073" side_tool="true" weight="0.28896105" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.63003355" weight="0.32900432" />
       <window_info anchor="bottom" id="Python Console" order="9" weight="0.32900432" />
@@ -379,6 +381,7 @@
       <window_info id="Project Explorer" order="2" />
       <window_info id="Job Explorer" order="2" />
       <window_info anchor="bottom" id="Console" order="7" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32900432" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="5" sideWeight="0.6533193" weight="0.28896105" />
@@ -388,7 +391,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32900432" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -413,16 +415,34 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="43" />
+      <option name="time" value="44" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="amount" language="Python" />
+        <watch expression="business" language="Python" />
+        <watch expression="bList" language="Python" />
+        <watch expression="b" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>b</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>bList</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>business</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>amount</expression-string>
         <language-id>Python</language-id>
@@ -458,28 +478,9 @@
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>dataframe.MONTH</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/sqlobject/mysql/mysqlconnection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/connection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/xlsxParser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1020">
@@ -723,9 +724,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="901">
           <caret line="59" column="36" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -745,28 +743,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dbAccess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="40" lean-forward="true" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+        <state relative-caret-position="357">
+          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/monthlyReport.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="59" selection-start-line="59" selection-end-line="59" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bankEntry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -780,24 +761,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/bankEntry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/htmlParser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="35" />
+        <state relative-caret-position="170">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scratchpad.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cleanDB.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="23" lean-forward="true" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/monthlyReport.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/queryMonthlyReport.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        <state relative-caret-position="204">
+          <caret line="12" column="15" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/xlsxParser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="73" column="9" lean-forward="true" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+        <state relative-caret-position="172">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
