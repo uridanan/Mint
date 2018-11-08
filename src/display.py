@@ -10,27 +10,30 @@ import os
 #It seems more direct to use the DB, I see no need for the overhead of APIs just yet
 
 
-#Refactor data extraction to separate file - done
-#Step 1 : monthly input/output graph in 3 variants: income vs expenses, savings, total - done
-#Learn to load sql from file - done
-#REFACTOR - done
 
-#Format fields per data type
-#Make the table scrollable
-#Use my own CSS (would solve the scrollable problem)
+#TODO Use my own CSS (would solve the scrollable problem)
+# https://dash.plot.ly/external-resources
 # https://github.com/plotly/dash-docs/blob/master/tutorial/external_css_and_js.py
-#Change the report to the data presented in the graphs
-#Use a control to select which graph to display
-#Use time series instead of working so hard on formatting the dates
+#TODO Change the report to the data presented in the graphs
+#TODO Use a control to select which graph to display
+#TODO Use time series instead of working so hard on formatting the dates
 #https://plot.ly/python/time-series/
-#Look at morning star tickers for proper time series?
+#TODO Look at morning star tickers for proper time series?
 #https://dash.plot.ly/gallery
 
-#Step 2 : combined table from all sources
-#Step 3 : start marking recurring expenses
-#Step 4 : mark expenses by type
-#Step 5 : rename expense (save the new name, re-use when recurring)
+#TODO: Format fields per data type
+#TODO: Make the table scrollable (use my own CSS)
+#TODO: Use tabs to select which graph to display https://dash.plot.ly/dash-core-components/tabs
 
+#TODO: use datatable https://dash.plot.ly/datatable
+#TODO: use range slider for date span and upload component for file import https://dash.plot.ly/dash-core-components
+#TODO: mark expense category https://dash.plot.ly/datatable/editable
+#TODO: monthly report expenses by category
+#TODO: expenses by category over time
+#TODO: import the rest of the credit cards
+#TODO: start marking recurring expenses
+#TODO: rename expense (save the new name, re-use when recurring)
+#TODO: show credit (income) report
 
 #Try an iplot instead
 #https://plot.ly/python/table/
@@ -63,7 +66,8 @@ balanceData = db.runQueryFromFile(F_BALANCE)
 savingsData = db.runQueryFromFile(F_SAVINGS)
 reportData = db.runQuery(Q_REPORT)
 
-app = dash.Dash()
+#app = dash.Dash()
+app = dash.Dash(__name__)
 
 app.css.append_css({
     "external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"

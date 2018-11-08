@@ -7,20 +7,6 @@ import src.dbAccess as db
 #It seems more direct to use the DB, I see no need for the overhead of APIs just yet
 
 
-#Refactor data extraction to separate file - done
-#Step 1 : monthly input/output graph in 3 variants: income vs expenses, savings, total - done
-#Learn to load sql from file - done
-#REFACTOR - done
-#TODO: Format fields per data type
-#TODO: Make the table scrollable
-#TODO: Use a control to select which graph to display
-
-
-#TODO: Step 2 : combined table from all sources
-#TODO: Step 3 : start marking recurring expenses
-#TODO: Step 4 : mark expenses by type
-#TODO: Step 5 : rename expense (save the new name, re-use when recurring)
-
 #Try an iplot instead
 #https://plot.ly/python/table/
 def generateTable(dataframe, max_rows=200):
