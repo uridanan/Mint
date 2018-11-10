@@ -28,7 +28,12 @@ import os
 #TODO: use datatable https://dash.plot.ly/datatable
 #TODO: use range slider for date span and upload component for file import https://dash.plot.ly/dash-core-components
 #TODO: mark expense category https://dash.plot.ly/datatable/editable
-#TODO: monthly report expenses by category
+#TODO: manage categories form: create categories and assign businesses to them
+#TODO: think of suggesting categories based on classification by others, but each uesr gets to assign businesses as they like
+#TODO: rename business in table?
+#TODO: assign category in table?
+#TODO: filter expenses by category
+#TODO: monthly report expenses by category (aggregated, pie chart?)
 #TODO: expenses by category over time
 #TODO: import the rest of the credit cards
 #TODO: start marking recurring expenses
