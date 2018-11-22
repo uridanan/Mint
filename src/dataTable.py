@@ -31,7 +31,7 @@ reportData = db.runQueryFromFile(F_MONTHLY)
 app.layout = html.Div(children=[
     html.H4(children='Editable Expense Report - Work In Pogress'),
     generateTable(reportData),
-    html.H5(id='output')
+    html.Div(id='output')
 ])
 
 #=============================================================================================================
@@ -42,20 +42,24 @@ app.layout = html.Div(children=[
 #https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
 
 @app.callback(
-    Output('monthly-report-table', 'data'),
-    [Input('monthly-report-table', 'updated_cells')],
-    [State('monthly-report-table', 'data')])
-def display_output(data, columns):
-    df = pd.DataFrame(data, columns=[c['name'] for c in columns])
-    return {
-        'data': [{
-            'type': 'parcoords',
-            'dimensions': [{
-                'label': col['name'],
-                'values': df[col['id']]
-            } for col in columns]
-        }]
-    }
+    Output('output', 'data-*'),
+    [Input('monthly-report-table', 'data')],
+    [State('monthly-report-table', 'active_cell')])
+def processInput(data,cell):
+    if(cell != None):
+        row=cell[0]
+        col=cell[1]
+        headers = list(data[row].keys())
+        values=data[row]
+        value=values[headers[col]]
+        print(','.join([headers[col],value]))
+
+
+#TODO: join with category
+#TODO: replace business with marketing name
+#TODO: avoid duplicates in business table: what about duplicate names for different purposes?
+def updateBusiness():
+    print("")
 
 
 

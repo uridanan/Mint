@@ -12,6 +12,7 @@ from dash.dependencies import Input, Output, State
 #https://plot.ly/python/table/
 def generateTable(dataframe, max_rows=200):
     return html.Table(
+
         # Header
         [html.Tr([html.Th(col) for col in dataframe.columns])] +
 
@@ -28,24 +29,8 @@ def generateTable(dataframe, max_rows=200):
 #TODO: join with category
 def editableCell(text,row,col):
     strId = '.'.join([str(row),str(col)])
-    cell = dcc.Input(id = strId, type = 'text', value = text, disabled=False) #setProps,debounce
+    cell = dcc.Input(id='editable-cell', name=strId, type='text', value=text, disabled=False) #setProps,debounce
     return cell
-
-@app.callback(
-    Output(component_id='output', component_property='children'),
-    [Input(component_id='my-id', component_property='id')],
-    [Input(component_id='my-id', component_property='value')]
-)
-def update_output_div(id,value):
-    return 'You\'ve entered "{}"'.format(value)
-
-
-
-def onUpdate(id):
-    print(id)
-
-# def generateTablePandas(dataFrame):
-#     return dataFrame.describe().to_html()
 
 
 def generateBarGraph(data, xName, yNames, names):
@@ -81,6 +66,23 @@ app.layout = html.Div(children=[
     generateTable(reportData),
     html.Div(id='output')
 ])
+
+@app.callback(
+    Output(component_id='output', component_property='children'),
+    [Input(component_id='editable-cell', component_property='value')],
+    [State(component_id='editable-cell', component_property='name')]
+)
+def update_output_div(name,value):
+    return 'You\'ve entered "{}"'.format(value)
+
+
+
+def onUpdate(id):
+    print(id)
+
+# def generateTablePandas(dataFrame):
+#     return dataFrame.describe().to_html()
+
 
 
 
