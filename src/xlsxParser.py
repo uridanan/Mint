@@ -50,7 +50,6 @@ def handleTotal(total, bankId):
 
 
 #TODO: handle credit line items
-#TODO: make entries in business entry table unique
 def processRow(row, date):
     for cell in row:
         print(cell.internal_value)

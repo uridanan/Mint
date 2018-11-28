@@ -16,7 +16,7 @@ import os
 # https://github.com/plotly/dash-docs/blob/master/tutorial/external_css_and_js.py
 #TODO Change the report to the data presented in the graphs
 #TODO Use a control to select which graph to display
-#TODO Use time series instead of working so hard on formatting the dates
+#TODO Use time series instead of working so hard on formatting the dates?
 #https://plot.ly/python/time-series/
 #TODO Look at morning star tickers for proper time series?
 #https://dash.plot.ly/gallery

@@ -55,9 +55,6 @@ def processInput(data,cell):
         print(','.join([headers[col],value]))
 
 
-#TODO: join with category
-#TODO: replace business with marketing name
-#TODO: avoid duplicates in business table: what about duplicate names for different purposes?
 def updateBusiness():
     print("")
 
