@@ -60,17 +60,21 @@ def processRow(row, date):
     #refID = ;
     purchaseDate = extractDate(row)
     reportDate = date.strftime("%Y-%m-%d")
-    business = row[1].internal_value
+    businessName = row[1].internal_value
     amount = extractAmount(row)
     comment = row[4].internal_value
     #entry = BankEntry(date,action,"7872","",amount,"")
     bankId = "8547"
-    entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business, cardNumber="7872", bankId="8547", credit=0, debit=amount, balance=0)
-    if(myString.isEmpty(business)):
+
+    if(myString.isEmpty(businessName)):
         handleTotal(amount, bankId)
-        entry.business = "__TOTAL__"
-    else:
-        business = BusinessEntry(businessName=business, marketingName="", category="")
+        businessName = "__TOTAL__"
+
+    business = BusinessEntry.selectBy(businessName=businessName).getOne(None)
+    if (business == None):
+        business = BusinessEntry(businessName=businessName, marketingName=businessName, category="")
+
+    entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business.id, cardNumber="7872", bankId="8547", credit=0, debit=amount, balance=0)
     entry.toCSV()
 
 

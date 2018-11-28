@@ -9,7 +9,7 @@ from src.myString import myString
 class CreditEntry(SQLObject):
     purchaseDate = DateCol()
     reportDate = DateCol()
-    business = StringCol()
+    business = IntCol()
     cardNumber = StringCol()
     bankId = StringCol()
     credit = DecimalCol(size=10, precision=2)

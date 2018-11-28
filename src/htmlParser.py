@@ -28,7 +28,7 @@ def example():
     url = 'http://www.google.com'
     r = requests.get("http://" + url)
     data = r.text
-    soup = BeautifulSoup(data)
+    soup = BeautifulSoup(data, "lxml")
     for link in soup.find_all('a'):
         print(link.get('href'))
 
@@ -54,7 +54,7 @@ class LeumiProcessor(object):
 
     def process(self, htmlInput):
         assert isinstance(htmlInput, object)
-        soup = BeautifulSoup(htmlInput)
+        soup = BeautifulSoup(htmlInput, "lxml")
         table = self.getDataTable(soup)
         for row in table.find_all('tr'):
             e = self.processRow(row)
@@ -70,8 +70,11 @@ class LeumiProcessor(object):
         balance = self.extractBalance(row)
         if(myString.isEmpty(date)):
             return None
-        entry = BankEntry(date=date, business=action, hide=0, refId=refId, credit=credit, debit=debit, balance=balance)
-        business = BusinessEntry(businessName=action, marketingName="", category="")
+
+        business = BusinessEntry.selectBy(businessName=action).getOne(None)
+        if (business == None):
+            business = BusinessEntry(businessName=action, marketingName=action, category="")
+        entry = BankEntry(date=date, business=business.id, hide=0, refId=refId, credit=credit, debit=debit, balance=balance)
         return entry
 
     ####################################################################################################################
