@@ -6,6 +6,7 @@ import dash_html_components as html
 import pandas as pd
 import src.dbAccess as db
 import copy
+from src.businessEntry import BusinessEntry
 
 app = dash.Dash(__name__)
 
@@ -36,29 +37,31 @@ app.layout = html.Div(children=[
 
 #=============================================================================================================
 
-
-#TODO: save updated data
 #TODO: format the table
 #https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
 
 @app.callback(
     Output('output', 'data-*'),
     [Input('monthly-report-table', 'data')],
-    [State('monthly-report-table', 'active_cell')])
-def processInput(data,cell):
+    [State('monthly-report-table', 'data_previous'),State('monthly-report-table', 'active_cell')])
+def processInput(data,previous,cell):
     if(cell != None):
         row=cell[0]
-        col=cell[1]
+        col=cell[1]+1
         headers = list(data[row].keys())
-        values=data[row]
-        value=values[headers[col]]
-        print(','.join([headers[col],value]))
+        new=data[row]
+        old=previous[row]
+        oldName=old['marketing_name']
+        newName = new['marketing_name']
+        newCategory = new['category']
+        if(headers[col] in ('marketing_name','category')):
+            updateBusinessEntry(oldName,newName,newCategory)
+        print("")
 
-
-def updateBusiness():
-    print("")
-
-
+def updateBusinessEntry(oldName,newName,newCategory):
+    business = BusinessEntry.selectBy(marketingName=oldName).getOne(None)
+    if (business != None):
+        business.set(marketingName=newName, category=newCategory)
 
 
 # @app.callback(
