@@ -9,31 +9,89 @@ import copy
 from src.businessEntry import BusinessEntry
 
 app = dash.Dash(__name__)
+F_GETMONTHS = 'src/queryMonthSelector.sql'
+F_MONTHLY = 'src/queryMonthlyReport.sql'
+
+
+# dt.DataTable(
+# rows=df.to_dict(‘records’),
+# columns=(df.columns),
+# filters=True,
+# resizable=True,
+# sortColumn=True,
+# editable=True,
+# row_selectable=True,
+# filterable=True,
+# sortable=True,
+# selected_row_indices=[],
+# id=‘datatable-gapminder’)
+
+
 
 #=============================================================================================================
 def generateTable(dataframe, max_rows=200):
     return dash_table.DataTable(
-        id='monthly-report-table',
+        id='monthlyReport',
         # Header
-        columns=(
-            [{'id': p, 'name': p} for p in dataframe.columns]
-        ),
+        columns=getColumns(dataframe),
         # Body
-        data=[
-            dict(entry=i,**{col: dataframe.iloc[i][col] for col in dataframe.columns})
-            for i in range(min(len(dataframe), max_rows))
-        ],
-        editable=True
+        #data=getData(dataframe, max_rows),
+        data=[],
+        editable=True,
     )
 
-F_MONTHLY = 'src/queryMonthlyReport.sql'
-reportData = db.runQueryFromFile(F_MONTHLY)
+def getColumns(dataframe):
+    return ([{'id': p, 'name': p} for p in dataframe.columns])
+
+def getData(dataframe, max_rows=200):
+    return [
+            dict(entry=i,**{col: dataframe.iloc[i][col] for col in dataframe.columns})
+            for i in range(min(len(dataframe), max_rows))
+        ]
+
+
+# Inject output into the monthly report query
+def generateMonthSelector(months):
+    monthSelector = dcc.Dropdown(
+        id='selectMonth',
+        options=[
+            {'label': months.iloc[i][0], 'value': months.iloc[i][1]}
+            for i in range(len(months))],
+        value=months.iloc[0][1]
+    )
+    return monthSelector
+
+def generateMonthlyReport(month):
+    return db.runQueryFromFile(F_MONTHLY, [{'name': 'month', 'value': month}])
+
+
+selectableMonths = db.runQueryFromFile(F_GETMONTHS)
+defaultMonth = selectableMonths.iloc[0][1]
+reportData = generateMonthlyReport(defaultMonth)
 
 app.layout = html.Div(children=[
     html.H4(children='Editable Expense Report - Work In Pogress'),
+    generateMonthSelector(selectableMonths),
     generateTable(reportData),
     html.Div(id='output')
 ])
+
+#=============================================================================================================
+
+
+# Filter the datatable
+def generateCategoryFilter(categories):
+    monthSelector = dcc.Dropdown(
+        options=[
+            {'label': 'New York City', 'value': 'NYC'},
+            {'label': 'Montréal', 'value': 'MTL'},
+            {'label': 'San Francisco', 'value': 'SF'}
+        ],
+        multi=True,
+        value="MTL"
+    )
+    return monthSelector
+
 
 #=============================================================================================================
 
@@ -42,8 +100,8 @@ app.layout = html.Div(children=[
 
 @app.callback(
     Output('output', 'data-*'),
-    [Input('monthly-report-table', 'data')],
-    [State('monthly-report-table', 'data_previous'),State('monthly-report-table', 'active_cell')])
+    [Input('monthlyReport', 'data')],
+    [State('monthlyReport', 'data_previous'),State('monthlyReport', 'active_cell')])
 def processInput(data,previous,cell):
     if(cell != None):
         row=cell[0]
@@ -64,20 +122,13 @@ def updateBusinessEntry(oldName,newName,newCategory):
         business.set(marketingName=newName, category=newCategory)
 
 
-# @app.callback(
-#     Output('editable-table', 'rows'),
-#     [Input('editable-table', 'row_update')],
-#     [State('editable-table', 'rows')])
-# def update_rows(row_update, rows):
-#     row_copy = copy.deepcopy(rows)
-#     if row_update:
-#         updated_row_index = row_update[0]['from_row']
-#         updated_value = row_update[0]['updated'].values()[0]
-#         row_copy[updated_row_index]['Output'] = (
-#             float(updated_value) ** 2
-#         )
-#     return row_copy
-
+@app.callback(
+    Output('monthlyReport', 'data'),
+    [Input('selectMonth', 'value')])
+def onMonthSelected(value):
+    reportData = generateMonthlyReport(value)
+    tableData = getData(reportData)
+    return tableData
 
 
 if __name__ == '__main__':

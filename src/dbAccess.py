@@ -20,15 +20,20 @@ def loadSingleQuery(fileName):
     return sql
 
 
-def runQuery(query):
+def runQuery(query,params={}):
     #cnx = dbConnect()
-    return pd.read_sql_query(query, cnx)
+    finalQuery = query
+    for param in params:
+        name = "<" + param['name'] + ">"
+        value = "'" + param['value'] + "'"
+        finalQuery = query.replace(name, value)
+    return pd.read_sql_query(finalQuery, cnx)
 
 
-def runQueryFromFile(sqlFile):
+def runQueryFromFile(sqlFile,params={}):
     #cnx = dbConnect()
     query = loadSingleQuery(sqlFile)
-    return runQuery(query)
+    return runQuery(query,params)
 
 
 cnx = dbConnect()

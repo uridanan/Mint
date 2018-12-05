@@ -30,13 +30,13 @@ import os
 #TODO: mark expense category https://dash.plot.ly/datatable/editable
 #TODO: manage categories form: create categories and assign businesses to them
 #TODO: think of suggesting categories based on classification by others, but each uesr gets to assign businesses as they like
-#TODO: rename business in table?
-#TODO: assign category in table?
+
+#TODO: select the month
 #TODO: filter expenses by category
 #TODO: monthly report expenses by category (aggregated, pie chart?)
 #TODO: expenses by category over time
-#TODO: import the rest of the credit cards
 #TODO: start marking recurring expenses
+#TODO: import the rest of the credit cards
 #TODO: rename expense (save the new name, re-use when recurring)
 #TODO: show credit (income) report
 
