@@ -1,0 +1,1 @@
+select distinct category, category from business_entry order by category

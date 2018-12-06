@@ -24,4 +24,11 @@ class myString:
         t = s.text.strip()
         return t
 
+    @staticmethod
+    def singleQuote(s):
+        if (s == None):
+            return "''"
+        t = "'" + s + "'"
+        return t
+
 #-----------------------------------------------------------------------------------------------------------------------

@@ -2,6 +2,7 @@ import pandas as pd
 import sqlalchemy
 from sqlalchemy import create_engine
 import psycopg2
+from src.myString import myString
 
 
 #Get connection to DB
@@ -25,8 +26,8 @@ def runQuery(query,params={}):
     finalQuery = query
     for param in params:
         name = "<" + param['name'] + ">"
-        value = "'" + param['value'] + "'"
-        finalQuery = query.replace(name, value)
+        value = ','.join(myString.singleQuote(v) for v in param['value'])
+        finalQuery = finalQuery.replace(name, value)
     return pd.read_sql_query(finalQuery, cnx)
 
 

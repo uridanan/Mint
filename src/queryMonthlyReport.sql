@@ -12,5 +12,6 @@ and hide = 0
 as U
 inner join business_entry on business_entry.id = U.business
 where debit > 0
+and category in (<filter>)
 and business_name <> '__TOTAL__'
 order by date asc

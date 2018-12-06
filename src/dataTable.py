@@ -7,9 +7,11 @@ import pandas as pd
 import src.dbAccess as db
 import copy
 from src.businessEntry import BusinessEntry
+from src.myString import myString
 
 app = dash.Dash(__name__)
 F_GETMONTHS = 'src/queryMonthSelector.sql'
+F_GETCATEGORIES = 'src/queryCategoryFilter.sql'
 F_MONTHLY = 'src/queryMonthlyReport.sql'
 
 
@@ -49,50 +51,58 @@ def getData(dataframe, max_rows=200):
             for i in range(min(len(dataframe), max_rows))
         ]
 
+#=============================================================================================================
+
+def generateDropDown(name,values,enableMultipleSelect,default):
+    selector = dcc.Dropdown(
+        id=name,
+        options=[
+            {'label': values.values[i][0], 'value': values.values[i][1]}
+            for i in range(len(values))],
+        multi=enableMultipleSelect,
+        value=default
+    )
+    return selector
 
 # Inject output into the monthly report query
 def generateMonthSelector(months):
-    monthSelector = dcc.Dropdown(
-        id='selectMonth',
-        options=[
-            {'label': months.iloc[i][0], 'value': months.iloc[i][1]}
-            for i in range(len(months))],
-        value=months.iloc[0][1]
-    )
-    return monthSelector
+    return generateDropDown('selectMonth', months, False, months.values[0][1])
 
-def generateMonthlyReport(month):
-    return db.runQueryFromFile(F_MONTHLY, [{'name': 'month', 'value': month}])
+# Filter the datatable
+def generateCategorySelector(categories):
+    return generateDropDown('filterCategories',categories,True,None)
 
+def getAllCategories(dataframe):
+    list = [v[0] for v in dataframe.values]
+    return list
+
+
+# myString.singleQuote(categories.values[i][0]) for i in range(len(categories.values))
+def generateMonthlyReport(month,categories):
+    params = [
+        {'name': 'month', 'value': [month]},
+        {'name': 'filter', 'value': categories}
+    ]
+    return db.runQueryFromFile(F_MONTHLY, params)
+
+#=============================================================================================================
 
 selectableMonths = db.runQueryFromFile(F_GETMONTHS)
+categories_df = db.runQueryFromFile(F_GETCATEGORIES)
+categories_list = getAllCategories(categories_df)
 defaultMonth = selectableMonths.iloc[0][1]
-reportData = generateMonthlyReport(defaultMonth)
+reportData = generateMonthlyReport(defaultMonth,categories_list)
+
 
 app.layout = html.Div(children=[
     html.H4(children='Editable Expense Report - Work In Pogress'),
     generateMonthSelector(selectableMonths),
+    generateCategorySelector(categories_df),
     generateTable(reportData),
     html.Div(id='output')
 ])
 
 #=============================================================================================================
-
-
-# Filter the datatable
-def generateCategoryFilter(categories):
-    monthSelector = dcc.Dropdown(
-        options=[
-            {'label': 'New York City', 'value': 'NYC'},
-            {'label': 'Montréal', 'value': 'MTL'},
-            {'label': 'San Francisco', 'value': 'SF'}
-        ],
-        multi=True,
-        value="MTL"
-    )
-    return monthSelector
-
-
 #=============================================================================================================
 
 #TODO: format the table
@@ -124,9 +134,15 @@ def updateBusinessEntry(oldName,newName,newCategory):
 
 @app.callback(
     Output('monthlyReport', 'data'),
-    [Input('selectMonth', 'value')])
-def onMonthSelected(value):
-    reportData = generateMonthlyReport(value)
+    [Input('selectMonth', 'value'),Input('filterCategories', 'value')])
+def onMonthSelected(month,filter):
+    return updateTable(month, filter)
+
+def updateTable(month,filter):
+    selectedCategories = categories_list
+    if(filter != None):
+        selectedCategories = filter
+    reportData = generateMonthlyReport(month,selectedCategories)
     tableData = getData(reportData)
     return tableData
 
