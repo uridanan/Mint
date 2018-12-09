@@ -31,9 +31,6 @@ import os
 #TODO: manage categories form: create categories and assign businesses to them
 #TODO: think of suggesting categories based on classification by others, but each uesr gets to assign businesses as they like
 
-#TODO: select the month
-#TODO: filter expenses by category
-#TODO: monthly report expenses by category (aggregated, pie chart?)
 #TODO: expenses by category over time
 #TODO: start marking recurring expenses
 #TODO: import the rest of the credit cards
