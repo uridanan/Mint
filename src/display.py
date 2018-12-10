@@ -2,6 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import src.dbAccess as db
+from dash.dependencies import Input, Output
 
 from flask import send_from_directory
 import os
@@ -23,7 +24,7 @@ import os
 
 #TODO: Format fields per data type
 #TODO: Make the table scrollable (use my own CSS)
-#TODO: Use tabs to select which graph to display https://dash.plot.ly/dash-core-components/tabs
+
 
 #TODO: use datatable https://dash.plot.ly/datatable
 #TODO: use range slider for date span and upload component for file import https://dash.plot.ly/dash-core-components
@@ -31,6 +32,7 @@ import os
 #TODO: manage categories form: create categories and assign businesses to them
 #TODO: think of suggesting categories based on classification by others, but each uesr gets to assign businesses as they like
 
+#TODO: Use tabs to select which graph to display https://dash.plot.ly/dash-core-components/tabs
 #TODO: expenses by category over time
 #TODO: start marking recurring expenses
 #TODO: import the rest of the credit cards
@@ -62,11 +64,9 @@ def generateBarGraph(data, xName, yNames, names):
 
 F_BALANCE = 'src/queryBalanceReport.sql'
 F_SAVINGS = 'src/querySavingsReport.sql'
-Q_REPORT = 'SELECT * FROM bank_entry'
 
 balanceData = db.runQueryFromFile(F_BALANCE)
 savingsData = db.runQueryFromFile(F_SAVINGS)
-reportData = db.runQuery(Q_REPORT)
 
 #app = dash.Dash()
 app = dash.Dash(__name__)
@@ -77,12 +77,34 @@ app.css.append_css({
 
 app.layout = html.Div(children=[
     html.H4(children='Bank Report - Work In Pogress'),
-    dcc.Graph(id='balance-graph',figure=generateBarGraph(balanceData,"monthname",["balance"],["Balance"])),
-    dcc.Graph(id='savings-graph',figure=generateBarGraph(savingsData,"monthname",["savings"],["Savings"])),
-    dcc.Graph(id='income-graph',figure=generateBarGraph(savingsData,"monthname",["monthlycredit","monthlydebit"],["Income","Expenses"])),
-    generateTable(reportData)
+    dcc.Tabs(id="tabs", value='tab1', children=[
+        dcc.Tab(label='Balance', value='tab1'),
+        dcc.Tab(label='Savings', value='tab2'),
+        dcc.Tab(label='IncomeVSExpenses', value='tab3')
+    ]),
+    html.Div(id='tabsContent')
 ])
 
+
+@app.callback(Output('tabsContent', 'children'),
+              [Input('tabs', 'value')])
+def render_content(tab):
+    if tab == 'tab1':
+        return html.Div([
+            html.H3('Balance over time'),
+            dcc.Graph(id='balance-graph', figure=generateBarGraph(balanceData, "monthname", ["balance"], ["Balance"]))
+        ])
+    elif tab == 'tab2':
+        return html.Div([
+            html.H3('Savings over time'),
+            dcc.Graph(id='savings-graph', figure=generateBarGraph(savingsData, "monthname", ["savings"], ["Savings"]))
+        ])
+    elif tab == 'tab3':
+        return html.Div([
+            html.H3('Savings over time'),
+            dcc.Graph(id='income-graph',
+                      figure=generateBarGraph(savingsData, "monthname", ["monthlycredit", "monthlydebit"],["Income", "Expenses"]))
+        ])
 
 
 if __name__ == '__main__':
