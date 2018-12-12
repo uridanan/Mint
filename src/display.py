@@ -97,8 +97,7 @@ class TimeSeriesData:
 
 #TODO: Format using the example "Label Lines with Annotations" from https://plot.ly/python/line-charts/
 #TODO: amounts in undefined category don't make sense
-#TODO: multiple values per month for undefined?
-#TODO: what about dates after june 2017?
+#TODO: add name for undefined
 def generateTimeSeries(categories,dataFrame):
     #df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
     timeSeries = TimeSeriesData(dataFrame)
