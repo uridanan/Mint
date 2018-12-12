@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66d37b08-2673-44d5-a55f-b7c77b26aeb0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/display.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/display.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="243" column="7" lean-forward="true" selection-start-line="243" selection-start-column="7" selection-end-line="243" selection-end-column="7" />
+            <state relative-caret-position="359">
+              <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -458,6 +457,16 @@
           <line>76</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/display.py</url>
+          <line>72</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/display.py</url>
+          <line>119</line>
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -837,8 +846,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/display.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="243" column="7" lean-forward="true" selection-start-line="243" selection-start-column="7" selection-end-line="243" selection-end-column="7" />
+        <state relative-caret-position="359">
+          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

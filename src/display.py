@@ -49,7 +49,8 @@ import os
 class TimeSeriesData:
     data = dict()
     dates = []
-    range = []
+    start = None
+    end = None
 
     def __init__(self,dataFrame):
         self.data = self.groupByDate(dataFrame)
@@ -62,18 +63,22 @@ class TimeSeriesData:
             date = row[0]
             key = row[1]
             value = row[2]
-            self.dates.append(date)
-            if start == None:
-                start = date
-            end = date
+            self.addDate(date)
             if date in data:
                 entry = data[date]
             else:
                 entry = dict()
             entry[key] = value
             data[date] = entry
-        self.range = [start,end]
         return data
+
+    def addDate(self,date):
+        if date in self.dates:
+            return
+        self.dates.append(date)
+        if self.start == None:
+            start = date
+        self.end = date
 
     def getSeriesByName(self,name):
         values = []
@@ -88,9 +93,12 @@ class TimeSeriesData:
         return self.dates
 
     def getRange(self):
-        return self.range
+        return [self.start,self.end]
 
-#Format using the example "Label Lines with Annotations" from https://plot.ly/python/line-charts/
+#TODO: Format using the example "Label Lines with Annotations" from https://plot.ly/python/line-charts/
+#TODO: amounts in undefined category don't make sense
+#TODO: multiple values per month for undefined?
+#TODO: what about dates after june 2017?
 def generateTimeSeries(categories,dataFrame):
     #df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
     timeSeries = TimeSeriesData(dataFrame)
@@ -100,7 +108,7 @@ def generateTimeSeries(categories,dataFrame):
             x=timeSeries.getDates(),
             y=timeSeries.getSeriesByName(c),
             name = c,
-            line = dict(color = '#17BECF'),
+            #line = dict(color = '#17BECF'),
             opacity = 0.8)
         data.append(trace)
     layout = dict(
@@ -128,8 +136,7 @@ def testFigure():
         x=month,
         y=high_2014,
         name='High 2014',
-        line=dict(
-            color=('rgb(205, 12, 24)'),
+        line=dict(color=('rgb(205, 12, 24)'),
             width=4)
     )
     trace1 = go.Scatter(
@@ -224,9 +231,6 @@ balanceData = db.runQueryFromFile(F_BALANCE)
 savingsData = db.runQueryFromFile(F_SAVINGS)
 categories = getCategories()
 categoriesData = db.runQueryFromFile(F_CATEGORIESOVERTIME)
-
-testFigure = testFigure()
-myFigure = generateTimeSeries(categories,categoriesData)
 
 #app = dash.Dash()
 app = dash.Dash(__name__)
