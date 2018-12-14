@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66d37b08-2673-44d5-a55f-b7c77b26aeb0" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/display.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/monthlyReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/monthlyReport.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xlsxParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/xlsxParser.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/display.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="99" column="29" selection-start-line="99" selection-start-column="29" selection-end-line="99" selection-end-column="29" />
+            <state relative-caret-position="374">
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -28,10 +31,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/queryExpensesByCategoryOverTime.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/monthlyReport.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="124" column="64" lean-forward="true" selection-start-line="124" selection-start-column="4" selection-end-line="124" selection-end-column="64" />
+            <state relative-caret-position="333">
+              <caret line="193" selection-start-line="193" selection-end-line="193" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -60,7 +72,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/xlsxParser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-408">
+            <state relative-caret-position="748">
               <caret line="51" column="1" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
@@ -72,7 +84,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/htmlParser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1088">
+            <state relative-caret-position="1122">
               <caret line="76" column="57" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -112,6 +124,8 @@
       <find>display_output</find>
       <find>beaut</find>
       <find>generateMonthlyReport</find>
+      <find>getAllCategories</find>
+      <find>getSelectedCategories</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -137,17 +151,17 @@
         <option value="$PROJECT_DIR$/src/creditEntry.py" />
         <option value="$PROJECT_DIR$/src/htmlParser.py" />
         <option value="$PROJECT_DIR$/src/scratchpad.sql" />
-        <option value="$PROJECT_DIR$/src/xlsxParser.py" />
         <option value="$PROJECT_DIR$/src/queryMonthSelector.sql" />
         <option value="$PROJECT_DIR$/src/queryMonthlyReport.sql" />
         <option value="$PROJECT_DIR$/src/queryCategoryFilter.sql" />
         <option value="$PROJECT_DIR$/src/myString.py" />
         <option value="$PROJECT_DIR$/src/dbAccess.py" />
         <option value="$PROJECT_DIR$/src/dataTable.py" />
-        <option value="$PROJECT_DIR$/src/monthlyReport.py" />
         <option value="$PROJECT_DIR$/src/queryMonthlyReportByCategory.sql" />
         <option value="$PROJECT_DIR$/src/queryExpensesByCategoryOverTime.sql" />
+        <option value="$PROJECT_DIR$/src/xlsxParser.py" />
         <option value="$PROJECT_DIR$/src/display.py" />
+        <option value="$PROJECT_DIR$/src/monthlyReport.py" />
       </list>
     </option>
   </component>
@@ -210,7 +224,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.display">
+  <component name="RunManager" selected="Python.monthlyReport (1)">
     <configuration name="queryMonthlyReport.sql" type="OdpsQLRunnerConfigurationType" factoryName="MaxCompute SQL">
       <odps_target_file>$PROJECT_DIR$/src/queryMonthlyReport.sql</odps_target_file>
       <odps_output_dir>C:\Users\urida\AppData\Local\Temp\</odps_output_dir>
@@ -362,8 +376,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.display" />
         <item itemvalue="Python.monthlyReport (1)" />
+        <item itemvalue="Python.display" />
         <item itemvalue="Python.dataTable" />
         <item itemvalue="Python.xlsxParser" />
         <item itemvalue="Python.htmlParser" />
@@ -404,14 +418,14 @@
       <window_info id="Job Explorer" order="5" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32900432" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6275026" weight="0.32827735" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6269758" weight="0.32827735" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Debug" order="5" sideWeight="0.65753424" visible="true" weight="0.3856988" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.625922" weight="0.32827735" />
+      <window_info active="true" anchor="bottom" id="Debug" order="5" sideWeight="0.6564805" visible="true" weight="0.3856988" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.6253952" weight="0.32827735" />
       <window_info anchor="bottom" id="Console" order="7" />
       <window_info anchor="bottom" id="DB Execution Console" order="8" weight="0.37878788" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.34246576" side_tool="true" visible="true" weight="0.3856988" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.3435195" side_tool="true" visible="true" weight="0.3856988" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.6296101" weight="0.32827735" />
       <window_info anchor="bottom" id="Python Console" order="11" weight="0.32900432" />
       <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.5906217" weight="0.32900432" />
@@ -459,7 +473,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/display.py</url>
-          <line>118</line>
+          <line>110</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
       </breakpoints>
@@ -474,11 +488,32 @@
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="dataFrame.columns" language="Python" />
+        <watch expression="myDict.values()" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>myDict.values()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>myDict.values()()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>myDict.values</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>dict.values</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>dataFrame.columns</expression-string>
         <language-id>Python</language-id>
@@ -501,31 +536,6 @@
       </expression>
       <expression>
         <expression-string>dataFrame.rows()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>df['AAPL.High']</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>df.Date</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>dataFrame.col[0]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>param['value']</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>param[value]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -757,13 +767,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/businessEntry.py">
+    <entry file="file://$PROJECT_DIR$/src/queryMonthlyReportByCategory.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="17" />
+        <state>
+          <caret column="54" selection-start-column="54" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/queryCategoryFilter.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/querySavingsReport.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/display.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
           <folding>
-            <element signature="e#0#16#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/queryExpensesByCategoryOverTime.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
@@ -783,7 +821,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/xlsxParser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408">
+        <state relative-caret-position="748">
           <caret line="51" column="1" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
@@ -793,7 +831,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/htmlParser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
+        <state relative-caret-position="1122">
           <caret line="76" column="57" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -801,48 +839,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/queryMonthlyReportByCategory.sql">
+    <entry file="file://$PROJECT_DIR$/src/businessEntry.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="54" selection-start-column="54" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/queryExpensesByCategoryOverTime.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="32" lean-forward="true" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/queryCategoryFilter.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/querySavingsReport.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="57" />
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/monthlyReport.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="124" column="64" lean-forward="true" selection-start-line="124" selection-start-column="4" selection-end-line="124" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/display.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="99" column="29" selection-start-line="99" selection-start-column="29" selection-end-line="99" selection-end-column="29" />
+        <state relative-caret-position="333">
+          <caret line="193" selection-start-line="193" selection-end-line="193" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

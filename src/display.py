@@ -18,8 +18,6 @@ import os
 # https://dash.plot.ly/external-resources
 # https://github.com/plotly/dash-docs/blob/master/tutorial/external_css_and_js.py
 #TODO Change the report to the data presented in the graphs
-#TODO Use a control to select which graph to display
-#TODO Use time series instead of working so hard on formatting the dates?
 #https://plot.ly/python/time-series/
 #TODO Look at morning star tickers for proper time series?
 #https://dash.plot.ly/gallery
@@ -28,15 +26,10 @@ import os
 #TODO: Format fields per data type
 #TODO: Make the table scrollable (use my own CSS)
 
-
-#TODO: use datatable https://dash.plot.ly/datatable
 #TODO: use range slider for date span and upload component for file import https://dash.plot.ly/dash-core-components
-#TODO: mark expense category https://dash.plot.ly/datatable/editable
 #TODO: manage categories form: create categories and assign businesses to them
 #TODO: think of suggesting categories based on classification by others, but each uesr gets to assign businesses as they like
 
-
-#TODO: expenses by category over time
 #TODO: add range slider to select dates range
 #TODO: start marking recurring expenses
 #TODO: import the rest of the credit cards
@@ -96,7 +89,6 @@ class TimeSeriesData:
         return [self.start,self.end]
 
 #TODO: Format using the example "Label Lines with Annotations" from https://plot.ly/python/line-charts/
-#TODO: amounts in undefined category don't make sense
 #TODO: add name for undefined
 def generateTimeSeries(categories,dataFrame):
     #df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")

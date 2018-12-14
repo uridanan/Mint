@@ -1,5 +1,5 @@
 import dash
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output, State, Event
 import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
@@ -32,13 +32,15 @@ F_MONTHLYBYCATEGORY = 'src/queryMonthlyReportByCategory.sql'
 #=============================================================================================================
 #=============================================================================================================
 
-def list(dict):
-    return [v for v in dict.values()]
+def toList(myDict):
+    if myDict == None:
+        return
+    return [v for v in myDict.values()]
 
 def generatePieChart(dataFrame):
     data = dataFrame.to_dict()
-    labels = list(data['category'])
-    values = list(data['amount'])
+    labels = toList(data['category'])
+    values = toList(data['amount'])
     figureData = [go.Pie(labels=labels,values=values)]
     figure = {
         'data': figureData,
@@ -123,7 +125,8 @@ app.layout = html.Div(children=[
     generateCategorySelector(categories_df),
     generateTable(reportData),
     dcc.Graph(id='pieChart',figure=generatePieChart(graphData)),
-    html.Div(id='output')
+    html.Div(id='output'),
+    html.A(id='link')
 ])
 
 #=============================================================================================================
@@ -138,7 +141,8 @@ app.layout = html.Div(children=[
 @app.callback(
     Output('output', 'data-*'),
     [Input('monthlyReport', 'data')],
-    [State('monthlyReport', 'data_previous'),State('monthlyReport', 'active_cell')])
+    [State('monthlyReport', 'data_previous'),State('monthlyReport', 'active_cell')],
+    [Event('link', 'click')])
 def processInput(data,previous,cell):
     if(cell != None):
         row=cell[0]
@@ -152,6 +156,7 @@ def processInput(data,previous,cell):
         if(headers[col] in ('marketing_name','category')):
             updateBusinessEntry(oldName,newName,newCategory)
         print("")
+        return newCategory
 
 def updateBusinessEntry(oldName,newName,newCategory):
     business = BusinessEntry.selectBy(marketingName=oldName).getOne(None)
@@ -163,6 +168,10 @@ def getSelectedCategories(filter):
     if (filter != None and len(filter) > 0):
         selectedCategories = filter
     return selectedCategories
+
+def addCategory(category):
+    if categories_list not in categories_list:
+        categories_list.append(category)
 
 @app.callback(
     Output('monthlyReport', 'data'),
@@ -179,8 +188,9 @@ def updateTable(month,filter):
 
 @app.callback(
     Output('pieChart', 'figure'),
-    [Input('selectMonth', 'value'),Input('filterCategories', 'value')])
-def onMonthSelected(month,filter):
+    [Input('selectMonth', 'value'),Input('filterCategories', 'value'),Input('output', 'data-*')])
+def onMonthSelected(month,filter,newCategory):
+    addCategory(newCategory)
     return updatePieChart(month, filter)
 
 def updatePieChart(month,filter):

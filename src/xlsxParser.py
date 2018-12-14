@@ -111,7 +111,8 @@ def main():
     BusinessEntry.createTable(ifNotExists=True)
     fileName = "inbox/7872_8547_0205218_Transactions_30_05_2018.xlsx"
     sheet = loadFile(fileName)
-    date = datetime(2018,4,2)
+    #TODO: the date can be extracted from the bank entry when we mark it with hide = 1
+    date = datetime(2018,5,2)
     cardNum = "7872"
     bankId = "8547" #replace with the actual value
     process(sheet, date)
