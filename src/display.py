@@ -5,7 +5,6 @@ import src.dbAccess as db
 from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.graph_objs as go
-
 from flask import send_from_directory
 import os
 
@@ -13,10 +12,10 @@ import os
 #It seems more direct to use the DB, I see no need for the overhead of APIs just yet
 
 
-
 #TODO Use my own CSS (would solve the scrollable problem)
 # https://dash.plot.ly/external-resources
-# https://github.com/plotly/dash-docs/blob/master/tutorial/external_css_and_js.py
+# https://github.com/plotly/dash/pull/171
+
 #TODO Change the report to the data presented in the graphs
 #https://plot.ly/python/time-series/
 #TODO Look at morning star tickers for proper time series?
@@ -226,9 +225,9 @@ categoriesData = db.runQueryFromFile(F_CATEGORIESOVERTIME)
 #app = dash.Dash()
 app = dash.Dash(__name__)
 
-app.css.append_css({
-    "external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"
-})
+# app.css.append_css({
+#     "external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"
+# })
 
 app.layout = html.Div(children=[
     html.H4(children='Bank Report - Work In Pogress'),

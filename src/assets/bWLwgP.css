@@ -131,7 +131,8 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: rgb(50, 50, 50); }
+  color: rgb(50, 50, 50);
+  }
 
 
 /* Typography
@@ -319,6 +320,7 @@ li {
 table {
   border-collapse: collapse;
 }
+
 th,
 td {
   padding: 12px 15px;
@@ -331,6 +333,18 @@ th:last-child,
 td:last-child {
   padding-right: 0; }
 
+/*
+tr:first {
+    display: block;
+    text-align: left;
+ }
+tbody{
+  display:block;
+  overflow:auto;
+  height:200px;
+  width:100%;
+}
+*/
 
 /* Spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
