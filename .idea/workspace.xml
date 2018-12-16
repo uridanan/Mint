@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66d37b08-2673-44d5-a55f-b7c77b26aeb0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/bWLwgP.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/myClass.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/parseXslx.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bWLwgP.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/bWLwgP.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/display.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/htmlParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parseHtml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xlsParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/xlsParser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xlsxParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parseBankReport.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xmlconverter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/xmlconverter.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,9 +22,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/xlsxParser.py">
+        <entry file="file://$PROJECT_DIR$/src/parseXslx.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state relative-caret-position="-60">
               <caret line="51" column="1" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
@@ -30,11 +33,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/htmlParser.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/parseHtml.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1292">
-              <caret line="76" column="57" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
+            <state relative-caret-position="484">
+              <caret line="62" column="65" selection-start-line="62" selection-start-column="65" selection-end-line="62" selection-end-column="65" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/parseBankReport.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="168" column="81" selection-start-line="168" selection-start-column="81" selection-end-line="168" selection-end-column="81" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -86,7 +101,6 @@
         <option value="$PROJECT_DIR$/src/businessEntry.py" />
         <option value="$PROJECT_DIR$/src/bankEntry.py" />
         <option value="$PROJECT_DIR$/src/creditEntry.py" />
-        <option value="$PROJECT_DIR$/src/htmlParser.py" />
         <option value="$PROJECT_DIR$/src/scratchpad.sql" />
         <option value="$PROJECT_DIR$/src/queryMonthSelector.sql" />
         <option value="$PROJECT_DIR$/src/queryMonthlyReport.sql" />
@@ -101,10 +115,13 @@
         <option value="$PROJECT_DIR$/assets/bWLwgP.css" />
         <option value="$PROJECT_DIR$/src/display.py" />
         <option value="$PROJECT_DIR$/src/assets/bWLwgP.css" />
+        <option value="$PROJECT_DIR$/src/myClass.py" />
+        <option value="$PROJECT_DIR$/src/htmlParser.py" />
+        <option value="$PROJECT_DIR$/src/parseBankReport.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="302" />
     <option name="y" value="42" />
     <option name="width" value="1230" />
@@ -127,12 +144,6 @@
               <item name="Mint" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Mint" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Mint" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -145,12 +156,13 @@
     <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\GitHub\Mint\src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitHub\Mint\src\discarded" />
       <recent name="D:\GitHub\Mint\assets" />
       <recent name="D:\GitHub\Mint\data" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GitHub\Mint\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -257,7 +269,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/htmlParser.py" />
+      <option name="SCRIPT_NAME" value="D:\GitHub\Mint\src\parseHtml.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="true" />
@@ -299,7 +311,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/xlsxParser.py" />
+      <option name="SCRIPT_NAME" value="D:\GitHub\Mint\src\parseXslx.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="true" />
@@ -349,16 +361,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4983871" visible="true" weight="0.15858799" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4983871" visible="true" weight="0.16859852" />
       <window_info id="Structure" order="1" sideWeight="0.5016129" side_tool="true" weight="0.15858799" />
       <window_info id="Project Explorer" order="2" weight="0.32982087" />
       <window_info id="Favorites" order="3" sideWeight="0.5016129" side_tool="true" weight="0.15858799" />
       <window_info id="DB Browser" order="4" weight="0.20706007" />
       <window_info id="Job Explorer" order="5" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32900432" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49894625" weight="0.32827735" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.62644887" weight="0.32827735" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
@@ -366,7 +377,7 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.6253952" weight="0.32827735" />
       <window_info anchor="bottom" id="Console" order="7" />
       <window_info anchor="bottom" id="DB Execution Console" order="8" weight="0.37878788" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.3735511" side_tool="true" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50105375" side_tool="true" visible="true" weight="0.32827735" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.6296101" weight="0.32827735" />
       <window_info anchor="bottom" id="Python Console" order="11" weight="0.32900432" />
       <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.5906217" weight="0.32900432" />
@@ -403,13 +414,13 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/xlsParser.py</url>
+          <url>file://$PROJECT_DIR$/src/discarded/xlsParser.py</url>
           <line>12</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/htmlParser.py</url>
-          <line>76</line>
+          <url>file://$PROJECT_DIR$/src/parseHtml.py</url>
+          <line>63</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
       </breakpoints>
@@ -478,13 +489,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/xmlconverter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="7" selection-end-column="120" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/openpyxl/reader/excel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -722,13 +726,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/bWLwgP.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3502">
-          <caret line="332" column="15" lean-forward="true" selection-start-line="332" selection-start-column="15" selection-end-line="332" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/bWLwgP.css" />
     <entry file="file://$PROJECT_DIR$/src/assets/bWLwgP.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="524">
@@ -777,16 +775,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xlsParser.py">
+    <entry file="file://$PROJECT_DIR$/src/discarded/xlsParser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="9" lean-forward="true" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xlsxParser.py">
+    <entry file="file://$PROJECT_DIR$/src/parseXslx.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
+        <state relative-caret-position="-60">
           <caret line="51" column="1" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
@@ -794,10 +792,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/htmlParser.py">
+    <entry file="file://$PROJECT_DIR$/src/myClass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="76" column="57" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
+        <state relative-caret-position="68">
+          <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parseHtml.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="62" column="65" selection-start-line="62" selection-start-column="65" selection-end-line="62" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/discarded/xmlconverter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3256">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="7" selection-end-column="120" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parseBankReport.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="168" column="81" selection-start-line="168" selection-start-column="81" selection-end-line="168" selection-end-column="81" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
