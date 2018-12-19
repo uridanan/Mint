@@ -3,17 +3,15 @@ from dash.dependencies import Input, Output, State, Event
 import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
-import pandas as pd
 import src.dbAccess as db
-import copy
-from src.businessEntry import BusinessEntry
+from src.entities.businessEntry import BusinessEntry
 import plotly.graph_objs as go
 
 app = dash.Dash(__name__)
-F_GETMONTHS = 'src/queryMonthSelector.sql'
-F_GETCATEGORIES = 'src/queryCategoryFilter.sql'
-F_MONTHLY = 'src/queryMonthlyReport.sql'
-F_MONTHLYBYCATEGORY = 'src/queryMonthlyReportByCategory.sql'
+F_GETMONTHS = 'src/queries/queryMonthSelector.sql'
+F_GETCATEGORIES = 'src/queries/queryCategoryFilter.sql'
+F_MONTHLY = 'src/queries/queryMonthlyReport.sql'
+F_MONTHLYBYCATEGORY = 'src/queries/queryMonthlyReportByCategory.sql'
 
 
 # dt.DataTable(

@@ -1,11 +1,11 @@
 from openpyxl import Workbook
 from openpyxl import load_workbook
-from src.creditEntry import CreditEntry
-from src.businessEntry import BusinessEntry
-from src.bankEntry import BankEntry
+from src.entities.creditEntry import CreditEntry
+from src.entities.businessEntry import BusinessEntry
+from src.entities.bankEntry import BankEntry
 from src.myString import myString
 from datetime import datetime
-import src.dbAccess as db
+
 
 def example():
     wb = Workbook()

@@ -207,10 +207,10 @@ def generateBarGraph(data, xName, yNames, names):
     }
 
 
-F_BALANCE = 'src/queryBalanceReport.sql'
-F_SAVINGS = 'src/querySavingsReport.sql'
-F_GETCATEGORIES = 'src/queryCategoryFilter.sql'
-F_CATEGORIESOVERTIME = 'src/queryExpensesByCategoryOverTime.sql'
+F_BALANCE = 'src/queries/queryBalanceReport.sql'
+F_SAVINGS = 'src/queries/querySavingsReport.sql'
+F_GETCATEGORIES = 'src/queries/queryCategoryFilter.sql'
+F_CATEGORIESOVERTIME = 'src/queries/queryExpensesByCategoryOverTime.sql'
 
 def getCategories():
     df = db.runQueryFromFile(F_GETCATEGORIES)
