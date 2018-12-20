@@ -14,7 +14,7 @@ class BankReport(ABC):
 
     def processRow(self,row):
         date = self.extractDate(row)
-        action = self.extractBusiness(row)
+        businessName = self.extractBusiness(row)
         refId = self.extractRefId(row)
         credit = self.extractCredit(row)
         debit = self.extractDebit(row)
@@ -22,12 +22,16 @@ class BankReport(ABC):
         if(myString.isEmpty(date)):
             return None
 
-        business = BusinessEntry.selectBy(businessName=action).getOne(None)
-        if (business == None):
-            business = BusinessEntry(businessName=action, marketingName=action, category="")
+        business = self.getBusinessEntry(businessName)
         entry = BankEntry(date=date, business=business.id, hide=0, refId=refId, credit=credit, debit=debit, balance=balance)
         entry.toCSV() # for debugging, find a better way to log only when in debug mode
         return entry
+
+    def getBusinessEntry(self,businessName):
+        business = BusinessEntry.selectBy(businessName=businessName).getOne(None)
+        if (business == None):
+            business = BusinessEntry(businessName=businessName, marketingName=businessName, category="")
+        return business
 
     @abstractmethod
     def getRows(self):
@@ -58,6 +62,5 @@ class BankReport(ABC):
         pass
 
 
-# TODO: test the refactor
 # TODO: create bank report factory
 # TODO: implement actual logging and debug mode
