@@ -4,7 +4,7 @@ from src.processors.processXslxFile import XSLXFile
 from src.processors.processCreditReport import CreditReport
 
 
-class VisaCalReport(CreditReport):
+class LeumiCardReport(CreditReport):
     data = None
 
     def __init__(self,filename,reportDate,bankReportRefId,cardNumber):
@@ -19,7 +19,7 @@ class VisaCalReport(CreditReport):
     ####################################################################################################################
 
     def getRows(self):
-        rows = self.data.iter_rows(min_row=4, min_col=1, max_col=5)
+        rows = self.data.iter_rows(min_row=2, min_col=1, max_col=8)
         return rows
 
     def extractPurchaseDate(self,row):
@@ -27,33 +27,41 @@ class VisaCalReport(CreditReport):
         if (myString.isEmpty(dateString)):
             return None
         try:
-            date = datetime.strptime(dateString, '%Y-%m-%d %H:%M:%S').date().strftime("%Y-%m-%d")
+            date = datetime.strptime(dateString, '%d/%m/%Y').date().strftime("%Y-%m-%d")
         except:
             date = None
         return date
 
-    def extractReportDate(self, row):
-        #TODO: extract from the report, not input
-        return self.getReportDate()
+    def extractReportDate(self,row):
+        dateString = str(row[1].internal_value)
+        if (myString.isEmpty(dateString)):
+            return None
+        try:
+            date = datetime.strptime(dateString, '%d/%m/%Y').date().strftime("%Y-%m-%d")
+        except:
+            date = None
+        return date
 
     def extractAmount(self,row):
-        amount = row[3].internal_value
-        if (myString.isEmpty(amount)):
+        amount = str(row[6].internal_value)
+        if myString.isEmpty(amount):
             return None
         amount = amount.replace(',', '')
         credit = amount[1:len(amount)]
         return credit
 
     def extractBusinessName(self, row):
-        name = row[1].internal_value
+        name = row[2].internal_value
         return name
 
     def extractComment(self,row):
-        comment = row[4].internal_value
+        comment = row[7].internal_value
         return comment
 
+    def extractCurrency(self,row):
+        currency = row[4].internal_value
+        return currency
+
     def computeTotals(self,business,date,amount):
-        if (myString.isEmpty(business)):
-            self.addTotal(date,amount)
-            skip = False
+        self.updateTotal(date, amount)
         return True
