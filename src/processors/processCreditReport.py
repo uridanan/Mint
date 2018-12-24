@@ -3,6 +3,9 @@ from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
 from src.myString import myString
 from abc import ABC, abstractmethod
+from datetime import datetime,timedelta
+import src.dbAccess as db
+from sqlobject.sqlbuilder import AND
 
 
 class CreditReport(ABC):
@@ -11,31 +14,24 @@ class CreditReport(ABC):
     cardNumber = None
     totals = {}
 
-
     def initTables(self):
         CreditEntry.createTable(ifNotExists=True)
         BusinessEntry.createTable(ifNotExists=True)
-
 
     def process(self):
         self.initTables()
         self.processRows()
         self.processTotals()
 
-
     def processRows(self):
         for row in self.getRows():
             self.processRow(row)
-
 
     def processTotals(self):
         for date, total in self.totals.items():
             self.processTotal(date,total)
 
-
     def processRow(self,row):
-        # for cell in row:
-        #     print(cell.internal_value)
         purchaseDate = self.extractPurchaseDate(row)
         reportDate = self.extractReportDate(row)
         businessName = self.extractBusinessName(row)
@@ -46,31 +42,29 @@ class CreditReport(ABC):
             self.addCreditEntry(reportDate, purchaseDate, businessName,
                                 self.getCardNumber(), self.getBankReportRefId(), amount)
 
-
-    def credit(self,amount):
+    @staticmethod
+    def credit(amount):
         if amount < 0:
             return amount
         else:
             return 0
 
-
-    def debit(self,amount):
+    @staticmethod
+    def debit(amount):
         if amount > 0:
             return amount
         else:
             return 0
 
-
     def addTotal(self,date,amount):
         self.totals[date] = amount
 
-
+    #TODO: fix key issue
     def updateTotal(self,date,amount):
-        if self.totals[date] == None:
+        if self.totals.get(date) == None:
             self.totals[date] = amount
         else:
             self.totals[date] += amount
-
 
     def addCreditEntry(self, reportDate, purchaseDate, businessName, cardNumber, bankRefId, amount):
         business = self.getBusinessEntry(businessName)
@@ -80,17 +74,20 @@ class CreditReport(ABC):
         #entry.toCSV()
         return entry
 
-
     def getBusinessEntry(self,businessName):
         business = BusinessEntry.selectBy(businessName=businessName).getOne(None)
         if (business == None):
             business = BusinessEntry(businessName=businessName, marketingName=businessName, category="")
         return business
 
-
     def processTotal(self, date, total):
         #TODO: lookup by month and amount, return refId
-        bList = BankEntry.selectBy(debit=total, refId=self.getBankReportRefId())
+        reportDate = datetime.strptime(date, '%Y-%m-%d').date()
+        delta = timedelta(days=3)
+        start = reportDate - delta
+        end = reportDate + delta
+        #TODO: fix the totals
+        bList = BankEntry.select( AND( BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == total) )
         for b in bList:
             b.hide = 1
 

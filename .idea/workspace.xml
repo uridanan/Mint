@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66d37b08-2673-44d5-a55f-b7c77b26aeb0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/processors/processLeumiCardReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/processors/processCreditReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processCreditReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/processVisaCalReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processVisaCalReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/processors/processLeumiCardReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processLeumiCardReport.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/queries/scratchpad.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/queries/scratchpad.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/processors/processCreditReport.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="90" column="20" selection-start-line="90" selection-start-column="20" selection-end-line="90" selection-end-column="20" />
+            <state relative-caret-position="291">
+              <caret line="87" column="32" selection-start-line="87" selection-start-column="32" selection-end-line="87" selection-end-column="32" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
               </folding>
@@ -33,19 +32,58 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/processors/processVisaCalReport.py">
+        <entry file="file://$PROJECT_DIR$/src/entities/bankEntry.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-128">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="255">
+              <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="db://8510952a-53c0-4dd8-aa62-6e59855f29b1/consoles/MintDB">
+          <provider selected="true" editor-type-id="0.CONSOLE">
+            <state line="0" column="0" selection-start="0" selection-end="89" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/display.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/queries/scratchpad.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/processors/processVisaCalReport.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/processors/processLeumiCardReport.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="722">
-              <caret line="66" column="19" selection-start-line="66" selection-start-column="19" selection-end-line="66" selection-end-column="19" />
+            <state relative-caret-position="204">
+              <caret line="30" column="88" lean-forward="true" selection-start-line="30" selection-start-column="67" selection-end-line="30" selection-end-column="88" />
+              <folding>
+                <element signature="e#0#33#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -53,8 +91,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/processors/processBankReport.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+            <state relative-caret-position="1037">
+              <caret line="64" column="2" selection-start-line="64" selection-start-column="2" selection-end-line="64" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -62,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="25" column="130" selection-start-line="25" selection-start-column="130" selection-end-line="25" selection-end-column="130" />
+            <state relative-caret-position="380">
+              <caret line="39" selection-start-line="39" selection-end-line="39" />
               <folding>
                 <element signature="e#0#57#0" expanded="true" />
               </folding>
@@ -138,13 +176,15 @@
         <option value="$PROJECT_DIR$/src/processCreditReport.py" />
         <option value="$PROJECT_DIR$/src/processors/processBankReport.py" />
         <option value="$PROJECT_DIR$/src/test.py" />
-        <option value="$PROJECT_DIR$/src/processors/processLeumiCardReport.py" />
         <option value="$PROJECT_DIR$/src/processors/processVisaCalReport.py" />
+        <option value="$PROJECT_DIR$/src/queries/scratchpad.sql" />
+        <option value="$PROJECT_DIR$/src/processors/processLeumiCardReport.py" />
+        <option value="8510952a-53c0-4dd8-aa62-6e59855f29b1/consoles/MintDB" />
         <option value="$PROJECT_DIR$/src/processors/processCreditReport.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="302" />
     <option name="y" value="42" />
     <option name="width" value="1230" />
@@ -176,7 +216,25 @@
               <item name="Mint" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mint" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="discarded" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mint" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mint" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="entities" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mint" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mint" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="processors" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mint" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mint" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="queries" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -400,7 +458,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4983871" visible="true" weight="0.16859852" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4983871" visible="true" weight="0.16859852" />
       <window_info id="Structure" order="1" sideWeight="0.5016129" side_tool="true" weight="0.15858799" />
       <window_info id="Project Explorer" order="2" weight="0.32982087" />
       <window_info id="Favorites" order="3" sideWeight="0.5016129" side_tool="true" weight="0.15858799" />
@@ -411,14 +469,14 @@
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.62644887" weight="0.32827735" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="5" sideWeight="0.65542674" visible="true" weight="0.3856988" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.6243414" visible="true" weight="0.32827735" />
+      <window_info active="true" anchor="bottom" id="Debug" order="5" sideWeight="0.6548999" visible="true" weight="0.3856988" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.6238145" weight="0.32827735" />
       <window_info anchor="bottom" id="Console" order="7" />
-      <window_info anchor="bottom" id="DB Execution Console" order="8" weight="0.37878788" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.3756586" side_tool="true" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="DB Execution Console" order="8" sideWeight="0.49947312" weight="0.37811485" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.3451001" side_tool="true" weight="0.3856988" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.6296101" weight="0.32827735" />
-      <window_info anchor="bottom" id="Python Console" order="11" weight="0.32900432" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.5906217" weight="0.32900432" />
+      <window_info anchor="bottom" id="Python Console" order="11" weight="0.32827735" />
+      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.5906217" weight="0.32827735" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -480,67 +538,68 @@
         <watch expression="dataFrame.columns" language="Python" />
         <watch expression="myDict.values()" language="Python" />
         <watch expression="row[2].internal_value" language="Python" />
+        <watch expression="self.totals.get(date)" language="Python" />
+        <watch expression="self.totals" />
+        <watch expression="datetime.strptime(date, '%Y-%m-%d').date().day" language="Python" />
+        <watch expression="bList[0]" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
       <expression>
-        <expression-string>row[2].internal_value</expression-string>
+        <expression-string>bList[0]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>row[1].internal_value</expression-string>
+        <expression-string>datetime.strptime(date, '%Y-%m-%d').date().day</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>row[0].internal_value</expression-string>
+        <expression-string>datetime.strptime(date, '%Y-%m-%d').date().day()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>row[3].internal_value</expression-string>
+        <expression-string>date = datetime.strptime(date, '%Y-%m-%d').date().day</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>myDict.values()</expression-string>
+        <expression-string>date = datetime.strptime(date, '%Y-%m-%d').date().day()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>myDict.values()()</expression-string>
+        <expression-string>date = datetime.strptime(date, '%Y-%m-%d').date()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>myDict.values</expression-string>
+        <expression-string>date = datetime.strptime(date, '%d-%m-%Y').date()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>dict.values</expression-string>
+        <expression-string>date = datetime.strptime(date, '%d/%m/%Y').date()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>dataFrame.columns</expression-string>
+        <expression-string>date = datetime.strptime(dateString, '%d/%m/%Y').date()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>dataFrame.rows</expression-string>
+        <expression-string>datetime(date)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitattributes">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/.git/config">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -621,27 +680,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/queries/scratchpad.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/myString.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="14" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dbAccess.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -736,13 +778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/entities/bankEntry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/entities/creditEntry.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -754,13 +789,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="9" lean-forward="true" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/myClass.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -782,16 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/display.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="212" column="35" selection-start-line="212" selection-start-column="35" selection-end-line="212" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -842,16 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/discarded/parseXslx.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="111" column="69" lean-forward="true" selection-start-line="111" selection-start-column="69" selection-end-line="111" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/processors/processXslxFile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -859,44 +867,102 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/discarded/parseXslx.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="43" selection-start-line="43" selection-end-line="45" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/myClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/display.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/queries/scratchpad.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/processors/processVisaCalReport.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/processors/processBankReport.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+        <state relative-caret-position="1037">
+          <caret line="64" column="2" selection-start-line="64" selection-start-column="2" selection-end-line="64" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dbAccess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/processors/processLeumiCardReport.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="30" column="88" lean-forward="true" selection-start-line="30" selection-start-column="67" selection-end-line="30" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="25" column="130" selection-start-line="25" selection-start-column="130" selection-end-line="25" selection-end-column="130" />
+        <state relative-caret-position="380">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
           <folding>
             <element signature="e#0#57#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="db://8510952a-53c0-4dd8-aa62-6e59855f29b1/consoles/MintDB">
+      <provider selected="true" editor-type-id="0.CONSOLE">
+        <state line="0" column="0" selection-start="0" selection-end="89" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/entities/bankEntry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/processors/processCreditReport.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="90" column="20" selection-start-line="90" selection-start-column="20" selection-end-line="90" selection-end-column="20" />
+        <state relative-caret-position="291">
+          <caret line="87" column="32" selection-start-line="87" selection-start-column="32" selection-end-line="87" selection-end-column="32" />
           <folding>
             <element signature="e#0#48#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/processors/processVisaCalReport.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-128">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/processors/processLeumiCardReport.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="66" column="19" selection-start-line="66" selection-start-column="19" selection-end-line="66" selection-end-column="19" />
         </state>
       </provider>
     </entry>

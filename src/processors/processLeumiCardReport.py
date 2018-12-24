@@ -7,6 +7,7 @@ from src.processors.processCreditReport import CreditReport
 class LeumiCardReport(CreditReport):
     data = None
 
+    #TODO: get reportdate and bankrefId during processing
     def __init__(self,filename,reportDate,bankReportRefId,cardNumber):
         self.data = XSLXFile(filename).getData()
         self.setReportDate(reportDate)
@@ -42,12 +43,14 @@ class LeumiCardReport(CreditReport):
             date = None
         return date
 
+    #TODO: handle +/- in conversion to float
     def extractAmount(self,row):
         amount = str(row[6].internal_value)
         if myString.isEmpty(amount):
             return None
         amount = amount.replace(',', '')
-        credit = amount[1:len(amount)]
+        #credit = amount[1:len(amount)]
+        credit = float(amount)
         return credit
 
     def extractBusinessName(self, row):
