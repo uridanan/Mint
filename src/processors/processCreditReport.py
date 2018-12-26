@@ -8,9 +8,13 @@ import src.dbAccess as db
 from sqlobject.sqlbuilder import AND
 
 
+
+#TODO: handle +/-
+#TODO: handle currency? what do I do with it?
+
 class CreditReport(ABC):
     date = None
-    bankReportRefId = None
+    bankReportRefId = 0
     cardNumber = None
     totals = {}
 
@@ -59,7 +63,6 @@ class CreditReport(ABC):
     def addTotal(self,date,amount):
         self.totals[date] = amount
 
-    #TODO: fix key issue
     def updateTotal(self,date,amount):
         if self.totals.get(date) == None:
             self.totals[date] = amount
@@ -80,28 +83,15 @@ class CreditReport(ABC):
             business = BusinessEntry(businessName=businessName, marketingName=businessName, category="")
         return business
 
+    #lookup by month and amount
     def processTotal(self, date, total):
-        #TODO: lookup by month and amount, return refId
         reportDate = datetime.strptime(date, '%Y-%m-%d').date()
         delta = timedelta(days=3)
         start = reportDate - delta
         end = reportDate + delta
-        #TODO: fix the totals
         bList = BankEntry.select( AND( BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == total) )
         for b in bList:
             b.hide = 1
-
-    def getReportDate(self):
-        return self.date.strftime("%Y-%m-%d")
-
-    def setReportDate(self,date):
-        self.date = date
-
-    def getBankReportRefId(self):
-        return self.bankReportRefId
-
-    def setBankReportRefId(self, id):
-        self.bankReportRefId = id
 
     def getCardNumber(self):
         return self.cardNumber

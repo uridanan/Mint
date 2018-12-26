@@ -7,11 +7,8 @@ from src.processors.processCreditReport import CreditReport
 class LeumiCardReport(CreditReport):
     data = None
 
-    #TODO: get reportdate and bankrefId during processing
-    def __init__(self,filename,reportDate,bankReportRefId,cardNumber):
+    def __init__(self,filename,cardNumber):
         self.data = XSLXFile(filename).getData()
-        self.setReportDate(reportDate)
-        self.setBankReportRefId(bankReportRefId)
         self.setCardNumber(cardNumber)
 
 

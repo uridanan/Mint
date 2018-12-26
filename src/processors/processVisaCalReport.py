@@ -6,12 +6,12 @@ from src.processors.processCreditReport import CreditReport
 
 class VisaCalReport(CreditReport):
     data = None
+    reportDate = None
 
-    def __init__(self,filename,reportDate,bankReportRefId,cardNumber):
+    def __init__(self,filename,cardNumber):
         self.data = XSLXFile(filename).getData()
-        self.setReportDate(reportDate)
-        self.setBankReportRefId(bankReportRefId)
         self.setCardNumber(cardNumber)
+        self.parseReportDate()
 
 
     ####################################################################################################################
@@ -32,9 +32,15 @@ class VisaCalReport(CreditReport):
             date = None
         return date
 
-    def extractReportDate(self, row):
-        #TODO: extract from the report, not input
-        return self.getReportDate()
+    def extractReportDate(self,row):
+        return self.reportDate
+
+    def parseReportDate(self):
+        cell = self.data.cell(1,1).value
+        date = cell[25:35]
+        self.reportDate = datetime.strptime(date, '%d/%m/%Y').date().strftime("%Y-%m-%d")
+        return self.reportDate
+
 
     def extractAmount(self,row):
         amount = row[3].internal_value
@@ -51,6 +57,13 @@ class VisaCalReport(CreditReport):
     def extractComment(self,row):
         comment = row[4].internal_value
         return comment
+
+    def extractCurrency(self,row):
+        amount = row[3].internal_value
+        if (myString.isEmpty(amount)):
+            return None
+        currency = amount[0:1]
+        return currency
 
     def computeTotals(self,business,date,amount):
         if (myString.isEmpty(business)):

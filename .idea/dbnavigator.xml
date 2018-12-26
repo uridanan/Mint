@@ -32,7 +32,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="8510952a-53c0-4dd8-aa62-6e59855f29b1">
-      <console name="MintDB" type="STANDARD" schema="public" session="Main"><![CDATA[SELECT * FROM bank_entry where date after date(2017,1,5) and date before date(2016,12,30)]]></console>
+      <console name="MintDB" type="STANDARD" schema="public" session="Main">SELECT * FROM bank_entry where hide=1</console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">

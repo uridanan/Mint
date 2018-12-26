@@ -3,6 +3,11 @@ from src.entities.bankEntry import BankEntry
 from src.myString import myString
 from abc import ABC, abstractmethod
 
+
+# TODO: handle the case when the credit report is imported before the bank report
+# TODO: create bank report factory
+# TODO: implement actual logging and debug mode
+
 # https://www.python-course.eu/python3_abstract_classes.php
 class BankReport(ABC):
     def process(self):
@@ -61,6 +66,3 @@ class BankReport(ABC):
     def extractBalance(self, row):
         pass
 
-
-# TODO: create bank report factory
-# TODO: implement actual logging and debug mode
