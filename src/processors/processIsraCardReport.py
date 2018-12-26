@@ -3,10 +3,11 @@ from datetime import datetime
 from src.processors.processXslxFile import XSLXFile
 from src.processors.processCreditReport import CreditReport
 
-#This report includes a single card for a single month
+#This report includes multiple cards for only for a single month
+#TODO: the card numbers and report date are there
 #TODO: extract the card number from the report?
 
-class VisaCalReport(CreditReport):
+class IsraCardReport(CreditReport):
     data = None
     reportDate = None
 

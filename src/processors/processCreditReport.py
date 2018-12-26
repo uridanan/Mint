@@ -14,7 +14,7 @@ from sqlobject.sqlbuilder import AND
 
 class CreditReport(ABC):
     date = None
-    bankReportRefId = 0
+    bankReportRefId = "0"
     cardNumber = None
     totals = {}
 
@@ -44,7 +44,7 @@ class CreditReport(ABC):
         #ComputeTotals returns true if an entry should be created
         if self.computeTotals(businessName,reportDate,amount):
             self.addCreditEntry(reportDate, purchaseDate, businessName,
-                                self.getCardNumber(), self.getBankReportRefId(), amount)
+                                self.getCardNumber(), self.bankReportRefId, amount)
 
     @staticmethod
     def credit(amount):
@@ -86,9 +86,11 @@ class CreditReport(ABC):
     #lookup by month and amount
     def processTotal(self, date, total):
         reportDate = datetime.strptime(date, '%Y-%m-%d').date()
-        delta = timedelta(days=3)
-        start = reportDate - delta
-        end = reportDate + delta
+        start = datetime(reportDate.year,reportDate.month,1).date()
+        end = datetime(reportDate.year,reportDate.month,28).date()
+        # delta = timedelta(days=3)
+        # start = reportDate - delta
+        # end = reportDate + delta
         bList = BankEntry.select( AND( BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == total) )
         for b in bList:
             b.hide = 1

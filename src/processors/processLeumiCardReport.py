@@ -3,6 +3,7 @@ from datetime import datetime
 from src.processors.processXslxFile import XSLXFile
 from src.processors.processCreditReport import CreditReport
 
+#This report includes a single card over multiple months
 
 class LeumiCardReport(CreditReport):
     data = None
