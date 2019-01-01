@@ -1,6 +1,7 @@
-from openpyxl import load_workbook
+from openpyxl.reader.excel import load_workbook
 
-class XSLXFile(object):
+
+class XLSXFile(object):
     data = None
 
     def __init__(self,fileName):

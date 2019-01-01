@@ -1,6 +1,6 @@
 from src.myString import myString
 from datetime import datetime
-from src.processors.processXslxFile import XSLXFile
+from src.processors.processXlsxFile import XLSXFile
 from src.processors.processCreditReport import CreditReport
 
 #This report includes a single card over multiple months
@@ -9,7 +9,7 @@ class LeumiCardReport(CreditReport):
     data = None
 
     def __init__(self,filename,cardNumber):
-        self.data = XSLXFile(filename).getData()
+        self.data = XLSXFile(filename).getData()
         self.setCardNumber(cardNumber)
 
 

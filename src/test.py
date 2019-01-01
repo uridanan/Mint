@@ -1,6 +1,7 @@
 from src.processors.processLeumiReport import LeumiReport
 from src.processors.processVisaCalReport import VisaCalReport
 from src.processors.processLeumiCardReport import LeumiCardReport
+from src.processors.processIsraCardReport import IsraCardReport
 from datetime import datetime
 
 
@@ -12,7 +13,7 @@ def testImportVISACALReport():
     visaCal = VisaCalReport(fileName,cardNum)
     visaCal.process()
 
-
+# TODO: change to XLS instead of XLSX
 def testImportLeumiCardReport():
     fileName = "inbox/4014_Deals.xlsx"
     reportDate = datetime(2017, 3, 15)
@@ -28,10 +29,15 @@ def testImportLeumiReport():
     leumi = LeumiReport(htmlFile)
     leumi.process()
 
+def testImportIsraCardReport():
+    fileName ='inbox/AMEX_Export_03_2018.xls'
+    amex = IsraCardReport(fileName)
+    amex.processAll()
 
 def main():
     #testImportLeumiReport()
-    testImportVISACALReport()
-    testImportLeumiCardReport()
+    testImportIsraCardReport()
+    #testImportVISACALReport()
+    #testImportLeumiCardReport()
 
 main()

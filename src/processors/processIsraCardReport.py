@@ -1,20 +1,53 @@
 from src.myString import myString
 from datetime import datetime
-from src.processors.processXslxFile import XSLXFile
+from src.processors.processXlsFile import XLSFile
 from src.processors.processCreditReport import CreditReport
 
 #This report includes multiple cards for only for a single month
 #TODO: the card numbers and report date are there
 #TODO: extract the card number from the report?
 
+# First card starts at row 4 (counting from 1)
+# Card number is in row 4 cell 1
+# Report date is in row 4 cell 3
+# rows start at cardnumber + 3
+# purchase date in cell 1
+# business in cell 2
+# amount in cell 5
+# currency in cell 6
+# Total and end of report in the first row with cell 1 empty
+# Next card number starts on total + 2 or next non-empty cell 1
+
+# Convert XLS to XLSX so it can be parsed
+# https://stackoverflow.com/questions/9918646/how-to-convert-xls-to-xlsx
+
 class IsraCardReport(CreditReport):
     data = None
     reportDate = None
 
-    def __init__(self,filename,cardNumber):
-        self.data = XSLXFile(filename).getData()
-        self.setCardNumber(cardNumber)
-        self.parseReportDate()
+    def __init__(self,filename):
+        self.data = XLSFile(filename).getData()
+        #self.parseReportDate()
+
+
+    def processReportHeader(self,row,data):
+        cardNumber = str(row[0].internal_value)
+        reportDate = str(row[2].internal_value)
+        end = len(cardNumber)
+        start = end-4
+        data["cardNumber"] = cardNumber[start:end]
+        data["reportDate"] = reportDate
+
+    def processAll(self):
+        firstRow = self.getFirstRow()
+        data = {"cardNumber": "", "reportDate": None}
+        self.processReportHeader(firstRow,data)
+        print("stop")
+
+    def getFirstRow(self):
+        rows = self.getRows()
+        for row in rows:
+            return row
 
 
     ####################################################################################################################
