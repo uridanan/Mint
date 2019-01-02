@@ -18,36 +18,83 @@ from src.processors.processCreditReport import CreditReport
 # Total and end of report in the first row with cell 1 empty
 # Next card number starts on total + 2 or next non-empty cell 1
 
+
+class CardData:
+    cardNumber = ""
+    reportDate = None
+    total = 0
+
+    def __init__(self, cardNumber, reportDate):
+        self.cardNumber = cardNumber
+        self.reportDate = reportDate
+
+    def setTotal(self,total):
+        self.total = total
+
+
 # Convert XLS to XLSX so it can be parsed
 # https://stackoverflow.com/questions/9918646/how-to-convert-xls-to-xlsx
 
 class IsraCardReport(CreditReport):
     data = None
-    reportDate = None
+    cards = []
 
     def __init__(self,filename):
         self.data = XLSFile(filename).getData()
         #self.parseReportDate()
 
-
-    def processReportHeader(self,row,data):
-        cardNumber = str(row[0].internal_value)
+    def processHeader(self,row):
+        cardString = str(row[0].internal_value)
         reportDate = str(row[2].internal_value)
-        end = len(cardNumber)
+        end = len(cardString)
         start = end-4
-        data["cardNumber"] = cardNumber[start:end]
-        data["reportDate"] = reportDate
+        cardNumber = cardString[start:end]
+        cardData = CardData(cardNumber, reportDate)
+        self.cards.append(cardData)
+        return cardData
 
     def processAll(self):
-        firstRow = self.getFirstRow()
-        data = {"cardNumber": "", "reportDate": None}
-        self.processReportHeader(firstRow,data)
+        start = 4
+        while start > 0:
+            start = self.processCard(start)
         print("stop")
 
-    def getFirstRow(self):
-        rows = self.getRows()
+    def getRows(self,start):
+        rows = self.data.iter_rows(min_row=start, min_col=1, max_col=5)
+        return rows
+
+    def processCard(self, start):
+        stop = False
+        skip = 1
+        nrow = start
+        rows = self.getRows(start)
+        card = None
+
+        # TODO: handle total row
         for row in rows:
-            return row
+            if nrow == start:
+                card = self.processHeader(row)
+            else:
+                stop = self.processRow(row,card)
+            nrow = nrow + 1
+            if stop:
+                return nrow + skip # add one to skip the empty row
+        return 0 # reached the end of the sheet, no more rows
+
+    def processRow(self,row,card):
+        purchaseDate = self.extractPurchaseDate(row)
+        businessName = self.extractBusinessName(row)
+        amount = self.extractAmount(row)
+        currency = self.extractCurrency(row)
+
+        reportDate = card.reportDate
+        cardNumber = card.cardNumber
+
+        # TODO: use total row or compute it?
+        #ComputeTotals returns true if an entry should be created
+        if self.computeTotals(businessName,reportDate,amount):
+            self.addCreditEntry(reportDate, purchaseDate, businessName,
+                                self.getCardNumber(), self.bankReportRefId, amount)
 
 
     ####################################################################################################################
