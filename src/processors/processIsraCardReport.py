@@ -4,20 +4,17 @@ from src.processors.processXlsFile import XLSFile
 from src.processors.processCreditReport import CreditReport
 
 #This report includes multiple cards for only for a single month
-#TODO: the card numbers and report date are there
-#TODO: extract the card number from the report?
 
 # First card starts at row 4 (counting from 1)
-# Card number is in row 4 cell 1
-# Report date is in row 4 cell 3
+# Card number is in row 4 cell 0
+# Report date is in row 4 cell 2
 # rows start at cardnumber + 3
-# purchase date in cell 1
-# business in cell 2
-# amount in cell 5
-# currency in cell 6
+# purchase date in cell 0
+# business in cell 1
+# amount in cell 4
+# currency in cell 5
 # Total and end of report in the first row with cell 1 empty
 # Next card number starts on total + 2 or next non-empty cell 1
-
 
 class CardData:
     cardNumber = ""
@@ -38,6 +35,7 @@ class CardData:
 class IsraCardReport(CreditReport):
     data = None
     cards = []
+    currentCard = None
 
     def __init__(self,filename):
         self.data = XLSFile(filename).getData()
@@ -59,42 +57,55 @@ class IsraCardReport(CreditReport):
             start = self.processCard(start)
         print("stop")
 
-    def getRows(self,start):
-        rows = self.data.iter_rows(min_row=start, min_col=1, max_col=5)
+    def getRowsFromX(self,start):
+        rows = self.data.iter_rows(min_row=start, min_col=1, max_col=8)
         return rows
 
     def processCard(self, start):
         stop = False
         skip = 1
         nrow = start
-        rows = self.getRows(start)
+        rows = self.getRowsFromX(start)
         card = None
 
         # TODO: handle total row
         for row in rows:
             if nrow == start:
-                card = self.processHeader(row)
+                self.currentCard = self.processHeader(row)
+            elif nrow < start + 3:
+                stop = False
             else:
-                stop = self.processRow(row,card)
+                stop = self.processRow(row)
             nrow = nrow + 1
             if stop:
                 return nrow + skip # add one to skip the empty row
         return 0 # reached the end of the sheet, no more rows
 
-    def processRow(self,row,card):
+    def getReportDate(self):
+        return self.currentCard.reportDate
+
+    def getCardNumber(self):
+        return self.currentCard.cardNumber
+
+    def processRow(self,row):
         purchaseDate = self.extractPurchaseDate(row)
         businessName = self.extractBusinessName(row)
         amount = self.extractAmount(row)
         currency = self.extractCurrency(row)
 
-        reportDate = card.reportDate
-        cardNumber = card.cardNumber
+        reportDate = self.getReportDate()
+        cardNumber = self.getCardNumber()
 
-        # TODO: use total row or compute it?
-        #ComputeTotals returns true if an entry should be created
-        if self.computeTotals(businessName,reportDate,amount):
+
+        # TODO: refactor to match the other cards
+        # ComputeTotals returns true if an entry should be created
+        if self.computeTotals(businessName,reportDate,amount,purchaseDate):
             self.addCreditEntry(reportDate, purchaseDate, businessName,
-                                self.getCardNumber(), self.bankReportRefId, amount)
+                                cardNumber, self.bankReportRefId, amount)
+            return False
+
+        # This was a total row, purchaseDate is None
+        return True
 
 
     ####################################################################################################################
@@ -102,7 +113,7 @@ class IsraCardReport(CreditReport):
     ####################################################################################################################
 
     def getRows(self):
-        rows = self.data.iter_rows(min_row=4, min_col=1, max_col=5)
+        rows = self.data.iter_rows(min_row=4, min_col=1, max_col=8)
         return rows
 
     def extractPurchaseDate(self,row):
@@ -110,7 +121,7 @@ class IsraCardReport(CreditReport):
         if (myString.isEmpty(dateString)):
             return None
         try:
-            date = datetime.strptime(dateString, '%Y-%m-%d %H:%M:%S').date().strftime("%Y-%m-%d")
+            date = datetime.strptime(dateString, '%d/%m/%Y').date().strftime("%Y-%m-%d")
         except:
             date = None
         return date
@@ -119,39 +130,28 @@ class IsraCardReport(CreditReport):
         return self.reportDate
 
     def parseReportDate(self):
-        #TODO: The date is probably wrong, let it slide for now, correct it later
-        cell = self.data.cell(1,1).value
-        date = cell[25:35]
-        self.reportDate = datetime.strptime(date, '%d/%m/%Y').date().strftime("%Y-%m-%d")
         return self.reportDate
 
 
     def extractAmount(self,row):
-        amount = row[3].internal_value
-        if (myString.isEmpty(amount)):
-            return None
-        amount = amount.replace(',', '')
-        creditStr = amount[1:len(amount)]
-        credit = float(creditStr)
-        return credit
+        amount = row[4].internal_value
+        return amount
 
     def extractBusinessName(self, row):
         name = row[1].internal_value
         return name
 
     def extractComment(self,row):
-        comment = row[4].internal_value
+        comment = row[7].internal_value
         return comment
 
     def extractCurrency(self,row):
-        amount = row[3].internal_value
-        if (myString.isEmpty(amount)):
-            return None
-        currency = amount[0:1]
+        currency = row[5].internal_value
         return currency
 
-    def computeTotals(self,business,date,amount):
-        if (myString.isEmpty(business)):
-            self.addTotal(date,amount)
-            skip = False
+    def computeTotals(self,business,reportDate,amount,purchaseDate):
+        if purchaseDate is None:
+            self.addTotal(reportDate, amount)
+            self.currentCard.total = amount
+            return False
         return True

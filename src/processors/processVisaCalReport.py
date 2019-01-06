@@ -72,5 +72,5 @@ class VisaCalReport(CreditReport):
     def computeTotals(self,business,date,amount):
         if (myString.isEmpty(business)):
             self.addTotal(date,amount)
-            skip = False
+            return False
         return True
