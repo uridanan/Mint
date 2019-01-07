@@ -7,16 +7,35 @@ from datetime import datetime,timedelta
 import src.dbAccess as db
 from sqlobject.sqlbuilder import AND
 
+#TODO: build in generic support for multiple cards, multiple dates
+#TODO: step 1 - figure out how each updates the cards array
+#TODO: step 2 - process the cards totals
+#TODO: step 3 - refactor isracard to return rows that can be processed in a unified manner / override processRows
+
+
+class CardData:
+    cardNumber = ""
+    reportDate = None
+    total = 0
+
+    def __init__(self, cardNumber, reportDate, total=0):
+        self.cardNumber = cardNumber
+        self.reportDate = reportDate
+        self.total = total
+
+    def setTotal(self,total):
+        self.total = total
 
 
 #TODO: handle +/-
 #TODO: handle currency? what do I do with it?
 
 class CreditReport(ABC):
-    date = None
     bankReportRefId = "0"
-    cardNumber = None
     totals = {}
+    cards = []
+    currentCard = None  # TODO: make this an index into cards[]
+
 
     def initTables(self):
         CreditEntry.createTable(ifNotExists=True)
@@ -34,6 +53,8 @@ class CreditReport(ABC):
     def processTotals(self):
         for date, total in self.totals.items():
             self.processTotal(date,total)
+        for card in self.cards:
+            self.processTotal(card.reportDate,card.total)  # refactor to pass card as parameter
 
     def processRow(self,row):
         purchaseDate = self.extractPurchaseDate(row)
@@ -96,10 +117,10 @@ class CreditReport(ABC):
             b.hide = 1
 
     def getCardNumber(self):
-        return self.cardNumber
+        return self.currentCard.cardNumber
 
     def setCardNumber(self, id):
-        self.cardNumber = id
+        self.currentCard.cardNumber = id
 
     @abstractmethod
     def getRows(self):

@@ -34,12 +34,14 @@ class CardData:
 
 class IsraCardReport(CreditReport):
     data = None
-    cards = []
-    currentCard = None
 
     def __init__(self,filename):
         self.data = XLSFile(filename).getData()
         #self.parseReportDate()
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Process the data
+    # ------------------------------------------------------------------------------------------------------------------
 
     def processHeader(self,row):
         cardString = str(row[0].internal_value)
@@ -48,9 +50,10 @@ class IsraCardReport(CreditReport):
         start = end-4
         cardNumber = cardString[start:end]
         cardData = CardData(cardNumber, reportDate)
-        self.cards.append(cardData)
+        #self.cards.append(cardData)
         return cardData
 
+    # TODO: rename to processRows
     def processAll(self):
         start = 4
         while start > 0:
@@ -68,7 +71,6 @@ class IsraCardReport(CreditReport):
         rows = self.getRowsFromX(start)
         card = None
 
-        # TODO: handle total row
         for row in rows:
             if nrow == start:
                 self.currentCard = self.processHeader(row)
@@ -78,8 +80,8 @@ class IsraCardReport(CreditReport):
                 stop = self.processRow(row)
             nrow = nrow + 1
             if stop:
-                return nrow + skip # add one to skip the empty row
-        return 0 # reached the end of the sheet, no more rows
+                return nrow + skip  # add one to skip the empty row
+        return 0  # reached the end of the sheet, no more rows
 
     def getReportDate(self):
         return self.currentCard.reportDate
@@ -107,6 +109,9 @@ class IsraCardReport(CreditReport):
         # This was a total row, purchaseDate is None
         return True
 
+    # ------------------------------------------------------------------------------------------------------------------
+    # Serve the data to the superclass
+    # ------------------------------------------------------------------------------------------------------------------
 
     ####################################################################################################################
     # Methods to override
@@ -153,5 +158,10 @@ class IsraCardReport(CreditReport):
         if purchaseDate is None:
             self.addTotal(reportDate, amount)
             self.currentCard.total = amount
+            self.cards.append(self.currentCard)
             return False
         return True
+
+
+#TODO: prepare data to return in getRows, setup the cards with totals and report dates, then process everything in CreditReport
+#TODO: option 2 - make sure cards is generic, then override processRows
