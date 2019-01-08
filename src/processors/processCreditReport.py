@@ -26,6 +26,36 @@ class CardData:
     def setTotal(self,total):
         self.total = total
 
+    def update(self,amount):
+        self.total += amount
+
+# A matrix of card data as a dictionary by date then by card number
+class Cards:
+    cards = {}
+
+    def __init__(self):
+        return
+
+    def add(self,card):
+        if card is None or card.reportDate is None or card.cardNumber is None:
+            return
+        byDate = self.cards[card.reportDate]
+        if byDate is None:
+            byDate = {}
+            self.cards[card.reportDate] = byDate
+        byDate[card.cardNumber] = card
+
+    def get(self,date,number):
+        card = self.cards[date][number]
+        return card
+
+    def getAll(self):
+        arrayOfCards = []
+        for date, byDate in self.cards.items():
+            for number, card in byDate.items():
+                arrayOfCards.append(card)
+        return arrayOfCards
+
 
 #TODO: handle +/-
 #TODO: handle currency? what do I do with it?
@@ -33,8 +63,8 @@ class CardData:
 class CreditReport(ABC):
     bankReportRefId = "0"
     totals = {}
-    cards = []
-    currentCard = None  # TODO: make this an index into cards[]
+    cards = Cards()
+    currentCard = None
 
 
     def initTables(self):
@@ -50,11 +80,14 @@ class CreditReport(ABC):
         for row in self.getRows():
             self.processRow(row)
 
+    def processCards(self):
+        for card in self.cards:
+            self.processCard(card)
+            #self.processTotal(card.reportDate, card.total)  # refactor to pass card as parameter
+
     def processTotals(self):
         for date, total in self.totals.items():
             self.processTotal(date,total)
-        for card in self.cards:
-            self.processTotal(card.reportDate,card.total)  # refactor to pass card as parameter
 
     def processRow(self,row):
         purchaseDate = self.extractPurchaseDate(row)
@@ -81,14 +114,15 @@ class CreditReport(ABC):
         else:
             return 0
 
-    def addTotal(self,date,amount):
-        self.totals[date] = amount
+    def addTotal(self,number,date,amount):
+        self.cards.add(CardData(number, date, amount))
 
-    def updateTotal(self,date,amount):
-        if self.totals.get(date) == None:
-            self.totals[date] = amount
+    def updateTotal(self,number,date,amount):
+        card = self.cards.get(date,number)
+        if card is None:
+            self.cards.add(CardData(number,date,amount))
         else:
-            self.totals[date] += amount
+            card.update(amount)
 
     def addCreditEntry(self, reportDate, purchaseDate, businessName, cardNumber, bankRefId, amount):
         business = self.getBusinessEntry(businessName)
@@ -113,6 +147,18 @@ class CreditReport(ABC):
         # start = reportDate - delta
         # end = reportDate + delta
         bList = BankEntry.select( AND( BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == total) )
+        for b in bList:
+            b.hide = 1
+
+    #lookup by month and amount
+    def processCard(self, card):
+        reportDate = datetime.strptime(card.reportDate, '%Y-%m-%d').date()
+        start = datetime(reportDate.year,reportDate.month,1).date()
+        end = datetime(reportDate.year,reportDate.month,28).date()
+        # delta = timedelta(days=3)
+        # start = reportDate - delta
+        # end = reportDate + delta
+        bList = BankEntry.select( AND( BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == card.total) )
         for b in bList:
             b.hide = 1
 

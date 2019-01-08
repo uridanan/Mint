@@ -163,5 +163,5 @@ class IsraCardReport(CreditReport):
         return True
 
 
-#TODO: prepare data to return in getRows, setup the cards with totals and report dates, then process everything in CreditReport
+#TODO: prepare data to return in getRows (actually I probably won't need to), setup the cards with totals and report dates, then process everything in CreditReport
 #TODO: option 2 - make sure cards is generic, then override processRows
