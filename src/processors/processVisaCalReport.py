@@ -2,23 +2,48 @@ from src.myString import myString
 from datetime import datetime
 from src.processors.processXlsxFile import XLSXFile
 from src.processors.processCreditReport import CreditReport
+import re
 
-#This report includes a single card for a single month
-#TODO: extract the card number from the report?
+# This report includes a single card for a single month
+# TODO: Convert from XLS to XLSX automatically
 
 class VisaCalReport(CreditReport):
     data = None
     reportDate = None
+    cardNumber = None
 
-    def __init__(self,filename,cardNumber):
+    def __init__(self,filename):
         self.data = XLSXFile(filename).getData()
-        self.setCardNumber(cardNumber)
-        self.parseReportDate()
+        self.parseCardNumberAndReportDate()
 
+    # In cell A2
+    # פירוט עסקות הכל לכרטיס ויזה זהב עסקי, המסתיים בספרות 7872, בבנק לאומי לישראל, חשבון מס' 678-8841076, לתאריך חיוב 05/2018, לעסקות שבוצעו בארץ ובחו''ל
+    def parseCardNumberAndReportDate(self):
+        cell = self.data.cell(2, 1).value
+        numbers = re.findall('\d+', cell)
+        card = numbers[0]
+        branch = numbers[1]
+        account = numbers[2]
+        month = numbers[3]
+        year = numbers[4]
+        self.setCardNumber(card)
+        self.setReportDate(datetime(int(year),int(month),1).date())
+
+    def getReportDate(self):
+        return self.reportDate
+
+    def setReportDate(self, date):
+        self.reportDate = date
 
     ####################################################################################################################
     # Methods to override
     ####################################################################################################################
+
+    def getCardNumber(self):
+        return self.cardNumber
+
+    def setCardNumber(self, number):
+        self.cardNumber = number
 
     def getRows(self):
         rows = self.data.iter_rows(min_row=4, min_col=1, max_col=5)
@@ -35,14 +60,7 @@ class VisaCalReport(CreditReport):
         return date
 
     def extractReportDate(self,row):
-        return self.reportDate
-
-    def parseReportDate(self):
-        #TODO: The date is probably wrong, let it slide for now, correct it later
-        cell = self.data.cell(1,1).value
-        date = cell[25:35]
-        self.reportDate = datetime.strptime(date, '%d/%m/%Y').date().strftime("%Y-%m-%d")
-        return self.reportDate
+        return self.getReportDate()
 
 
     def extractAmount(self,row):
@@ -69,8 +87,15 @@ class VisaCalReport(CreditReport):
         currency = amount[0:1]
         return currency
 
-    def computeTotals(self,business,date,amount):
-        if (myString.isEmpty(business)):
-            self.addTotal(date,amount)
-            return False
-        return True
+    def isMonthlyTotal(self,row):
+        businessName = self.extractBusinessName(row)
+        return myString.isEmpty(businessName)
+
+    def computeMonthlyTotal(self, row):
+        reportDate = self.extractReportDate(row)
+        amount = self.extractAmount(row)
+        cardNumber = self.getCardNumber()
+        if (self.isMonthlyTotal(row)):
+            self.addMonthlyTotal(cardNumber, reportDate, amount)
+            return True
+        return False

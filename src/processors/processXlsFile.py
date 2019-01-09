@@ -1,10 +1,12 @@
 import xlrd
 from openpyxl.workbook import Workbook
-from openpyxl.utils.cell import get_column_letter
 import datetime
-from openpyxl.reader.excel import load_workbook, InvalidFileException
+# from openpyxl.utils.cell import get_column_letter
+# from openpyxl.reader.excel import load_workbook, InvalidFileException
 
 
+# Convert XLS to XLSX so it can be parsed
+# https://stackoverflow.com/questions/9918646/how-to-convert-xls-to-xlsx
 
 class XLSFile(object):
     data = None

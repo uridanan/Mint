@@ -7,11 +7,6 @@ from datetime import datetime,timedelta
 import src.dbAccess as db
 from sqlobject.sqlbuilder import AND
 
-#TODO: build in generic support for multiple cards, multiple dates
-#TODO: step 1 - figure out how each updates the cards array
-#TODO: step 2 - process the cards totals
-#TODO: step 3 - refactor isracard to return rows that can be processed in a unified manner / override processRows
-
 
 class CardData:
     cardNumber = ""
@@ -28,6 +23,7 @@ class CardData:
 
     def update(self,amount):
         self.total += amount
+
 
 # A matrix of card data as a dictionary by date then by card number
 class Cards:
@@ -57,15 +53,10 @@ class Cards:
         return arrayOfCards
 
 
-#TODO: handle +/-
-#TODO: handle currency? what do I do with it?
-
+# TODO: handle +/-
+# TODO: handle currency? what do I do with it?
 class CreditReport(ABC):
-    bankReportRefId = "0"
-    totals = {}
     cards = Cards()
-    currentCard = None
-
 
     def initTables(self):
         CreditEntry.createTable(ifNotExists=True)
@@ -74,31 +65,24 @@ class CreditReport(ABC):
     def process(self):
         self.initTables()
         self.processRows()
-        self.processTotals()
+        self.processMonthlyTotals()
 
     def processRows(self):
         for row in self.getRows():
             self.processRow(row)
 
-    def processCards(self):
+    def processMonthlyTotals(self):
         for card in self.cards:
-            self.processCard(card)
-            #self.processTotal(card.reportDate, card.total)  # refactor to pass card as parameter
-
-    def processTotals(self):
-        for date, total in self.totals.items():
-            self.processTotal(date,total)
+            self.processMonthlyTotal(card)
 
     def processRow(self,row):
-        purchaseDate = self.extractPurchaseDate(row)
-        reportDate = self.extractReportDate(row)
-        businessName = self.extractBusinessName(row)
-        amount = self.extractAmount(row)
+        # ComputeTotals returns False if an entry should be created (i.e. this is an actual entry, not a monthly total)
+        if not self.computeMonthlyTotal(row):
+            self.addCreditEntry(row)
+            return False
 
-        #ComputeTotals returns true if an entry should be created
-        if self.computeTotals(businessName,reportDate,amount):
-            self.addCreditEntry(reportDate, purchaseDate, businessName,
-                                self.getCardNumber(), self.bankReportRefId, amount)
+        # This was a monthly total row, not an actual entry
+        return True
 
     @staticmethod
     def credit(amount):
@@ -114,20 +98,26 @@ class CreditReport(ABC):
         else:
             return 0
 
-    def addTotal(self,number,date,amount):
+    def addMonthlyTotal(self, number, date, amount):
         self.cards.add(CardData(number, date, amount))
 
-    def updateTotal(self,number,date,amount):
+    def updateMonthlyTotal(self, number, date, amount):
         card = self.cards.get(date,number)
         if card is None:
             self.cards.add(CardData(number,date,amount))
         else:
             card.update(amount)
 
-    def addCreditEntry(self, reportDate, purchaseDate, businessName, cardNumber, bankRefId, amount):
+    def addCreditEntry(self, row):
+        reportDate = self.extractReportDate(row)
+        purchaseDate = self.extractPurchaseDate(row)
+        businessName = self.extractBusinessName(row)
+        amount = self.extractAmount(row)
+        cardNumber = self.getCardNumber()
+
         business = self.getBusinessEntry(businessName)
         entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business.id,
-                            cardNumber=cardNumber, bankId=bankRefId, credit=self.credit(amount), debit=self.debit(amount),
+                            cardNumber=cardNumber, bankId="0", credit=self.credit(amount), debit=self.debit(amount),
                             balance=0)
         #entry.toCSV()
         return entry
@@ -139,19 +129,7 @@ class CreditReport(ABC):
         return business
 
     #lookup by month and amount
-    def processTotal(self, date, total):
-        reportDate = datetime.strptime(date, '%Y-%m-%d').date()
-        start = datetime(reportDate.year,reportDate.month,1).date()
-        end = datetime(reportDate.year,reportDate.month,28).date()
-        # delta = timedelta(days=3)
-        # start = reportDate - delta
-        # end = reportDate + delta
-        bList = BankEntry.select( AND( BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == total) )
-        for b in bList:
-            b.hide = 1
-
-    #lookup by month and amount
-    def processCard(self, card):
+    def processMonthlyTotal(self, card):
         reportDate = datetime.strptime(card.reportDate, '%Y-%m-%d').date()
         start = datetime(reportDate.year,reportDate.month,1).date()
         end = datetime(reportDate.year,reportDate.month,28).date()
@@ -162,11 +140,13 @@ class CreditReport(ABC):
         for b in bList:
             b.hide = 1
 
+    @abstractmethod
     def getCardNumber(self):
-        return self.currentCard.cardNumber
+        pass
 
+    @abstractmethod
     def setCardNumber(self, id):
-        self.currentCard.cardNumber = id
+        pass
 
     @abstractmethod
     def getRows(self):
@@ -197,5 +177,5 @@ class CreditReport(ABC):
         pass
 
     @abstractmethod
-    def computeTotals(self,business,date,amount):
+    def computeMonthlyTotal(self, business, date, amount):
         pass

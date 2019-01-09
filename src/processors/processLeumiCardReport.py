@@ -7,6 +7,7 @@ from src.processors.processCreditReport import CreditReport
 
 class LeumiCardReport(CreditReport):
     data = None
+    cardNumber = None
 
     def __init__(self,filename,cardNumber):
         self.data = XLSXFile(filename).getData()
@@ -16,6 +17,12 @@ class LeumiCardReport(CreditReport):
     ####################################################################################################################
     # Methods to override
     ####################################################################################################################
+
+    def getCardNumber(self):
+        return self.cardNumber
+
+    def setCardNumber(self, number):
+        self.cardNumber = number
 
     def getRows(self):
         rows = self.data.iter_rows(min_row=2, min_col=1, max_col=8)
@@ -63,6 +70,9 @@ class LeumiCardReport(CreditReport):
         currency = row[4].internal_value
         return currency
 
-    def computeTotals(self,business,date,amount):
-        self.updateTotal(date, amount)
-        return True
+    def computeMonthlyTotal(self, row):
+        reportDate = self.extractReportDate(row)
+        amount = self.extractAmount(row)
+        cardNumber = self.getCardNumber()
+        self.updateMonthlyTotal(cardNumber, reportDate, amount)
+        return False
