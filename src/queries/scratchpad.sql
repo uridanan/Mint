@@ -31,3 +31,5 @@ and business_name <> '__TOTAL__'
 order by date asc
 
 SELECT * from daterange('2010-01-01 14:30', '2010-01-05 15:30')
+
+select * from credit_entry order by card_number

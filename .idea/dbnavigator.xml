@@ -23,11 +23,16 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1">
+        <schema name="pg_catalog" object-types="table, view, function" />
+        <schema name="public" object-types="table, view, function, column" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="8510952a-53c0-4dd8-aa62-6e59855f29b1">
-      <console name="MintDB" type="STANDARD" schema="public" session="Main"><![CDATA[SELECT * FROM bank_entry where hide=1]]></console>
+      <console name="MintDB" type="STANDARD" schema="public" session="Main">SELECT * FROM bank_entry where hide=1</console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">

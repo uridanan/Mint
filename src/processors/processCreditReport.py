@@ -35,14 +35,17 @@ class Cards:
     def add(self,card):
         if card is None or card.reportDate is None or card.cardNumber is None:
             return
-        byDate = self.cards[card.reportDate]
+        byDate = self.cards.get(card.reportDate,None)
         if byDate is None:
             byDate = {}
             self.cards[card.reportDate] = byDate
         byDate[card.cardNumber] = card
 
     def get(self,date,number):
-        card = self.cards[date][number]
+        card = None
+        byDate = self.cards.get(date,None)
+        if byDate is not None:
+            card = byDate.get(number,None)
         return card
 
     def getAll(self):
@@ -72,7 +75,7 @@ class CreditReport(ABC):
             self.processRow(row)
 
     def processMonthlyTotals(self):
-        for card in self.cards:
+        for card in self.cards.getAll():
             self.processMonthlyTotal(card)
 
     def processRow(self,row):

@@ -61,7 +61,7 @@ class IsraCardReport(CreditReport):
         end = len(cardString)
         start = end-4
         cardNumber = cardString[start:end]
-        reportDate = datetime.strptime(dateString, '%d/%m/%Y').date().strftime("%Y-%m-%d")
+        reportDate = datetime.strptime(dateString, '%d/%m/%y').date().strftime("%Y-%m-%d")
         self.setCardNumber(cardNumber)
         self.setReportDate(reportDate)
 

@@ -27,7 +27,7 @@ class VisaCalReport(CreditReport):
         month = numbers[3]
         year = numbers[4]
         self.setCardNumber(card)
-        self.setReportDate(datetime(int(year),int(month),1).date())
+        self.setReportDate(datetime(int(year),int(month),1).date().strftime("%Y-%m-%d"))
 
     def getReportDate(self):
         return self.reportDate

@@ -24,12 +24,12 @@ def testImportLeumiReport():
 def testImportIsraCardReport():
     fileName ='inbox/AMEX_Export_03_2018.xls'
     amex = IsraCardReport(fileName)
-    amex.processAll()
+    amex.process()
 
 def main():
     #testImportLeumiReport()
-    testImportIsraCardReport()
+    #testImportIsraCardReport()
     #testImportVISACALReport()
-    #testImportLeumiCardReport()
+    testImportLeumiCardReport()
 
 main()
