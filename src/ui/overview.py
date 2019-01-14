@@ -229,7 +229,7 @@ app = dash.Dash(__name__)
 #     "external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"
 # })
 
-app.layout = html.Div(children=[
+layout = html.Div(children=[
     html.H4(children='Bank Report - Work In Pogress'),
     dcc.Tabs(id="tabs", value='tab1', children=[
         dcc.Tab(label='Balance', value='tab1'),
@@ -240,7 +240,7 @@ app.layout = html.Div(children=[
     dcc.Graph(id='byCategory',figure=generateTimeSeries(categories,categoriesData))
 ])
 
-
+app.config['suppress_callback_exceptions']=True
 @app.callback(Output('tabsContent', 'children'),
               [Input('tabs', 'value')])
 def render_content(tab):

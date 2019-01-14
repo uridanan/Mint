@@ -117,7 +117,7 @@ defaultMonth = selectableMonths.iloc[0][1]
 reportData = generateMonthlyReport(defaultMonth,categories_list)
 graphData = generatePieChartData(defaultMonth,categories_list)
 
-app.layout = html.Div(children=[
+layout = html.Div(children=[
     html.H4(children='Editable Expense Report - Work In Pogress'),
     generateMonthSelector(selectableMonths),
     generateCategorySelector(categories_df),
@@ -136,6 +136,7 @@ app.layout = html.Div(children=[
 #TODO: handle exceptions
 #https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
 
+app.config['suppress_callback_exceptions']=True
 @app.callback(
     Output('output', 'data-*'),
     [Input('monthlyReport', 'data')],

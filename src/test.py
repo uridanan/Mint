@@ -27,9 +27,9 @@ def testImportIsraCardReport():
     amex.process()
 
 def main():
-    #testImportLeumiReport()
-    #testImportIsraCardReport()
-    #testImportVISACALReport()
+    testImportLeumiReport()
+    testImportIsraCardReport()
+    testImportVISACALReport()
     testImportLeumiCardReport()
 
 main()
