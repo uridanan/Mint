@@ -1,20 +1,11 @@
-import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import src.dbAccess as db
 from dash.dependencies import Input, Output
-import pandas as pd
 import plotly.graph_objs as go
-from flask import send_from_directory
-import os
-
-#Am I better off getting the data via REST API or directly from DB?
-#It seems more direct to use the DB, I see no need for the overhead of APIs just yet
+from src.app import app
 
 
-#TODO Use my own CSS (would solve the scrollable problem)
-# https://dash.plot.ly/external-resources
-# https://github.com/plotly/dash/pull/171
 
 #TODO Change the report to the data presented in the graphs
 #https://plot.ly/python/time-series/
@@ -222,12 +213,6 @@ savingsData = db.runQueryFromFile(F_SAVINGS)
 categories = getCategories()
 categoriesData = db.runQueryFromFile(F_CATEGORIESOVERTIME)
 
-#app = dash.Dash()
-app = dash.Dash(__name__)
-
-# app.css.append_css({
-#     "external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"
-# })
 
 layout = html.Div(children=[
     html.H4(children='Bank Report - Work In Pogress'),
@@ -240,7 +225,7 @@ layout = html.Div(children=[
     dcc.Graph(id='byCategory',figure=generateTimeSeries(categories,categoriesData))
 ])
 
-app.config['suppress_callback_exceptions']=True
+
 @app.callback(Output('tabsContent', 'children'),
               [Input('tabs', 'value')])
 def render_content(tab):
@@ -260,7 +245,3 @@ def render_content(tab):
             dcc.Graph(id='income-graph',
                       figure=generateBarGraph(savingsData, "monthname", ["monthlycredit", "monthlydebit"],["Income", "Expenses"]))
         ])
-
-
-if __name__ == '__main__':
-    app.run_server(debug=True)

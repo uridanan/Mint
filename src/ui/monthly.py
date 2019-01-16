@@ -1,4 +1,3 @@
-import dash
 from dash.dependencies import Input, Output, State, Event
 import dash_table
 import dash_core_components as dcc
@@ -6,8 +5,8 @@ import dash_html_components as html
 import src.dbAccess as db
 from src.entities.businessEntry import BusinessEntry
 import plotly.graph_objs as go
+from src.app import app
 
-app = dash.Dash(__name__)
 F_GETMONTHS = 'src/queries/queryMonthSelector.sql'
 F_GETCATEGORIES = 'src/queries/queryCategoryFilter.sql'
 F_MONTHLY = 'src/queries/queryMonthlyReport.sql'
@@ -136,7 +135,6 @@ layout = html.Div(children=[
 #TODO: handle exceptions
 #https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
 
-app.config['suppress_callback_exceptions']=True
 @app.callback(
     Output('output', 'data-*'),
     [Input('monthlyReport', 'data')],
@@ -172,6 +170,7 @@ def addCategory(category):
     if categories_list not in categories_list:
         categories_list.append(category)
 
+
 @app.callback(
     Output('monthlyReport', 'data'),
     [Input('selectMonth', 'value'),Input('filterCategories', 'value')])
@@ -201,6 +200,3 @@ def updatePieChart(month,filter):
 
 #On how to display a pie chart in tabs
 #https://community.plot.ly/t/how-to-create-a-pie-chart-in-dash-app-under-a-particular-tab/7700
-
-if __name__ == '__main__':
-    app.run_server(debug=True)
