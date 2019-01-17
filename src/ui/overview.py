@@ -210,20 +210,26 @@ def getCategories():
 
 balanceData = db.runQueryFromFile(F_BALANCE)
 savingsData = db.runQueryFromFile(F_SAVINGS)
-categories = getCategories()
+#categories = getCategories()
 categoriesData = db.runQueryFromFile(F_CATEGORIESOVERTIME)
 
 
 layout = html.Div(children=[
-    html.H4(children='Bank Report - Work In Pogress'),
+    html.H4(id='title', children='Bank Report - Work In Pogress'),
     dcc.Tabs(id="tabs", value='tab1', children=[
         dcc.Tab(label='Balance', value='tab1'),
         dcc.Tab(label='Savings', value='tab2'),
         dcc.Tab(label='IncomeVSExpenses', value='tab3')
     ]),
     html.Div(id='tabsContent'),
-    dcc.Graph(id='byCategory',figure=generateTimeSeries(categories,categoriesData))
+    dcc.Graph(id='byCategory',figure=generateTimeSeries(getCategories(),categoriesData))
 ])
+
+
+@app.callback(Output('byCategory', 'figure'),
+              [Input('title', 'value')])
+def updateCategoriesGraph(title):
+    return generateTimeSeries(getCategories(), categoriesData)
 
 
 @app.callback(Output('tabsContent', 'children'),

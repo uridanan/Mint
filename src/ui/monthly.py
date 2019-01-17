@@ -167,7 +167,7 @@ def getSelectedCategories(filter):
     return selectedCategories
 
 def addCategory(category):
-    if categories_list not in categories_list:
+    if category not in categories_list:
         categories_list.append(category)
 
 
