@@ -1,2 +1,5 @@
 /inbox
 /src/__pycache__
+/src/entities/__pycache__
+/src/processors/__pycache__
+/src/ui/__pycache__
