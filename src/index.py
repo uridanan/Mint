@@ -13,7 +13,7 @@ from dash.dependencies import Input, Output
 # https://github.com/plotly/dash/pull/171
 
 from src.app import app
-from src.ui import overview, monthly
+from src.ui import overview, monthly, recurring
 
 
 # This layout displays a sidebar and page content
@@ -23,6 +23,7 @@ app.layout = html.Div(children=[
     html.Div(id='sidebar',className='sidebar',children=[
         dcc.Link('Overview', href='overview'),
         dcc.Link('Monthly Reports', href='monthly'),
+        dcc.Link('Recurring Expenses', href='recurring'),
         dcc.Link('About', href='about')
         ]),
     html.Div(id='content',className='content'),
@@ -35,6 +36,8 @@ def display_page(pageName):
         return overview.layout
     elif pageName == '/monthly':
         return monthly.layout
+    elif pageName == '/recurring':
+        return recurring.layout
     else:
         return '404'
 

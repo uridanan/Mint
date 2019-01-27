@@ -33,3 +33,51 @@ order by date asc
 SELECT * from daterange('2010-01-01 14:30', '2010-01-05 15:30')
 
 select * from credit_entry order by card_number
+
+select * from (
+SELECT business, count(business) as recurs from bank_entry group by business
+) as A where recurs > 2
+
+
+SELECT
+    debit, COUNT(*)
+FROM
+    bank_entry
+GROUP BY
+    debit
+HAVING
+    COUNT(*) > 3
+
+
+select * from
+(SELECT
+    debit, COUNT(*)
+FROM
+    bank_entry
+GROUP BY
+    debit
+HAVING
+    COUNT(*) > 3
+) as R
+inner join bank_entry as be on r.debit = be.debit
+inner join business_entry on business_entry.id = be.business
+order by be.debit, date
+
+
+
+select * from bank_entry where business = 107
+
+
+select * from
+(SELECT
+    business, COUNT(*)
+FROM
+    credit_entry
+GROUP BY
+    business
+HAVING
+    COUNT(*) > 3
+) as R
+inner join business_entry on business_entry.id = R.business
+inner join credit_entry as ce on business_entry.id = ce.business
+order by ce.business, report_date
