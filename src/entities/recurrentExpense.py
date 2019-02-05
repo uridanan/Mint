@@ -1,5 +1,5 @@
 from sqlobject import *
-# import src.connection
+import src.connection
 # from src.myString import myString
 
 

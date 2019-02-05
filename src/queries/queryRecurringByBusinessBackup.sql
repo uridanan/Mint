@@ -29,11 +29,14 @@ inner join business_entry on business_entry.id = R.business
 inner join credit_entry as ce on business_entry.id = ce.business
 ) as U
 order by business, date
-/*-----------------*/
 
+/* uses report date, should I be using purchase date instead? */
 
 
 select * from
+(
+select R.business, R.count, business_entry.marketing_name, avg(be.debit), min(be.debit), max(be.debit), min(be.date), max(be.date)
+from
 (SELECT
     business, COUNT(*)
 FROM
@@ -45,10 +48,10 @@ HAVING
 ) as R
 inner join business_entry on business_entry.id = R.business
 inner join bank_entry as be on business_entry.id = be.business
-order by be.business, date
-
-
-select * from
+group by R.business, R.count, business_entry.marketing_name
+UNION
+select R.business, R.count, business_entry.marketing_name, avg(ce.debit), min(ce.debit), max(ce.debit), min(ce.report_date), max(ce.report_date)
+from
 (SELECT
     business, COUNT(*)
 FROM
@@ -60,34 +63,6 @@ HAVING
 ) as R
 inner join business_entry on business_entry.id = R.business
 inner join credit_entry as ce on business_entry.id = ce.business
-order by ce.business, report_date
-
-
-select * from
-(SELECT
-    debit, COUNT(*)
-FROM
-    bank_entry
-GROUP BY
-    debit
-HAVING
-    COUNT(*) > 3
-) as R
-inner join bank_entry as be on r.debit = be.debit
-inner join business_entry on business_entry.id = be.business
-order by be.debit, date
-
-
-select * from
-(SELECT
-    debit, COUNT(*)
-FROM
-    credit_entry
-GROUP BY
-    debit
-HAVING
-    COUNT(*) > 3
-) as R
-inner join credit_entry as be on r.debit = be.debit
-inner join business_entry on business_entry.id = be.business
-order by be.debit, report_date
+group by R.business, R.count, business_entry.marketing_name
+) as U
+order by business
