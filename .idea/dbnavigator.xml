@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1">
-        <schema name="pg_catalog" object-types="table, view, function" />
+        <schema name="pg_catalog" object-types="function" />
         <schema name="public" object-types="table, view, function, column" />
       </connection>
     </loaded-nodes>
@@ -45,6 +45,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/src/queries/queryRecurringByAmount.sql" connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1" session-id="MAIN" current-schema="public" />
     <mapping file-url="file://$PROJECT_DIR$/src/queries/scratchpad.sql" connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1" session-id="MAIN" current-schema="public" />
     <mapping file-url="file://$PROJECT_DIR$/src/queries/cleanDB.sql" connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1" session-id="MAIN" current-schema="public" />
     <mapping file-url="file://$PROJECT_DIR$/src/queries/queryRecurringExpenses.sql" connection-id="8510952a-53c0-4dd8-aa62-6e59855f29b1" session-id="MAIN" current-schema="public" />
@@ -462,7 +463,7 @@
     </code-completion-settings>
     <execution-engine-settings>
       <statement-execution>
-        <fetch-block-size value="100" />
+        <fetch-block-size value="500" />
         <execution-timeout value="20" />
         <debug-execution-timeout value="600" />
         <focus-result value="false" />
