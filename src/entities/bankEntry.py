@@ -14,6 +14,7 @@ class BankEntry(SQLObject):
     credit = DecimalCol(size=10, precision=2) #use CurrencyCol?
     debit = DecimalCol(size=10, precision=2)
     balance = DecimalCol(size=10, precision=2)
+    trackerId = IntCol()
 
     def toCSV(self):
         set = [self.date, self.refId, self.credit, self.debit, self.balance]

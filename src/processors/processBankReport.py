@@ -28,15 +28,19 @@ class BankReport(ABC):
             return None
 
         business = self.getBusinessEntry(businessName)
-        entry = BankEntry(date=date, business=business.id, hide=0, refId=refId, credit=credit, debit=debit, balance=balance)
+        entry = BankEntry(date=date, business=business.id, hide=0, refId=refId, credit=credit, debit=debit, balance=balance, trackerId=0)
         entry.toCSV() # for debugging, find a better way to log only when in debug mode
         return entry
 
     def getBusinessEntry(self,businessName):
         business = BusinessEntry.selectBy(businessName=businessName).getOne(None)
         if (business == None):
-            business = BusinessEntry(businessName=businessName, marketingName=businessName, category="")
+            marketingName = businessName.replace('שיק','check')
+            business = BusinessEntry(businessName=businessName, marketingName=marketingName, category="")
         return business
+
+    def renameChecks(self, name):
+        name.replace('שיק','check')
 
     @abstractmethod
     def getRows(self):

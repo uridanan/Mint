@@ -121,7 +121,7 @@ class CreditReport(ABC):
         business = self.getBusinessEntry(businessName)
         entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business.id,
                             cardNumber=cardNumber, bankId="0", credit=self.credit(amount), debit=self.debit(amount),
-                            balance=0)
+                            balance=0, trackerId=0)
         #entry.toCSV()
         return entry
 
