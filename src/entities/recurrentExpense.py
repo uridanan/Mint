@@ -2,6 +2,9 @@ from sqlobject import *
 import src.connection
 import src.dbAccess as db
 # from src.myString import myString
+from src.entities.bankEntry import BankEntry
+from src.entities.businessEntry import BusinessEntry
+from src.entities.creditEntry import CreditEntry
 
 
 class RecurrentExpense(SQLObject):
@@ -43,21 +46,43 @@ class RecurrentExpense(SQLObject):
         else:
             self.markByAmount()
 
+    # pandas does not support update statements, use SQLObj to select then update ( less efficient :( )
+    # UPDATE bank_entry SET tracker_id = < tracker >
+    # WHERE business IN(SELECT id FROM business_entry WHERE marketing_name ~ '.*check.*')
+    # AND debit = < amount >
     def markByAmount(self):
-        params = [
-            {'name': 'tracker', 'value': [str(self.id)]},
-            {'name': 'amount', 'value': [str(self.amount)]}
-        ]
+        # params = [
+        #     {'name': 'tracker', 'value': [str(self.id)]},
+        #     {'name': 'amount', 'value': [str(self.amount)]}
+        # ]
         #db.runUpdateFromFile(self.F_MARKBYAMOUNT, params)
 
+        businesses = BusinessEntry.select(LIKE(BusinessEntry.q.marketingName,"%check%"))
+        businessIds = []
+        for b in businesses:
+            businessIds.append(b.id)
+
+        bankEntries = BankEntry.select(AND(BankEntry.q.debit == self.amount,IN(BankEntry.q.business,businessIds)))
+        for e in bankEntries:
+            e.trackerId = self.id
+
+    #pandas does not support update statements, use SQLObj to select then update ( less efficient :( )
     def markByBusiness(self):
-        params = [
-            {'name': 'tracker', 'value': [str(self.id)]},
-            {'name': 'business', 'value': [str(self.businessId)]}
-        ]
+        # params = [
+        #     {'name': 'tracker', 'value': [str(self.id)]},
+        #     {'name': 'business', 'value': [str(self.businessId)]}
+        # ]
         #db.runUpdate(self.Q_MARKBANKENTRYBYBUSINESS, params)
         #db.runUpdate(self.Q_MARKCREDITENTRYBYBUSINESS, params)
 
+        bankEntries = BankEntry.selectBy(business=self.businessId)
+        for e in bankEntries:
+            e.trackerId = self.id
 
-# TODO: pandas does not support update statements, use SQLObj to select then update ( less efficient :( )
+        creditEntries = CreditEntry.selectBy(business=self.businessId)
+        for c in creditEntries:
+            c.trackerId = self.id
+
+
+
 
