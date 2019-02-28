@@ -7,6 +7,12 @@ import src.dbAccess as db
 # automatically identify and mark recurring expenses
 # Pre-process all the data and computations now because it only changes when you import new data
 
+# TODO: add bank account / card number
+# TODO: handle recurring credit
+# TODO: for now compute avg, min and max until I fine tune the feature.
+#    When I add time range in UI, these values should be computed based on the dates selected in UI
+# TODO: Make min treshold configurable
+
 class ExpenseTracker():
     minOccurrences = 3
     F_RECURRINGBYBUSINESS = 'src/queries/queryRecurringByBusiness.sql'
@@ -115,13 +121,5 @@ class ExpenseTracker():
         self.markRecurringExpenses()
 
 
-# TODO: Mark all entries so I can join with the expense name when loading the report
-# TODO: add bank account / card number
-# TODO: handle recurring credit
-# TODO: for now compute avg, min and max until I fine tune the feature.
-#    When I add time range in UI, these values should be computed based on the dates selected in UI
-# TODO: Make min treshold configurable
 
 
-run = ExpenseTracker()
-run.process()

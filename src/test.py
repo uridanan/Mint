@@ -1,3 +1,4 @@
+from src.processors.markRecurrentExpenses import ExpenseTracker
 from src.processors.processLeumiReport import LeumiReport
 from src.processors.processVisaCalReport import VisaCalReport
 from src.processors.processLeumiCardReport import LeumiCardReport
@@ -26,10 +27,15 @@ def testImportIsraCardReport():
     amex = IsraCardReport(fileName)
     amex.process()
 
+def testExpenseTracker():
+    run = ExpenseTracker()
+    run.process()
+
 def main():
     testImportLeumiReport()
     testImportIsraCardReport()
     testImportVISACALReport()
     testImportLeumiCardReport()
+    testExpenseTracker()
 
 main()

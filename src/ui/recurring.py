@@ -82,3 +82,8 @@ def newTrackerContent(n_clicks,payment):
 # automatically look for recurring businesses, if no expected amount is provided, compute average and deviation from average
 # NO NEED FOR INPUT, DO IT AUTOMATICALLY: add new tracker, add new report to trackers
 # Show graph with slider and table with average, min, max, start date, end date and table with alerts
+
+# TODO: query data and prepare for graph
+# TODO: display graph
+# TODO: add slider
+# TODO: add table
