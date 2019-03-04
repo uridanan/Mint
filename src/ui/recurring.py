@@ -6,84 +6,114 @@ import src.dbAccess as db
 from src.entities.businessEntry import BusinessEntry
 import plotly.graph_objs as go
 from src.app import app
+from src.ui.timeseries import *
 
 #=============================================================================================================
+#TODO: Format using the example "Label Lines with Annotations" from https://plot.ly/python/line-charts/
+#TODO: add name for undefined
+def generateTimeSeries(trackers,timeSeries):
+    #df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv")
+    #timeSeries = TimeSeriesData(dataFrame)
+    data = []
+    for key,name in trackers.items():
+        trace = go.Scatter(
+            x=timeSeries.getDates(),
+            y=timeSeries.getSeriesByName(key),
+            name = name,
+            #line = dict(color = '#17BECF'),
+            opacity = 0.8)
+        data.append(trace)
+    layout = dict(
+        title = "Recurring Expenses",
+        xaxis = dict(title='Month'),
+        yaxis = dict(title='Expenses')
+    )
+    figure = dict(data=data, layout=layout)
+    return figure
+
+#=============================================================================================================
+# Range slider
+
+def generateDatesSlider(dates):
+    iMax = len(dates)-1
+    slider = dcc.RangeSlider(
+        marks={i:dates[i] for i in range(iMax)},
+        min=0,
+        max=iMax,
+        value=[iMax-3,iMax])
+    return slider
+
+#=============================================================================================================
+
+#=============================================================================================================
+def generateTable(dataframe, max_rows=200):
+    return dash_table.DataTable(
+        id='Trackers',
+        # Header
+        columns=getColumns(dataframe),
+        # Body
+        #data=[],
+        data=getData(dataframe, max_rows),
+        editable=True,
+    )
+
+def getColumns(dataframe):
+    return ([{'id': p, 'name': p} for p in ['name','start_date','last_date','count','avg_amount','min_amount','max_amount']])
+
+def getData(dataframe, max_rows=200):
+    return [
+            dict(entry=i,**{col: dataframe.iloc[i][col] for col in dataframe.columns})
+            for i in range(min(len(dataframe), max_rows))
+        ]
+
+#=============================================================================================================
+#=============================================================================================================
+Q_GETTRACKERS = 'select * from recurrent_expense'
+F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
+
+trackers_df = db.runQuery(Q_GETTRACKERS)
+
+def getTrackers(df):
+    #df = db.runQuery(Q_GETTRACKERS)
+    dict = {v[0]:v[1] for v in df.values}
+    return dict
+
+def getDataPoints():
+    dataFrame = db.runQueryFromFile(F_GETRECURRINGDATA)
+    dataPoints = TimeSeriesData(dataFrame)
+    return dataPoints
+
+trackersData = getDataPoints()
+
 #=============================================================================================================
 layout = html.Div(children=[
     html.H4(children='Recurring Expenses - Work In Pogress'),
-    html.Button('add', id='add'),
-    html.Div(id='newtracker',style={'width':'40%'}),
-    html.Div(id='trackers'),
-    html.Div(id='data'),
-    html.A(id='link')
+    dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(trackers_df), trackersData)),
+    generateDatesSlider(trackersData.getDates()),
+    generateTable(trackers_df),
+    html.Div(id='trackers_table')
 ])
 
 #=============================================================================================================
-
-def generateNewTrackerSection():
-    # html.Div(id='newtracker',style={'width':'40%'},children=[
-    children = [
-        html.H5(children='Add new tracker'),
-        html.Div(children=[html.P('Name: ')],className='inline20'),
-        html.Div(children=[dcc.Input(id='name', type='text')],className='inline80'),
-        html.Div(children=[html.P('Payment: ')],className='inline20'),
-        html.Div(children=[dcc.Dropdown(id='payment',
-                                  options=[
-                                      {'label': 'Check', 'value': 'check'},
-                                      {'label': 'Bank Account', 'value': 'bank'},
-                                      {'label': 'Credit Card', 'value': 'card'}
-                                  ])],className='inline80'),
-        html.Div(children=[html.P('Type: ')], className='inline20'),
-        html.Div(children=[dcc.Dropdown(id='type',
-                              options=[
-                                  {'label': 'Fixed amount', 'value': 'fixed'},
-                                  {'label': 'Variable amount', 'value': 'variable'}
-                              ])], className='inline80'),
-        html.Div(children=[html.P('Amount: ')], className='inline20'),
-        html.Div(children=[dcc.Input(id='amount', type='text')], className='inline80'),
-        html.Button('Submit', id='submit')
-    ]
-    return children
-# Select amount or select business or both
+# Callbacks
 
 #=============================================================================================================
-
-
-@app.callback(
-    Output('newtracker', 'style'),
-    [Input('add', 'n_clicks')],
-    )
-def toggleTrackers(n_clicks):
-    if n_clicks % 2 == 1:
-        return {'width': '40%','display': 'none'}
-    else:
-        return {'width': '40%','display': 'block'}
-
-
-@app.callback(
-    Output('newtracker', 'children'),
-    [Input('add', 'n_clicks'),Input('payment', 'value')],
-    )
-def newTrackerContent(n_clicks,payment):
-    return generateNewTrackerSection()
 
 #https://stackoverflow.com/questions/9067892/how-to-align-two-elements-on-the-same-line-without-changing-html
 #https://community.plot.ly/t/two-graphs-side-by-side/5312
 
-# TODO: submit callback
-# TODO: dependencies between controls for the various use cases: write down the use cases before implementing
-# Check: bank account, fixed amount, params: amount, name of recipient
-# Recurring Bank Transfer: bank account, fixed amount (+/-), params: amount, name of recipient
-# Named bank transfer: bank account, variable amount, params: business
-# Credit Card: credit card, params: business
-# Boils down to
-# Option 1: by amount - specify the amount and a recipient name - automatically look for recurring amounts and ask for a name
-# Option 2: by business - select business in drop down, specify and expected amount or a max variation? -
-# automatically look for recurring businesses, if no expected amount is provided, compute average and deviation from average
-# NO NEED FOR INPUT, DO IT AUTOMATICALLY: add new tracker, add new report to trackers
-# Show graph with slider and table with average, min, max, start date, end date and table with alerts
-
-# TODO: query data and prepare for graph
-# TODO: display graph
+# TODO: Show graph with slider and table with average, min, max, start date, end date and table with alerts
 # TODO: add slider
-# TODO: add table
+# TODO: add table, the table allows toggling the graph and naming the expense.
+# TODO: The new name applies to the monthly report and overview as well
+# DONE: show only name, start, last, count, avg, min, max
+# TODO: align the slider with the graph and add a separation from the table
+# TODO: when the amount is constant, show it as avg, min & max
+# TODO: rename columns
+# TODO: add section titles
+# TODO: table content dynamic based on slider
+# TODO: make name editable
+# TODO: apply new name to the monthly report and overview as well
+# TODO: toggle graph lines based on table
+# TODO: alerts
+
