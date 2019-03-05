@@ -1,9 +1,6 @@
-.inline20 {
-  width: 20%;
-  display: inline-block;
-}
-
-.inline80 {
-  width: 80%;
-  display: inline-block;
+.padded {
+  padding-top: 0px;
+  padding-bottom: 100px;
+  padding-right: 20%;
+  padding-left: 9%;
 }
