@@ -49,6 +49,7 @@ def generateDatesSlider(dates):
 #=============================================================================================================
 
 #=============================================================================================================
+# TODO: replace datatables with divs and use CSS to make it look like cards that you can toggle
 def generateTable(dataframe, max_rows=200):
     return dash_table.DataTable(
         id='Trackers',
@@ -118,8 +119,8 @@ def applyDateRange(range):
 # DONE: add table, the table allows toggling the graph and naming the expense.
 # DONE: apply slider to graph
 # DONE: fix last value on slider
-# TODO: apply slider to table
 # TODO: toggle graph lines based on table
+# TODO: apply slider to table: compute avg min max accordingly
 # TODO: when the amount is constant, show it as avg, min & max
 # TODO: rename columns
 # TODO: make name editable
