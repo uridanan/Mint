@@ -71,6 +71,42 @@ def getData(dataframe, max_rows=200):
         ]
 
 #=============================================================================================================
+# Custom table because dash datatable cannot be styled...
+def generateCustomTable(dataframe, max_rows=200):
+    # Header
+    columns = ['name','start_date','last_date','count','avg_amount','min_amount','max_amount']
+    # Body
+    data = getData(dataframe, max_rows)
+
+    return html.Table(
+
+        # Header
+        [html.Tr([html.Th(col) for col in columns])] +
+
+        # Body
+        [html.Tr([
+            html.Td(cellContent(data[i][col],i,col)) for col in columns
+        ]) for i in range(min(len(data), max_rows))]
+    )
+
+#TODO: handle onclick callback to save data
+#TODO: style edit box to make it invisible
+#TODO: use only for editable cells, not all
+#TODO: update on enter, not every keypress, why does debounce not work?
+#TODO: join with category
+def editableCell(text,row,col):
+    strId = '_'.join([str(row),str(col)])
+    cell = dcc.Input(id=strId, name=strId, type='text', value=text, disabled=False) #setProps,debounce
+    return cell
+
+def cellContent(text,row,col):
+    editableColumns = ['name']
+    content = text
+    if col in editableColumns:
+        content = editableCell(text,row,col)
+    return content
+
+
 #=============================================================================================================
 Q_GETTRACKERS = 'select * from recurrent_expense'
 F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
@@ -88,13 +124,15 @@ def getDataPoints():
     return dataPoints
 
 trackersData = getDataPoints()
+trackers = getTrackers(trackers_df)
 
 #=============================================================================================================
 layout = html.Div(children=[
     html.H4(children='Recurring Expenses - Work In Pogress'),
-    dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(trackers_df), trackersData)),
+    dcc.Graph(id='data', figure=generateTimeSeries(trackers, trackersData)),
     html.Div(id='slider',className='padded',children=[generateDatesSlider(trackersData.getDates())]),
-    html.Div(id='trackers_table',children=[generateTable(trackers_df)])
+    html.Div(id='trackers_table',children=[generateCustomTable(trackers_df)]),
+    html.Div(id='hidden_output')
 ])
 
 #=============================================================================================================
@@ -106,6 +144,17 @@ def applyDateRange(range):
     figure = generateTimeSeries(getTrackers(trackers_df), trackersData, range[0], range[1])
     return figure
 
+for i in range(len(trackers)):
+    @app.callback(
+        Output('_'.join([str(i),'name']), 'value'),
+        [Input('_'.join([str(i),'name']), 'n_submit')],
+        [State('_'.join([str(i),'name']), 'value'),State('_'.join([str(i),'name']), 'name')]
+       )
+    def updateName(event,value,name):
+        params = name.split('_')
+        row = params[0]
+        col = params[1]
+        return value
 
 #=============================================================================================================
 
@@ -130,3 +179,11 @@ def applyDateRange(range):
 # TODO: align slider when resizing window
 
 
+# Format table and add toggles
+# option 1: format datatable and catch onselect events to toggle
+# option 2: make my own table or list of divs and figure out the callback, style it as cards (use the projects I downloaded)
+
+# TODO: control table width and center (the problem comes from the input styling)
+# DONE: make only name cell editable
+# DONE: check callbacks viability
+# TODO: style as cards

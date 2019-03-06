@@ -1,0 +1,33 @@
+/* Tables
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+table {
+  border-collapse: collapse;
+  width: 70%
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  background-color: pink;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+  padding-right: 0; }
+
+
+/*
+tr:first {
+    display: block;
+    text-align: left;
+ }
+tbody{
+  display:block;
+  overflow:auto;
+  height:200px;
+  width:100%;
+}
+*/
