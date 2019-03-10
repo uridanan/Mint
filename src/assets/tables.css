@@ -5,25 +5,38 @@ table {
   width: 70%
 }
 
-th,
+th{
+  background-color: #555;
+  color: white;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid white;
+  height: 50px;
+}
 td {
   padding: 12px 15px;
   text-align: left;
-  background-color: pink;
-  border-bottom: 1px solid #E1E1E1; }
+  border-bottom: 1px solid white;
+}
 th:first-child,
 td:first-child {
-  padding-left: 0; }
+  padding-left: 15px; }
 th:last-child,
 td:last-child {
-  padding-right: 0; }
+  padding-right: 15px; }
 
+
+tr {
+    background-color: white;
+    color: black;
+    box-shadow: 0 4px 20px 0px #d6fbff, 0 7px 10px -5px #555;
+    /*box-shadow: 1px 1px white;*/
+}
+tr:hover {
+    background-color: #d6fbff;
+}
 
 /*
-tr:first {
-    display: block;
-    text-align: left;
- }
 tbody{
   display:block;
   overflow:auto;
