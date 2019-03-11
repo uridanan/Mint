@@ -32,6 +32,7 @@ tr {
     box-shadow: 0 4px 20px 0px #d6fbff, 0 7px 10px -5px #555;
     /*box-shadow: 1px 1px white;*/
 }
+tr.selected,
 tr:hover {
     background-color: #d6fbff;
 }

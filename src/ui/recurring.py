@@ -74,7 +74,7 @@ def getData(dataframe, max_rows=200):
 # Custom table because dash datatable cannot be styled...
 def generateCustomTable(dataframe, max_rows=200):
     # Header
-    columns = ['name','start_date','last_date','count','avg_amount','min_amount','max_amount']
+    columns = ['','name','start_date','last_date','count','avg_amount','min_amount','max_amount']
     # Body
     data = getData(dataframe, max_rows)
 
@@ -84,9 +84,11 @@ def generateCustomTable(dataframe, max_rows=200):
         [html.Tr([html.Th(col) for col in columns])] +
 
         # Body
-        [html.Tr([
-            html.Td(cellContent(data[i][col],i,col)) for col in columns
-        ]) for i in range(min(len(data), max_rows))]
+        [html.Tr(
+            id = makeId('row',str(i)),
+            className = 'unselected',
+            children= [html.Td(cellContent(data,i,col)) for col in columns]
+        ) for i in range(min(len(data), max_rows))]
     )
 
 #TODO: handle onclick callback to save data
@@ -94,17 +96,33 @@ def generateCustomTable(dataframe, max_rows=200):
 #TODO: use only for editable cells, not all
 #TODO: update on enter, not every keypress, why does debounce not work?
 #TODO: join with category
+def makeId(s1,s2):
+    return '_'.join([s1,s2])
+
+def parseId(id):
+    params = id.split('_')
+    return params
+
 def editableCell(text,row,col):
-    strId = '_'.join([str(row),str(col)])
+    strId = makeId(str(col),str(row))
     cell = dcc.Input(id=strId, name=strId, type='text', value=text, disabled=False) #setProps,debounce
     return cell
 
-def cellContent(text,row,col):
+def cellContent(data,row,col):
     editableColumns = ['name']
-    content = text
-    if col in editableColumns:
-        content = editableCell(text,row,col)
+    if col == '':
+        content = buttonCell('Show', row)
+    else:
+        text = data[row][col]
+        content = text
+        if col in editableColumns:
+            content = editableCell(text,row,col)
     return content
+
+def buttonCell(text, row):
+    strId = makeId('toggle', str(row))
+    button = html.Button(text,id=strId)
+    return button
 
 
 #=============================================================================================================
@@ -123,13 +141,35 @@ def getDataPoints():
     dataPoints = TimeSeriesData(dataFrame)
     return dataPoints
 
+def initSelectedTrackers(count,trackers):
+    max = len(trackers)
+    if count > max:
+        count = max
+    selected = {}
+    i = 0
+    for k,v in trackers.items():
+        if i < count:
+            selected[k] = v
+            i = i+1
+        else:
+            break
+    return selected
+
+
 trackersData = getDataPoints()
 trackers = getTrackers(trackers_df)
+selectedTrackers = initSelectedTrackers(3,trackers)
+
+def getTrackerId(row):
+    tracker = trackers[row]['id']
+    return tracker
+
+
 
 #=============================================================================================================
 layout = html.Div(children=[
     html.H4(children='Recurring Expenses - Work In Pogress'),
-    dcc.Graph(id='data', figure=generateTimeSeries(trackers, trackersData)),
+    dcc.Graph(id='data', figure=generateTimeSeries(selectedTrackers, trackersData)),
     html.Div(id='slider',className='padded',children=[generateDatesSlider(trackersData.getDates())]),
     html.Div(id='trackers_table',children=[generateCustomTable(trackers_df)]),
     html.Div(id='hidden_output')
@@ -144,17 +184,52 @@ def applyDateRange(range):
     figure = generateTimeSeries(getTrackers(trackers_df), trackersData, range[0], range[1])
     return figure
 
+def toggleState(event,state):
+    newState = 'unselected'
+    if state == newState:
+        newState = 'selected'
+    # All callbacks are called at startup, need to compensate for that
+    if event == None:
+        newState = state
+    return newState
+
 for i in range(len(trackers)):
     @app.callback(
-        Output('_'.join([str(i),'name']), 'value'),
-        [Input('_'.join([str(i),'name']), 'n_submit')],
-        [State('_'.join([str(i),'name']), 'value'),State('_'.join([str(i),'name']), 'name')]
+        Output(makeId('name',str(i)), 'value'),
+        [Input(makeId('name',str(i)), 'n_submit')],
+        [State(makeId('name',str(i)), 'value'),State(makeId('name',str(i)), 'name')]
        )
     def updateName(event,value,name):
-        params = name.split('_')
-        row = params[0]
-        col = params[1]
+        params = parseId(name)
+        row = params[1]
+        col = params[0]
         return value
+
+
+    @app.callback(
+        Output(makeId('row',str(i)), 'className'),
+        [Input(makeId('toggle',str(i)), 'n_clicks')],
+        [State(makeId('row',str(i)), 'className')]
+    )
+    def toggleTracker(event, state):
+        return toggleState(event,state)
+
+    # dcc.Graph(id='data', figure=generateTimeSeries(trackers, trackersData)),
+    # can't have multiple callbacks writing to data/figure, need to combine all inputs into one single callback
+    @app.callback(
+        Output('data', 'figure'),
+        [Input(makeId('toggle',str(i)), 'n_clicks')],
+        [State(makeId('row',str(i)), 'className'),State(makeId('row',str(i)), 'id')]
+    )
+    def toggleTrackerLine(event, state, id):
+        row = parseId(id)[1]
+        trackerId = getTrackerId(row)
+        newState = toggleState(event,state)
+        if newState == 'selected':
+            selectedTrackers[trackerId] = trackers[trackerId]
+        if newState == 'unselected':
+            selectedTrackers.pop(trackerId)
+        return generateTimeSeries(selectedTrackers, trackersData)
 
 #=============================================================================================================
 
@@ -186,4 +261,8 @@ for i in range(len(trackers)):
 # TODO: control table width and center (the problem comes from the input styling)
 # DONE: make only name cell editable
 # DONE: check callbacks viability
-# TODO: style as cards
+# DONE: style as cards
+# TODO: change the style of the show / hide button or replace with an eye
+# TODO: automatically select the first 3 rows
+# TODO: in toggle callback, change the appearance of the button
+# TODO: in toggle callback, query date for the graph
