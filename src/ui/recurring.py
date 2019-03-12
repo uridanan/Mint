@@ -7,6 +7,7 @@ from src.entities.businessEntry import BusinessEntry
 import plotly.graph_objs as go
 from src.app import app
 from src.ui.timeseries import *
+from src.utils import *
 
 #=============================================================================================================
 #TODO: Format using the example "Label Lines with Annotations" from https://plot.ly/python/line-charts/
@@ -85,42 +86,38 @@ def generateCustomTable(dataframe, max_rows=200):
 
         # Body
         [html.Tr(
-            id = makeId('row',str(i)),
+            id = makeId(['row',str(data[i]['id'])]),
             className = 'unselected',
-            children= [html.Td(cellContent(data,i,col)) for col in columns]
+            children = [html.Td(cellContent(data,i,col)) for col in columns]
         ) for i in range(min(len(data), max_rows))]
     )
 
-#TODO: handle onclick callback to save data
-#TODO: style edit box to make it invisible
-#TODO: use only for editable cells, not all
-#TODO: update on enter, not every keypress, why does debounce not work?
-#TODO: join with category
-def makeId(s1,s2):
-    return '_'.join([s1,s2])
+def makeId(s):
+    return '_'.join(s)
 
 def parseId(id):
     params = id.split('_')
     return params
 
 def editableCell(text,row,col):
-    strId = makeId(str(col),str(row))
+    strId = makeId([str(col),str(row)])
     cell = dcc.Input(id=strId, name=strId, type='text', value=text, disabled=False) #setProps,debounce
     return cell
 
 def cellContent(data,row,col):
     editableColumns = ['name']
+    id = data[row]['id']
     if col == '':
-        content = buttonCell('Show', row)
+        content = buttonCell('Show', id)
     else:
         text = data[row][col]
         content = text
         if col in editableColumns:
-            content = editableCell(text,row,col)
+            content = editableCell(text,id,col)
     return content
 
 def buttonCell(text, row):
-    strId = makeId('toggle', str(row))
+    strId = makeId(['toggle', str(row)])
     button = html.Button(text,id=strId)
     return button
 
@@ -160,10 +157,11 @@ trackersData = getDataPoints()
 trackers = getTrackers(trackers_df)
 selectedTrackers = initSelectedTrackers(3,trackers)
 
-def getTrackerId(row):
-    tracker = trackers[row]['id']
-    return tracker
-
+def generateHiddenPipe():
+    pipe = html.Div(id='pipe', children=[
+        html.P(id=makeId(['pipe',str(i)]), children='unselected') for i in trackers.keys()
+    ])
+    return pipe
 
 
 #=============================================================================================================
@@ -172,17 +170,26 @@ layout = html.Div(children=[
     dcc.Graph(id='data', figure=generateTimeSeries(selectedTrackers, trackersData)),
     html.Div(id='slider',className='padded',children=[generateDatesSlider(trackersData.getDates())]),
     html.Div(id='trackers_table',children=[generateCustomTable(trackers_df)]),
-    html.Div(id='hidden_output')
+    html.Div(id='hidden_output', hidden=True, children=[generateHiddenPipe()])
 ])
 
 #=============================================================================================================
 # Callbacks
 @app.callback(
     Output('data', 'figure'),
-    [Input('dateRange', 'value')])
-def applyDateRange(range):
-    figure = generateTimeSeries(getTrackers(trackers_df), trackersData, range[0], range[1])
+    [Input('dateRange', 'value'),Input('pipe','children')])
+def updateGraph(dateRange,selected):
+    for i in range(len(selected)):
+        state = selected[i]['props']['children']
+        id = int(parseId(selected[i]['props']['id'])[1])
+        if state == 'selected':
+            selectedTrackers[id] = trackers.get(id)
+        if state == 'unselected' and id in selectedTrackers.keys():
+            selectedTrackers.pop(id)
+    #figure = generateTimeSeries(getTrackers(trackers_df), trackersData, range[0], range[1])
+    figure = generateTimeSeries(selectedTrackers, trackersData, dateRange[0], dateRange[1])
     return figure
+
 
 def toggleState(event,state):
     newState = 'unselected'
@@ -193,11 +200,11 @@ def toggleState(event,state):
         newState = state
     return newState
 
-for i in range(len(trackers)):
+for i in trackers.keys():
     @app.callback(
-        Output(makeId('name',str(i)), 'value'),
-        [Input(makeId('name',str(i)), 'n_submit')],
-        [State(makeId('name',str(i)), 'value'),State(makeId('name',str(i)), 'name')]
+        Output(makeId(['name',str(i)]), 'value'),
+        [Input(makeId(['name',str(i)]), 'n_submit')],
+        [State(makeId(['name',str(i)]), 'value'),State(makeId(['name',str(i)]), 'name')]
        )
     def updateName(event,value,name):
         params = parseId(name)
@@ -205,31 +212,23 @@ for i in range(len(trackers)):
         col = params[0]
         return value
 
-
     @app.callback(
-        Output(makeId('row',str(i)), 'className'),
-        [Input(makeId('toggle',str(i)), 'n_clicks')],
-        [State(makeId('row',str(i)), 'className')]
+        Output(makeId(['row',str(i)]), 'className'),
+        [Input(makeId(['toggle',str(i)]), 'n_clicks')],
+        [State(makeId(['row',str(i)]), 'className')]
     )
     def toggleTracker(event, state):
         return toggleState(event,state)
 
-    # dcc.Graph(id='data', figure=generateTimeSeries(trackers, trackersData)),
-    # can't have multiple callbacks writing to data/figure, need to combine all inputs into one single callback
+
     @app.callback(
-        Output('data', 'figure'),
-        [Input(makeId('toggle',str(i)), 'n_clicks')],
-        [State(makeId('row',str(i)), 'className'),State(makeId('row',str(i)), 'id')]
+        Output(makeId(['pipe',str(i)]), 'children'),
+        [Input(makeId(['toggle',str(i)]), 'n_clicks')],
+        [State(makeId(['row',str(i)]), 'className')]
     )
-    def toggleTrackerLine(event, state, id):
-        row = parseId(id)[1]
-        trackerId = getTrackerId(row)
-        newState = toggleState(event,state)
-        if newState == 'selected':
-            selectedTrackers[trackerId] = trackers[trackerId]
-        if newState == 'unselected':
-            selectedTrackers.pop(trackerId)
-        return generateTimeSeries(selectedTrackers, trackersData)
+    def toggleTracker(event, state):
+        return toggleState(event,state)
+
 
 #=============================================================================================================
 
@@ -243,7 +242,7 @@ for i in range(len(trackers)):
 # DONE: add table, the table allows toggling the graph and naming the expense.
 # DONE: apply slider to graph
 # DONE: fix last value on slider
-# TODO: toggle graph lines based on table
+# DONE: toggle graph lines based on table
 # TODO: apply slider to table: compute avg min max accordingly
 # TODO: when the amount is constant, show it as avg, min & max
 # TODO: rename columns
@@ -262,7 +261,8 @@ for i in range(len(trackers)):
 # DONE: make only name cell editable
 # DONE: check callbacks viability
 # DONE: style as cards
-# TODO: change the style of the show / hide button or replace with an eye
 # TODO: automatically select the first 3 rows
+# TODO: show rows as selected in table on start
+# TODO: trigger graph update on button click
+# TODO: change the style of the show / hide button or replace with an eye
 # TODO: in toggle callback, change the appearance of the button
-# TODO: in toggle callback, query date for the graph

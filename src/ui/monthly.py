@@ -6,6 +6,7 @@ import src.dbAccess as db
 from src.entities.businessEntry import BusinessEntry
 import plotly.graph_objs as go
 from src.app import app
+from src.utils import *
 
 F_GETMONTHS = 'src/queries/queryMonthSelector.sql'
 F_GETCATEGORIES = 'src/queries/queryCategoryFilter.sql'
@@ -28,11 +29,6 @@ F_MONTHLYBYCATEGORY = 'src/queries/queryMonthlyReportByCategory.sql'
 
 #=============================================================================================================
 #=============================================================================================================
-
-def toList(myDict):
-    if myDict == None:
-        return
-    return [v for v in myDict.values()]
 
 def generatePieChart(dataFrame):
     data = dataFrame.to_dict()
