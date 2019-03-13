@@ -73,7 +73,7 @@ def getData(dataframe, max_rows=200):
 
 #=============================================================================================================
 # Custom table because dash datatable cannot be styled...
-def generateCustomTable(dataframe, max_rows=200):
+def generateCustomTable(dataframe,selectedRows, max_rows=200):
     # Header
     columns = ['','name','start_date','last_date','count','avg_amount','min_amount','max_amount']
     # Body
@@ -87,10 +87,16 @@ def generateCustomTable(dataframe, max_rows=200):
         # Body
         [html.Tr(
             id = makeId(['row',str(data[i]['id'])]),
-            className = 'unselected',
+            className = getClassName(data[i]['id'],selectedRows.keys()),
             children = [html.Td(cellContent(data,i,col)) for col in columns]
         ) for i in range(min(len(data), max_rows))]
     )
+
+def getClassName(id,selectedIds):
+    if id in selectedIds:
+        return 'selected'
+    else:
+        return 'unselected'
 
 def makeId(s):
     return '_'.join(s)
@@ -157,6 +163,9 @@ trackersData = getDataPoints()
 trackers = getTrackers(trackers_df)
 selectedTrackers = initSelectedTrackers(3,trackers)
 
+# Each callback targets a single P element
+# Get around the limitation that multiple callbacks cannot write to the same target
+# TODO: replace with a single output, single callback, list of inputs that combine into a json dump
 def generateHiddenPipe():
     pipe = html.Div(id='pipe', children=[
         html.P(id=makeId(['pipe',str(i)]), children='unselected') for i in trackers.keys()
@@ -169,16 +178,18 @@ layout = html.Div(children=[
     html.H4(children='Recurring Expenses - Work In Pogress'),
     dcc.Graph(id='data', figure=generateTimeSeries(selectedTrackers, trackersData)),
     html.Div(id='slider',className='padded',children=[generateDatesSlider(trackersData.getDates())]),
-    html.Div(id='trackers_table',children=[generateCustomTable(trackers_df)]),
-    html.Div(id='hidden_output', hidden=True, children=[generateHiddenPipe()])
+    html.A(id='refresh', children='Refresh'),
+    html.Div(id='trackers_table',children=[generateCustomTable(trackers_df,selectedTrackers)]),
+    html.Div(id='hidden_output', hidden=True, children=[generateHiddenPipe()]),
+    html.Div(id='hidden_output_2')
 ])
 
 #=============================================================================================================
 # Callbacks
 @app.callback(
     Output('data', 'figure'),
-    [Input('dateRange', 'value'),Input('pipe','children')])
-def updateGraph(dateRange,selected):
+    [Input('dateRange', 'value'),Input('pipe','children'),Input('refresh', 'n_clicks')])
+def updateGraph(dateRange,selected,event):
     for i in range(len(selected)):
         state = selected[i]['props']['children']
         id = int(parseId(selected[i]['props']['id'])[1])
@@ -224,7 +235,8 @@ for i in trackers.keys():
     @app.callback(
         Output(makeId(['pipe',str(i)]), 'children'),
         [Input(makeId(['toggle',str(i)]), 'n_clicks')],
-        [State(makeId(['row',str(i)]), 'className')]
+        [State(makeId(['row',str(i)]), 'className')],
+        [Event('refresh', 'click')]
     )
     def toggleTracker(event, state):
         return toggleState(event,state)
@@ -261,8 +273,8 @@ for i in trackers.keys():
 # DONE: make only name cell editable
 # DONE: check callbacks viability
 # DONE: style as cards
-# TODO: automatically select the first 3 rows
-# TODO: show rows as selected in table on start
+# DONE: automatically select the first 3 rows
+# DONE: show rows as selected in table on start
 # TODO: trigger graph update on button click
 # TODO: change the style of the show / hide button or replace with an eye
 # TODO: in toggle callback, change the appearance of the button
