@@ -51,7 +51,7 @@ def generateDatesSlider(dates):
 
 #=============================================================================================================
 # TODO: replace datatables with divs and use CSS to make it look like cards that you can toggle
-def generateTable(dataframe, selectedRows, max_rows=200):
+def generateTable(dataframe, max_rows=200):
     return dash_table.DataTable(
         id='Trackers',
         # Header
@@ -60,42 +60,7 @@ def generateTable(dataframe, selectedRows, max_rows=200):
         #data=[],
         data=getData(dataframe, max_rows),
         editable=True,
-        row_selectable=True,
-        selected_rows=[0,1,2],
-        style_as_list_view=True,
-        css=[{'selector': '.dash-cell div.dash-cell-value',
-              'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-        n_fixed_rows=1,
-        style_table={
-            'overflowY': 'scroll',
-            'maxHeight': '600',
-            'maxWidth': '1500px'
-        },
-        style_cell={
-            'whiteSpace': 'normal',
-            'text-align': 'left'
-        },
-        style_header={
-            'background-color': '#555',
-            'color': 'white',
-            'font-weight': 'bold',
-            'height': '50px'
-        }
-        # content_style
-        # style_cell, style_cell_conditional
-        # style_data, style_data_conditional,
-        # style_header, style_header_conditional,
-        # style_table
     )
-# https://dash.plot.ly/datatable/sizing
-# Allowed arguments: active_cell, column_conditional_dropdowns, column_static_dropdown, columns, content_style, css,
-# data, data_previous, data_timestamp, derived_viewport_data, derived_viewport_indices, derived_virtual_data,
-# derived_virtual_indices, dropdown_properties, editable, end_cell, filtering, filtering_settings, filtering_type,
-# filtering_types, id, is_focused, merge_duplicate_headers, n_fixed_columns, n_fixed_rows, navigation, pagination_mode,
-# pagination_settings, row_deletable, row_selectable, selected_cells, selected_rows, sorting, sorting_settings,
-# sorting_treat_empty_string_as_none, sorting_type, start_cell, style_as_list_view, style_cell, style_cell_conditional,
-# style_data, style_data_conditional, style_filter, style_filter_conditional, style_header, style_header_conditional, style_table
-
 
 def getColumns(dataframe):
     return ([{'id': p, 'name': p} for p in ['name','start_date','last_date','count','avg_amount','min_amount','max_amount']])
@@ -214,7 +179,7 @@ layout = html.Div(children=[
     dcc.Graph(id='data', figure=generateTimeSeries(selectedTrackers, trackersData)),
     html.Div(id='slider',className='padded',children=[generateDatesSlider(trackersData.getDates())]),
     html.A(id='refresh', children='Refresh'),
-    html.Div(id='trackers_table', children=[generateTable(trackers_df,selectedTrackers)]),
+    html.Div(id='trackers_table',children=[generateCustomTable(trackers_df,selectedTrackers)]),
     html.Div(id='hidden_output', hidden=True, children=[generateHiddenPipe()]),
     html.Div(id='hidden_output_2')
 ])
@@ -318,8 +283,3 @@ for i in trackers.keys():
 # TODO: figure out why I can't trigger a click event from the callback
 # TODO: duplicate and try with datatable
 # TODO: check what I can do with styling and selected rows. How do I apply css classes?
-
-# TODO: go back to data table
-# TODO: make sure I can style it
-# TODO: use built in checkboxes
-# TODO: make sure the callbacks work
