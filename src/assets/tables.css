@@ -4,6 +4,12 @@
 table {
   border-collapse: collapse;
   width: 70%
+  --accent: #78daf1;
+  border: lightgrey;
+  text-color: #3c3c3c;
+  --hover: #d6fbff;
+  --selected-background: #d6fbff;
+  --selected-row: #fff0ff;
 }
 
 th{
@@ -37,6 +43,7 @@ tr.selected,
 tr:hover {
     background-color: #d6fbff;
 }
+
 
 /*
 tbody{

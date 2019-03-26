@@ -50,26 +50,29 @@ def generateDatesSlider(dates):
 #=============================================================================================================
 
 #=============================================================================================================
-# TODO: replace datatables with divs and use CSS to make it look like cards that you can toggle
-def generateTable(dataframe, selectedRows, max_rows=200):
+def generateTable(dataframe, max_rows=200):
     return dash_table.DataTable(
-        id='Trackers',
+        id='trackers',
         # Header
         columns=getColumns(dataframe),
         # Body
         #data=[],
         data=getData(dataframe, max_rows),
         editable=True,
-        row_selectable=True,
+        row_selectable="multi",
         selected_rows=[0,1,2],
         style_as_list_view=True,
-        css=[{'selector': '.dash-cell div.dash-cell-value',
-              'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
+        css=[{'selector': '.selected .cell'}],
+        #       'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
         n_fixed_rows=1,
         style_table={
             'overflowY': 'scroll',
             'maxHeight': '600',
-            'maxWidth': '1500px'
+            'maxWidth': '900',
+            '--accent':'#78daf1',
+            '--hover': '#d6fbff',
+            '--selected-row': '#d6fbff',
+            '--selected-background': '#d6fbff'
         },
         style_cell={
             'whiteSpace': 'normal',
@@ -107,26 +110,6 @@ def getData(dataframe, max_rows=200):
         ]
 
 #=============================================================================================================
-# Custom table because dash datatable cannot be styled...
-def generateCustomTable(dataframe,selectedRows, max_rows=200):
-    # Header
-    columns = ['','name','start_date','last_date','count','avg_amount','min_amount','max_amount']
-    # Body
-    data = getData(dataframe, max_rows)
-
-    return html.Table(
-
-        # Header
-        [html.Tr([html.Th(col) for col in columns])] +
-
-        # Body
-        [html.Tr(
-            id = makeId(['row',str(data[i]['id'])]),
-            className = getClassName(data[i]['id'],selectedRows.keys()),
-            children = [html.Td(cellContent(data,i,col)) for col in columns]
-        ) for i in range(min(len(data), max_rows))]
-    )
-
 def getClassName(id,selectedIds):
     if id in selectedIds:
         return 'selected'
@@ -140,38 +123,23 @@ def parseId(id):
     params = id.split('_')
     return params
 
-def editableCell(text,row,col):
-    strId = makeId([str(col),str(row)])
-    cell = dcc.Input(id=strId, name=strId, type='text', value=text, disabled=False) #setProps,debounce
-    return cell
-
-def cellContent(data,row,col):
-    editableColumns = ['name']
-    id = data[row]['id']
-    if col == '':
-        content = buttonCell('Show', id)
-    else:
-        text = data[row][col]
-        content = text
-        if col in editableColumns:
-            content = editableCell(text,id,col)
-    return content
-
-def buttonCell(text, row):
-    strId = makeId(['toggle', str(row)])
-    button = html.Button(text,id=strId)
-    return button
-
-
 #=============================================================================================================
 Q_GETTRACKERS = 'select * from recurrent_expense'
 F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
 
 trackers_df = db.runQuery(Q_GETTRACKERS)
 
-def getTrackers(df):
+def getTrackers(df, selected=None):
     #df = db.runQuery(Q_GETTRACKERS)
-    dict = {v[0]:v[1] for v in df.values}
+    dict = {}
+    if selected == None:
+        dict = {v[0]: v[1] for v in df.values}
+    else:
+        i=0
+        for v in df.values:
+            if i in selected:
+                dict[v[0]] = v[1]
+            i = i+1
     return dict
 
 def getDataPoints():
@@ -196,85 +164,27 @@ def initSelectedTrackers(count,trackers):
 
 trackersData = getDataPoints()
 trackers = getTrackers(trackers_df)
-selectedTrackers = initSelectedTrackers(3,trackers)
-
-# Each callback targets a single P element
-# Get around the limitation that multiple callbacks cannot write to the same target
-# TODO: replace with a single output, single callback, list of inputs that combine into a json dump
-def generateHiddenPipe():
-    pipe = html.Div(id='pipe', children=[
-        html.P(id=makeId(['pipe',str(i)]), children='unselected') for i in trackers.keys()
-    ])
-    return pipe
 
 
 #=============================================================================================================
 layout = html.Div(children=[
     html.H4(children='Recurring Expenses - Work In Pogress'),
-    dcc.Graph(id='data', figure=generateTimeSeries(selectedTrackers, trackersData)),
+    dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(trackers_df), trackersData)),
     html.Div(id='slider',className='padded',children=[generateDatesSlider(trackersData.getDates())]),
-    html.A(id='refresh', children='Refresh'),
-    html.Div(id='trackers_table', children=[generateTable(trackers_df,selectedTrackers)]),
-    html.Div(id='hidden_output', hidden=True, children=[generateHiddenPipe()]),
-    html.Div(id='hidden_output_2')
+    html.Div(id='trackers_table', children=[generateTable(trackers_df)])
 ])
 
 #=============================================================================================================
 # Callbacks
 @app.callback(
     Output('data', 'figure'),
-    [Input('dateRange', 'value'),Input('pipe','children'),Input('refresh', 'n_clicks')])
-def updateGraph(dateRange,selected,event):
-    for i in range(len(selected)):
-        state = selected[i]['props']['children']
-        id = int(parseId(selected[i]['props']['id'])[1])
-        if state == 'selected':
-            selectedTrackers[id] = trackers.get(id)
-        if state == 'unselected' and id in selectedTrackers.keys():
-            selectedTrackers.pop(id)
-    #figure = generateTimeSeries(getTrackers(trackers_df), trackersData, range[0], range[1])
-    figure = generateTimeSeries(selectedTrackers, trackersData, dateRange[0], dateRange[1])
+    [Input('dateRange', 'value'),Input('trackers','selected_rows')])
+def updateGraph(dateRange,selected):
+    figure = generateTimeSeries(getTrackers(trackers_df,selected), trackersData, dateRange[0], dateRange[1])
     return figure
 
 
-def toggleState(event,state):
-    newState = 'unselected'
-    if state == newState:
-        newState = 'selected'
-    # All callbacks are called at startup, need to compensate for that
-    if event == None:
-        newState = state
-    return newState
 
-for i in trackers.keys():
-    @app.callback(
-        Output(makeId(['name',str(i)]), 'value'),
-        [Input(makeId(['name',str(i)]), 'n_submit')],
-        [State(makeId(['name',str(i)]), 'value'),State(makeId(['name',str(i)]), 'name')]
-       )
-    def updateName(event,value,name):
-        params = parseId(name)
-        row = params[1]
-        col = params[0]
-        return value
-
-    @app.callback(
-        Output(makeId(['row',str(i)]), 'className'),
-        [Input(makeId(['toggle',str(i)]), 'n_clicks')],
-        [State(makeId(['row',str(i)]), 'className')]
-    )
-    def toggleTracker(event, state):
-        return toggleState(event,state)
-
-
-    @app.callback(
-        Output(makeId(['pipe',str(i)]), 'children'),
-        [Input(makeId(['toggle',str(i)]), 'n_clicks')],
-        [State(makeId(['row',str(i)]), 'className')],
-        [Event('refresh', 'click')]
-    )
-    def toggleTracker(event, state):
-        return toggleState(event,state)
 
 
 #=============================================================================================================
@@ -290,36 +200,15 @@ for i in trackers.keys():
 # DONE: apply slider to graph
 # DONE: fix last value on slider
 # DONE: toggle graph lines based on table
+# TODO: highlight selected rows
+# TODO: style as cards
 # TODO: apply slider to table: compute avg min max accordingly
 # TODO: when the amount is constant, show it as avg, min & max
 # TODO: rename columns
-# TODO: make name editable
+# TODO: make name editable (and only the name)
 # TODO: apply new name to the monthly report and overview as well
 # TODO: add section titles
 # TODO: alerts
 # TODO: align slider when resizing window
-
-
-# Format table and add toggles
-# option 1: format datatable and catch onselect events to toggle
-# option 2: make my own table or list of divs and figure out the callback, style it as cards (use the projects I downloaded)
-
 # TODO: control table width and center (the problem comes from the input styling)
-# DONE: make only name cell editable
-# DONE: check callbacks viability
-# DONE: style as cards
-# DONE: automatically select the first 3 rows
-# DONE: show rows as selected in table on start
-# TODO: trigger graph update on button click
-# TODO: change the style of the show / hide button or replace with an eye
-# TODO: in toggle callback, change the appearance of the button
-
-
-# TODO: figure out why I can't trigger a click event from the callback
-# TODO: duplicate and try with datatable
 # TODO: check what I can do with styling and selected rows. How do I apply css classes?
-
-# TODO: go back to data table
-# TODO: make sure I can style it
-# TODO: use built in checkboxes
-# TODO: make sure the callbacks work
