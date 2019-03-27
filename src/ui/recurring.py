@@ -36,7 +36,6 @@ def generateTimeSeries(trackers,timeSeries,start=0,stop=None):
 
 #=============================================================================================================
 # Range slider
-
 def generateDatesSlider(dates):
     iMax = len(dates)-1
     slider = dcc.RangeSlider(
@@ -62,13 +61,13 @@ def generateTable(dataframe, max_rows=200):
         row_selectable="multi",
         selected_rows=[0,1,2],
         style_as_list_view=True,
-        css=[{'selector': '.selected .cell'}],
-        #       'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
+        css=[{'selector': '.dash-cell div.dash-cell-value',
+              'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
         n_fixed_rows=1,
         style_table={
-            'overflowY': 'scroll',
-            'maxHeight': '600',
-            'maxWidth': '900',
+            #'overflowY': 'scroll',
+            #'maxHeight': '600',
+            'maxWidth': '1500',
             '--accent':'#78daf1',
             '--hover': '#d6fbff',
             '--selected-row': '#d6fbff',
@@ -101,7 +100,7 @@ def generateTable(dataframe, max_rows=200):
 
 
 def getColumns(dataframe):
-    return ([{'id': p, 'name': p} for p in ['name','start_date','last_date','count','avg_amount','min_amount','max_amount']])
+    return ([{'id': p, 'name': p} for p in dataframe.columns[1:]])
 
 def getData(dataframe, max_rows=200):
     return [
@@ -110,20 +109,7 @@ def getData(dataframe, max_rows=200):
         ]
 
 #=============================================================================================================
-def getClassName(id,selectedIds):
-    if id in selectedIds:
-        return 'selected'
-    else:
-        return 'unselected'
-
-def makeId(s):
-    return '_'.join(s)
-
-def parseId(id):
-    params = id.split('_')
-    return params
-
-#=============================================================================================================
+F_TRACKERS = 'src/queries/queryTrackersFromTo.sql'
 Q_GETTRACKERS = 'select * from recurrent_expense'
 F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
 
@@ -147,31 +133,30 @@ def getDataPoints():
     dataPoints = TimeSeriesData(dataFrame)
     return dataPoints
 
-def initSelectedTrackers(count,trackers):
-    max = len(trackers)
-    if count > max:
-        count = max
-    selected = {}
-    i = 0
-    for k,v in trackers.items():
-        if i < count:
-            selected[k] = v
-            i = i+1
-        else:
-            break
-    return selected
-
-
 trackersData = getDataPoints()
 trackers = getTrackers(trackers_df)
 
+def getDates(dateRange):
+    if dateRange is None:
+        dateRange = [0, len(trackersData.getDates())-1]
+    start = trackersData.getDates()[dateRange[0]]
+    stop = trackersData.getDates()[dateRange[1]]
+    return [start,stop]
+
+def generateTrackersReport(dateRange):
+    params = [
+        {'name': 'start', 'value': [dateRange[0]]},
+        {'name': 'stop', 'value': [dateRange[1]]}
+    ]
+    return db.runQueryFromFile(F_TRACKERS, params)
 
 #=============================================================================================================
+# Layout
 layout = html.Div(children=[
     html.H4(children='Recurring Expenses - Work In Pogress'),
     dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(trackers_df), trackersData)),
     html.Div(id='slider',className='padded',children=[generateDatesSlider(trackersData.getDates())]),
-    html.Div(id='trackers_table', children=[generateTable(trackers_df)])
+    html.Div(id='trackers_table', children=[generateTable(generateTrackersReport(getDates([13,16])))])
 ])
 
 #=============================================================================================================
@@ -184,8 +169,13 @@ def updateGraph(dateRange,selected):
     return figure
 
 
-
-
+@app.callback(
+    Output('trackers', 'data'),
+    [Input('dateRange', 'value')])
+def updateTrackers(dateRange):
+    df = generateTrackersReport(getDates(dateRange))
+    data = generateTable(df)
+    return data
 
 #=============================================================================================================
 
@@ -193,22 +183,20 @@ def updateGraph(dateRange,selected):
 #https://community.plot.ly/t/two-graphs-side-by-side/5312
 
 # TODO: Show graph with slider and table with average, min, max, start date, end date and table with alerts
-# DONE: show only name, start, last, count, avg, min, max
-# DONE: add slider
-# DONE: align the slider with the graph and add a separation from the table
-# DONE: add table, the table allows toggling the graph and naming the expense.
-# DONE: apply slider to graph
-# DONE: fix last value on slider
-# DONE: toggle graph lines based on table
-# TODO: highlight selected rows
-# TODO: style as cards
 # TODO: apply slider to table: compute avg min max accordingly
 # TODO: when the amount is constant, show it as avg, min & max
 # TODO: rename columns
-# TODO: make name editable (and only the name)
+# TODO: make name editable
 # TODO: apply new name to the monthly report and overview as well
+# TODO: make other columns non editable
 # TODO: add section titles
 # TODO: alerts
-# TODO: align slider when resizing window
-# TODO: control table width and center (the problem comes from the input styling)
 # TODO: check what I can do with styling and selected rows. How do I apply css classes?
+# TODO: use grid and columns to position and resize the graph and table
+# TODO: highlight selected rows
+# TODO: style as cards
+# TODO: cleanup: remove global variables, fetch all data in callbacks
+# TODO: format dates
+# TODO: format amounts
+# TODO: fix last date
+# TODO: get table to update when slider changes, why isn't it working?

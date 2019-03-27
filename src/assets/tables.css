@@ -5,11 +5,27 @@ table {
   border-collapse: collapse;
   width: 70%
   --accent: #78daf1;
-  border: lightgrey;
-  text-color: #3c3c3c;
+  --border: lightgrey;
+  --text-color: #3c3c3c;
   --hover: #d6fbff;
   --selected-background: #d6fbff;
-  --selected-row: #fff0ff;
+  --selected-row: #d6fbff;
+}
+
+.dash-spreadsheet-container .dash-spreadsheet-inner table {
+    border-collapse: collapse;
+    font-family: monospace;
+    --accent: #78daf1;
+    --border: lightgrey;
+    --text-color: #3c3c3c;
+    --hover: #d6fbff;
+    --background-color-ellipses: #d6fbff;
+    --faded-text: #fafafa;
+    --faded-text-header: #b4b4b4;
+    --selected-background: #d6fbff;
+    --faded-dropdown: #f0f0f0;
+    --selected-row: #d6fbff;
+    --muted: #c8c8c8;
 }
 
 th{
@@ -32,18 +48,17 @@ th:last-child,
 td:last-child {
   padding-right: 15px; }
 
-
+/*
 tr {
     background-color: white;
     color: black;
     box-shadow: 0 4px 20px 0px #d6fbff, 0 7px 10px -5px #555;
-    /*box-shadow: 1px 1px white;*/
 }
 tr.selected,
 tr:hover {
     background-color: #d6fbff;
 }
-
+*/
 
 /*
 tbody{
