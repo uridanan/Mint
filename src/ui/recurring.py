@@ -4,6 +4,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import src.dbAccess as db
 from src.entities.businessEntry import BusinessEntry
+from src.entities.recurrentExpense import RecurrentExpense
 import plotly.graph_objs as go
 from src.app import app
 from src.ui.timeseries import *
@@ -29,7 +30,8 @@ def generateTimeSeries(trackers,timeSeries,start=0,stop=None):
     layout = dict(
         title = "Recurring Expenses",
         xaxis = dict(title='Month'),
-        yaxis = dict(title='Expenses')
+        yaxis = dict(title='Expenses'),
+        height = 400
     )
     figure = dict(data=data, layout=layout)
     return figure
@@ -67,7 +69,7 @@ def generateTable(dataframe, max_rows=200):
         style_table={
             #'overflowY': 'scroll',
             #'maxHeight': '600',
-            'maxWidth': '1500',
+            #'maxWidth': '1500',
             '--accent':'#78daf1',
             '--hover': '#d6fbff',
             '--selected-row': '#d6fbff',
@@ -153,14 +155,18 @@ def generateTrackersReport(dateRange):
 #=============================================================================================================
 # Layout
 layout = html.Div(children=[
-    html.H4(children='Recurring Expenses - Work In Pogress'),
-    dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(trackers_df), trackersData)),
-    html.Div(id='slider',className='padded',children=[generateDatesSlider(trackersData.getDates())]),
-    html.Div(id='trackers_table', children=[generateTable(generateTrackersReport(getDates([13,16])))])
+    html.H4(children='Recurring Expenses - Work In Pogress',className="row"),
+    dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(trackers_df), trackersData), className="row"),
+    html.Div(id='slider', className='padded',children=[generateDatesSlider(trackersData.getDates())]),
+    html.Div(id='trackers_table', children=[generateTable(generateTrackersReport(getDates([13,16])))], className="row"),
+    html.Div(id='hidden'),
+    html.A(id='link')
 ])
 
 #=============================================================================================================
 # Callbacks
+
+# Update the graph
 @app.callback(
     Output('data', 'figure'),
     [Input('dateRange', 'value'),Input('trackers','selected_rows')])
@@ -168,14 +174,43 @@ def updateGraph(dateRange,selected):
     figure = generateTimeSeries(getTrackers(trackers_df,selected), trackersData, dateRange[0], dateRange[1])
     return figure
 
-
+# Update the table
 @app.callback(
     Output('trackers', 'data'),
     [Input('dateRange', 'value')])
 def updateTrackers(dateRange):
     df = generateTrackersReport(getDates(dateRange))
-    data = generateTable(df)
+    data = getData(df)
     return data
+
+# Edit tracker name
+@app.callback(
+    Output('hidden', 'data-*'),
+    [Input('trackers', 'data')],
+    [State('trackers', 'data_previous'),State('trackers', 'active_cell')],
+    [Event('link', 'click')])
+def processInput(data,previous,cell):
+    if(cell != None):
+        row=cell[0]
+        new=data[row]
+        old=previous[row]
+        id=new['id']
+        newName=new['name']
+        oldName = old['name']
+        if newName != oldName:
+            updateTrackerEntry(id, newName)
+    return None
+
+def updateTrackerEntry(id,newName):
+    tracker = RecurrentExpense.selectBy(id=id).getOne(None)
+    if tracker != None:
+        tracker.set(name=newName)
+
+def updateBusinessEntry(oldName,newName,newCategory):
+    business = BusinessEntry.selectBy(marketingName=oldName).getOne(None)
+    if (business != None):
+        business.set(marketingName=newName, category=newCategory)
+
 
 #=============================================================================================================
 
@@ -183,20 +218,15 @@ def updateTrackers(dateRange):
 #https://community.plot.ly/t/two-graphs-side-by-side/5312
 
 # TODO: Show graph with slider and table with average, min, max, start date, end date and table with alerts
-# TODO: apply slider to table: compute avg min max accordingly
-# TODO: when the amount is constant, show it as avg, min & max
-# TODO: rename columns
-# TODO: make name editable
+# TODO: format headers, rename columns
 # TODO: apply new name to the monthly report and overview as well
+# TODO: add currency symbols
 # TODO: make other columns non editable
+# TODO: use grid and columns to position and resize the graph and table
 # TODO: add section titles
 # TODO: alerts
 # TODO: check what I can do with styling and selected rows. How do I apply css classes?
-# TODO: use grid and columns to position and resize the graph and table
 # TODO: highlight selected rows
 # TODO: style as cards
 # TODO: cleanup: remove global variables, fetch all data in callbacks
-# TODO: format dates
-# TODO: format amounts
-# TODO: fix last date
-# TODO: get table to update when slider changes, why isn't it working?
+
