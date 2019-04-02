@@ -28,10 +28,10 @@ def generateTimeSeries(trackers,timeSeries,start=0,stop=None):
             opacity = 0.8)
         data.append(trace)
     layout = dict(
-        title = "Recurring Expenses",
+        title = "",
         xaxis = dict(title='Month'),
         yaxis = dict(title='Expenses'),
-        height = 400
+        height = 300
     )
     figure = dict(data=data, layout=layout)
     return figure
@@ -111,14 +111,8 @@ def getData(dataframe, max_rows=200):
         ]
 
 #=============================================================================================================
-F_TRACKERS = 'src/queries/queryTrackersFromTo.sql'
-Q_GETTRACKERS = 'select * from recurrent_expense'
-F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
-
-trackers_df = db.runQuery(Q_GETTRACKERS)
-
-def getTrackers(df, selected=None):
-    #df = db.runQuery(Q_GETTRACKERS)
+def getTrackers(selected=None):
+    df = db.runQuery(Q_GETTRACKERS)
     dict = {}
     if selected == None:
         dict = {v[0]: v[1] for v in df.values}
@@ -130,20 +124,21 @@ def getTrackers(df, selected=None):
             i = i+1
     return dict
 
+
 def getDataPoints():
     dataFrame = db.runQueryFromFile(F_GETRECURRINGDATA)
     dataPoints = TimeSeriesData(dataFrame)
     return dataPoints
 
-trackersData = getDataPoints()
-trackers = getTrackers(trackers_df)
 
 def getDates(dateRange):
+    trackersData = getDataPoints()
     if dateRange is None:
         dateRange = [0, len(trackersData.getDates())-1]
     start = trackersData.getDates()[dateRange[0]]
     stop = trackersData.getDates()[dateRange[1]]
     return [start,stop]
+
 
 def generateTrackersReport(dateRange):
     params = [
@@ -152,13 +147,24 @@ def generateTrackersReport(dateRange):
     ]
     return db.runQueryFromFile(F_TRACKERS, params)
 
+F_TRACKERS = 'src/queries/queryTrackersFromTo.sql'
+Q_GETTRACKERS = 'select * from recurrent_expense'
+F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
+
+
+trackersData = getDataPoints()
+
 #=============================================================================================================
 # Layout
 layout = html.Div(children=[
     html.H4(children='Recurring Expenses - Work In Pogress',className="row"),
-    dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(trackers_df), trackersData), className="row"),
+    dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(), trackersData), className="row"),
     html.Div(id='slider', className='padded',children=[generateDatesSlider(trackersData.getDates())]),
-    html.Div(id='trackers_table', children=[generateTable(generateTrackersReport(getDates([13,16])))], className="row"),
+    html.Div(id='trackers_table', className="row", children=[
+        html.Div(className="one column"),
+        html.Div(className="ten columns", children=[generateTable(generateTrackersReport(getDates([13,16])))]),
+        html.Div(className="one column")
+    ]),
     html.Div(id='hidden'),
     html.A(id='link')
 ])
@@ -167,11 +173,12 @@ layout = html.Div(children=[
 # Callbacks
 
 # Update the graph
+# TODO: use table data to convert selected rows into tracker ids instead of relying on indices
 @app.callback(
     Output('data', 'figure'),
     [Input('dateRange', 'value'),Input('trackers','selected_rows')])
 def updateGraph(dateRange,selected):
-    figure = generateTimeSeries(getTrackers(trackers_df,selected), trackersData, dateRange[0], dateRange[1])
+    figure = generateTimeSeries(getTrackers(selected), getDataPoints(), dateRange[0], dateRange[1])
     return figure
 
 # Update the table
@@ -184,6 +191,7 @@ def updateTrackers(dateRange):
     return data
 
 # Edit tracker name
+# TODO: combine with update graph
 @app.callback(
     Output('hidden', 'data-*'),
     [Input('trackers', 'data')],
@@ -203,13 +211,8 @@ def processInput(data,previous,cell):
 
 def updateTrackerEntry(id,newName):
     tracker = RecurrentExpense.selectBy(id=id).getOne(None)
-    if tracker != None:
+    if tracker is not None:
         tracker.set(name=newName)
-
-def updateBusinessEntry(oldName,newName,newCategory):
-    business = BusinessEntry.selectBy(marketingName=oldName).getOne(None)
-    if (business != None):
-        business.set(marketingName=newName, category=newCategory)
 
 
 #=============================================================================================================
@@ -217,16 +220,15 @@ def updateBusinessEntry(oldName,newName,newCategory):
 #https://stackoverflow.com/questions/9067892/how-to-align-two-elements-on-the-same-line-without-changing-html
 #https://community.plot.ly/t/two-graphs-side-by-side/5312
 
-# TODO: Show graph with slider and table with average, min, max, start date, end date and table with alerts
+# BUG: after renaming expense, the table no longer matches the names
+# TODO: automatically update graph names when renaming expense in report
 # TODO: format headers, rename columns
-# TODO: apply new name to the monthly report and overview as well
 # TODO: add currency symbols
 # TODO: make other columns non editable
 # TODO: use grid and columns to position and resize the graph and table
-# TODO: add section titles
-# TODO: alerts
+# TODO: add alerts when expense deviates from expectations / norm
 # TODO: check what I can do with styling and selected rows. How do I apply css classes?
 # TODO: highlight selected rows
 # TODO: style as cards
-# TODO: cleanup: remove global variables, fetch all data in callbacks
+
 
