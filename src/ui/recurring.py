@@ -63,9 +63,9 @@ def generateTable(dataframe, max_rows=200):
         row_selectable="multi",
         selected_rows=[0,1,2],
         style_as_list_view=True,
-        css=[{'selector': '.dash-cell div.dash-cell-value',
-              'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-        n_fixed_rows=1,
+        # css=[{'selector': '.dash-cell div.dash-cell-value',
+        #       'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
+        # n_fixed_rows=1,
         style_table={
             #'overflowY': 'scroll',
             #'maxHeight': '600',
@@ -77,14 +77,32 @@ def generateTable(dataframe, max_rows=200):
         },
         style_cell={
             'whiteSpace': 'normal',
-            'text-align': 'left'
+            'text-align': 'left',
+            'hover': 'hotpink'
         },
         style_header={
+            'whiteSpace': 'normal',
             'background-color': '#555',
             'color': 'white',
             'font-weight': 'bold',
-            'height': '50px'
+            'height': '50px',
+            'textAlign': 'left'
+        },
+        style_header_conditional=[
+            {'if': {'column_id': c}, 'width': w} for c,w in getColumnWidths()
+        ],
+        style_cell_conditional=[
+            {'if': {'column_id': c}, 'width': w} for c,w in getColumnWidths()
+        ],
+        style_data={
+            'accent': '#78daf1',
+            'hover': '#d6fbff'
         }
+
+        # ,
+        # style_data_conditional=[
+        #     {'if': {'row_index': i}, 'backgroundColor': '#3D9970', 'color': 'white'} for i in selected_rows
+        # ]
         # content_style
         # style_cell, style_cell_conditional
         # style_data, style_data_conditional,
@@ -101,8 +119,22 @@ def generateTable(dataframe, max_rows=200):
 # style_data, style_data_conditional, style_filter, style_filter_conditional, style_header, style_header_conditional, style_table
 
 
+def getColumnWidths():
+    return [{'start','10%'},{'stop','10%'},{'occurences','6%'},{'average','10%'},{'minimum','10%'},{'maximum','10%'}]
+
+
 def getColumns(dataframe):
-    return ([{'id': p, 'name': p} for p in dataframe.columns[1:]])
+    #([{'id': p, 'name': p} for p in dataframe.columns[1:]])
+    columns = [
+        {'id': 'name', 'name': 'Expense'},
+        {'id': 'start', 'name': 'First'},
+        {'id': 'stop', 'name': 'Last'},
+        {'id': 'occurences', 'name': 'Count'},
+        {'id': 'average', 'name': 'Avg Amount'},
+        {'id': 'minimum', 'name': 'Min Amount'},
+        {'id': 'maximum', 'name': 'Max Amount'}
+    ]
+    return columns
 
 def getData(dataframe, max_rows=200):
     return [
@@ -111,17 +143,10 @@ def getData(dataframe, max_rows=200):
         ]
 
 #=============================================================================================================
-def getTrackers(selected=None):
+def getTrackers():
     df = db.runQuery(Q_GETTRACKERS)
     dict = {}
-    if selected == None:
-        dict = {v[0]: v[1] for v in df.values}
-    else:
-        i=0
-        for v in df.values:
-            if i in selected:
-                dict[v[0]] = v[1]
-            i = i+1
+    dict = {v[0]: v[1] for v in df.values}
     return dict
 
 
@@ -173,13 +198,32 @@ layout = html.Div(children=[
 # Callbacks
 
 # Update the graph
-# TODO: use table data to convert selected rows into tracker ids instead of relying on indices
+# Edit tracker name
 @app.callback(
     Output('data', 'figure'),
-    [Input('dateRange', 'value'),Input('trackers','selected_rows')])
-def updateGraph(dateRange,selected):
-    figure = generateTimeSeries(getTrackers(selected), getDataPoints(), dateRange[0], dateRange[1])
+    [Input('dateRange', 'value'),Input('trackers','selected_rows'),Input('trackers', 'data')],
+    [State('trackers', 'data_previous'),State('trackers', 'active_cell')])
+def updateGraph(dateRange,selected,data,previous,cell):
+    #Update tracker name in DB
+    if cell is not None:
+        row=cell[0]
+        new=data[row]
+        old=previous[row]
+        id=new['id']
+        newName=new['name']
+        oldName = old['name']
+        if newName != oldName:
+            updateTrackerEntry(id, newName)
+
+    #Update graph
+    trackers = {}
+    for i in selected:
+        trackerId = data[i]['id']
+        trackerName = data[i]['name']
+        trackers[trackerId]=trackerName
+    figure = generateTimeSeries(trackers, getDataPoints(), dateRange[0], dateRange[1])
     return figure
+
 
 # Update the table
 @app.callback(
@@ -190,24 +234,17 @@ def updateTrackers(dateRange):
     data = getData(df)
     return data
 
-# Edit tracker name
-# TODO: combine with update graph
+
+# Hilghlight selected rows
 @app.callback(
-    Output('hidden', 'data-*'),
-    [Input('trackers', 'data')],
-    [State('trackers', 'data_previous'),State('trackers', 'active_cell')],
-    [Event('link', 'click')])
-def processInput(data,previous,cell):
-    if(cell != None):
-        row=cell[0]
-        new=data[row]
-        old=previous[row]
-        id=new['id']
-        newName=new['name']
-        oldName = old['name']
-        if newName != oldName:
-            updateTrackerEntry(id, newName)
-    return None
+    Output('trackers','style_data_conditional'),
+    [Input('trackers','selected_rows')])
+def highlightRows(selected):
+    style=[
+        {'if': {'row_index': i}, 'backgroundColor': '#d6fbff'} for i in selected
+    ]
+    return style
+
 
 def updateTrackerEntry(id,newName):
     tracker = RecurrentExpense.selectBy(id=id).getOne(None)
@@ -220,15 +257,11 @@ def updateTrackerEntry(id,newName):
 #https://stackoverflow.com/questions/9067892/how-to-align-two-elements-on-the-same-line-without-changing-html
 #https://community.plot.ly/t/two-graphs-side-by-side/5312
 
-# BUG: after renaming expense, the table no longer matches the names
-# TODO: automatically update graph names when renaming expense in report
-# TODO: format headers, rename columns
+# TODO: fix accent, active cell background and hover color
 # TODO: add currency symbols
 # TODO: make other columns non editable
 # TODO: use grid and columns to position and resize the graph and table
 # TODO: add alerts when expense deviates from expectations / norm
-# TODO: check what I can do with styling and selected rows. How do I apply css classes?
-# TODO: highlight selected rows
 # TODO: style as cards
 
 
