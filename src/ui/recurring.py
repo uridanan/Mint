@@ -66,6 +66,16 @@ def generateTable(dataframe, max_rows=200):
         # css=[{'selector': '.dash-cell div.dash-cell-value',
         #       'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
         # n_fixed_rows=1,
+        css=[
+            {
+                'selector': 'td.cell--selected, td.focused',
+                'rule': 'background-color: #d6fbff; --accent: #78daf1; text-align: left'
+            },
+            {
+                'selector': 'td.cell--selected *, td.focused *',
+                'rule': 'background-color: #d6fbff; --accent: #78daf1; text-align: left'
+            }
+        ],
         style_table={
             #'overflowY': 'scroll',
             #'maxHeight': '600',
@@ -257,7 +267,7 @@ def updateTrackerEntry(id,newName):
 #https://stackoverflow.com/questions/9067892/how-to-align-two-elements-on-the-same-line-without-changing-html
 #https://community.plot.ly/t/two-graphs-side-by-side/5312
 
-# TODO: fix accent, active cell background and hover color
+# TODO: fix hover color
 # TODO: add currency symbols
 # TODO: make other columns non editable
 # TODO: use grid and columns to position and resize the graph and table
