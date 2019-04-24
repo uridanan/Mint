@@ -8,7 +8,6 @@ from dash.dependencies import Input, Output
 #Am I better off getting the data via REST API or directly from DB?
 #It seems more direct to use the DB, I see no need for the overhead of APIs just yet
 
-#TODO Use my own CSS (would solve the scrollable problem)
 # https://dash.plot.ly/external-resources
 # https://github.com/plotly/dash/pull/171
 
@@ -43,4 +42,4 @@ def display_page(pageName):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True,host='localhost')
