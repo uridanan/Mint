@@ -3,3 +3,5 @@
 /src/entities/__pycache__
 /src/processors/__pycache__
 /src/ui/__pycache__
+src/credentials.json
+src/env.json
