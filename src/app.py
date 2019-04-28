@@ -1,9 +1,8 @@
 import os
 from src.environment import env
-import dash
+from src.myGoogleOAuth import MyGoogleOAuth
 from dash import Dash
 from flask import Flask
-from dash_google_auth import GoogleOAuth
 
 
 # How to build a multi-page app
@@ -24,13 +23,6 @@ server.secret_key = env['SERVER']['secret_key']
 server.config["GOOGLE_OAUTH_CLIENT_ID"] = env['GOOGLE_OAUTH']['client_id'] #os.environ["GOOGLE_OAUTH_CLIENT_ID"]
 server.config["GOOGLE_OAUTH_CLIENT_SECRET"] = env['GOOGLE_OAUTH']['client_secret'] #os.environ["GOOGLE_OAUTH_CLIENT_SECRET"]
 
-# server.config.update({
-#     'GOOGLE_OAUTH_CLIENT_ID': '',
-#     'GOOGLE_OAUTH_CLIENT_SECRET': '',
-#     'OAUTHLIB_RELAX_TOKEN_SCOPE': True,
-#     'OAUTHLIB_INSECURE_TRANSPORT': True
-# })
-
 # allow for insecure transport for local testing (remove in prod)
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
@@ -48,14 +40,16 @@ app = Dash(__name__, external_stylesheets=external_stylesheets, server=server, u
 app.config.suppress_callback_exceptions = True
 # app.config['suppress_callback_exceptions']=True
 
-auth = GoogleOAuth(app, authorized_emails, additional_scopes)
+auth = MyGoogleOAuth(app, authorized_emails, additional_scopes)
 
 
 @server.route("/")
 def MyDashApp():
     return app.index()
 
-# TODO: make sure env variables are not committed to GIT
-# TODO: figure out where to catch the user profile and use the hash
+
+# TODO: create login display in the sidebar
+# TODO: figure out what hash to use in the DB
 # TODO: figure out how to signout
 # TODO: figure out how to create a landing page with a Google Button before authenticating
+

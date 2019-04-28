@@ -6,9 +6,10 @@ import src.dbAccess as db
 from src.entities.businessEntry import BusinessEntry
 from src.entities.recurrentExpense import RecurrentExpense
 import plotly.graph_objs as go
-from src.app import app
+from src.app import app, auth
 from src.ui.timeseries import *
 from src.utils import *
+from flask import session
 
 #=============================================================================================================
 #TODO: Format using the example "Label Lines with Annotations" from https://plot.ly/python/line-charts/
@@ -192,7 +193,7 @@ trackersData = getDataPoints()
 #=============================================================================================================
 # Layout
 layout = html.Div(children=[
-    html.H4(children='Recurring Expenses - Work In Pogress',className="row"),
+    html.H4(id='title', children='Recurring Expenses - Work In Pogress',className="row"),
     dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(), trackersData), className="row"),
     html.Div(id='slider', className='padded',children=[generateDatesSlider(trackersData.getDates())]),
     html.Div(id='trackers_table', className="row", children=[
@@ -262,6 +263,15 @@ def updateTrackerEntry(id,newName):
         tracker.set(name=newName)
 
 
+@app.callback(
+    Output('title', 'children'),
+    [Input('hidden', 'value')]
+)
+def on_load(value):
+    resp = auth.getResp()
+    email = auth.getEmail()
+    return "Welcome, {}!".format(email)
+
 #=============================================================================================================
 
 #https://stackoverflow.com/questions/9067892/how-to-align-two-elements-on-the-same-line-without-changing-html
@@ -273,5 +283,4 @@ def updateTrackerEntry(id,newName):
 # TODO: use grid and columns to position and resize the graph and table
 # TODO: add alerts when expense deviates from expectations / norm
 # TODO: style as cards
-
 

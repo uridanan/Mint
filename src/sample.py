@@ -9,10 +9,39 @@ import dash_html_components as html
 
 from dash import Dash
 from dash.dependencies import Input, Output
-from flask import Flask, session
+from flask import Flask, session, abort
 from src.environment import env
 
 from dash_google_auth import GoogleOAuth
+from flask_dance.contrib.google import (
+    make_google_blueprint,
+    google,
+)
+
+class MyGoogleOAuth(GoogleOAuth):
+    def is_authorized(self):
+        if not google.authorized:
+            # send to google login
+            return False
+
+        self.resp = google.get("/oauth2/v2/userinfo")
+        assert self.resp.ok, self.resp.text
+
+        self.email = session['email'] = self.resp.json().get('email')
+        if self.email in self.authorized_emails:
+            # send to index
+            return True
+        else:
+            # unauthorized email
+            return abort(403)
+
+    def getResp(self):
+        return self.resp
+
+    def getEmail(self):
+        return self.email
+
+
 
 # configure app
 server = Flask(__name__)
@@ -35,7 +64,7 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 # designate list of authorized emails
 authorized_emails = env['GOOGLE_OAUTH']['authorized_emails']
 
-auth = GoogleOAuth(
+auth = MyGoogleOAuth(
     app,
     authorized_emails,
 )
@@ -71,6 +100,8 @@ app.layout = html.Div(children=[
     [Input('placeholder', 'value')]
 )
 def on_load(value):
+    resp = auth.getResp()
+    email = auth.getEmail()
     return "Welcome, {}!".format(session['email'])
 
 if __name__ == '__main__':
