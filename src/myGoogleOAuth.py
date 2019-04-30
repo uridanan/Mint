@@ -15,6 +15,9 @@ class MyGoogleOAuth(GoogleOAuth):
         assert self.resp.ok, self.resp.text
 
         self.email = session['email'] = self.resp.json().get('email')
+        self.id = session['id'] = self.resp.json().get('id')
+        self.name = session['name'] = self.resp.json().get('name')
+        self.picture = session['picture'] = self.resp.json().get('picture')
         if self.email in self.authorized_emails:
             # send to index
             return True

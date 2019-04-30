@@ -263,15 +263,6 @@ def updateTrackerEntry(id,newName):
         tracker.set(name=newName)
 
 
-@app.callback(
-    Output('title', 'children'),
-    [Input('hidden', 'value')]
-)
-def on_load(value):
-    resp = auth.getResp()
-    email = auth.getEmail()
-    return "Welcome, {}!".format(email)
-
 #=============================================================================================================
 
 #https://stackoverflow.com/questions/9067892/how-to-align-two-elements-on-the-same-line-without-changing-html

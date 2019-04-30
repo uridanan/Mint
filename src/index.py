@@ -11,6 +11,7 @@ from dash.dependencies import Input, Output
 # https://dash.plot.ly/external-resources
 # https://github.com/plotly/dash/pull/171
 
+from flask import session
 from src.app import app
 from src.ui import overview, monthly, recurring
 
@@ -20,6 +21,7 @@ from src.ui import overview, monthly, recurring
 app.layout = html.Div(children=[
     dcc.Location(id='url', refresh=False),
     html.Div(id='sidebar',className='sidebar',children=[
+        html.Div(id='user'),
         dcc.Link('Overview', href='overview'),
         dcc.Link('Monthly Reports', href='monthly'),
         dcc.Link('Recurring Expenses', href='recurring'),
@@ -28,6 +30,23 @@ app.layout = html.Div(children=[
     html.Div(id='content',className='content'),
 ])
 
+
+@app.callback(
+    Output('user', 'children'),
+    [Input('user', 'value')]
+)
+def on_load(value):
+    email = session['email']
+    id = session['id']
+    name = session['name']
+    picture = session['picture']
+    layout = html.Table([
+        html.Tr([
+            html.Td([html.Img(src=picture,width=64,height=64)]),
+            html.Td([html.P(name),html.P('Logout')])
+            ])
+        ])
+    return layout
 
 @app.callback(Output('content', 'children'),[dash.dependencies.Input('url', 'pathname')])
 def display_page(pageName):

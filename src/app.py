@@ -47,8 +47,8 @@ auth = MyGoogleOAuth(app, authorized_emails, additional_scopes)
 def MyDashApp():
     return app.index()
 
-
-# TODO: create login display in the sidebar
+# TODO: style the login display in the sidebar
+# TODO: add user to the DB
 # TODO: figure out what hash to use in the DB
 # TODO: figure out how to signout
 # TODO: figure out how to create a landing page with a Google Button before authenticating
