@@ -1,9 +1,10 @@
 # Extend the GoogleOAuth class to make the response available
 
-from flask import Flask, session, abort
+from flask import Flask, session, abort, redirect, url_for, Response
 from dash_google_auth import GoogleOAuth
 from flask_dance.contrib.google import google
 
+SIGNIN = '/landing'
 
 class MyGoogleOAuth(GoogleOAuth):
     def is_authorized(self):
@@ -23,10 +24,41 @@ class MyGoogleOAuth(GoogleOAuth):
             return True
         else:
             # unauthorized email
-            return abort(403)
+            return False  #self.login_fail()
+
+    def login_fail(self):
+        #return abort(403)
+        return redirect(SIGNIN)
+
+    def login_request(self):
+        # send to google auth page
+        # TODO: this is where I need to redirect to my login page
+        return redirect(SIGNIN)  #return redirect(url_for("google.login"))
+
+    def auth_wrapper(self, f):
+        def wrap(*args, **kwargs):
+            if not self.is_authorized():
+                return self.login_request()  #Response(status=403)
+
+            response = f(*args, **kwargs)
+            return response
+        return wrap
+
+    def index_auth_wrapper(self, original_index):
+        def wrap(*args, **kwargs):
+            if self.is_authorized():
+                return original_index(*args, **kwargs)
+            else:
+                return self.login_request()
+        return wrap
 
     def getResp(self):
         return self.resp
 
     def getEmail(self):
         return self.email
+
+    def logout(self):
+        if 'google_oauth_token' in session:
+            del session['google_oauth_token']
+        return redirect(SIGNIN)

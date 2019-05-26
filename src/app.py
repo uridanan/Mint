@@ -43,13 +43,19 @@ app.config.suppress_callback_exceptions = True
 auth = MyGoogleOAuth(app, authorized_emails, additional_scopes)
 
 
-@server.route("/")
-def MyDashApp():
-    return app.index()
-
 # TODO: style the login display in the sidebar
 # TODO: add user to the DB
 # TODO: figure out what hash to use in the DB
 # TODO: figure out how to signout
 # TODO: figure out how to create a landing page with a Google Button before authenticating
+
+# Use Cases
+# Signup: new user, add to DB
+# Signin: existing user, fetch from DB
+# Signout -- https://developers.google.com/identity/protocols/OAuth2WebServer
+
+# https://github.com/Chris3691/Dash-User-Management
+# https://github.com/RafaelMiquelino/dash-flask-login
+# TODO: the way to have a landing page with GoogleOAuth is to cancel the overwrite index method
+# TODO: to do this I need to write the index in such a way that I can't get anywhere from the index without being authenticated
 
