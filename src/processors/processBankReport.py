@@ -1,6 +1,6 @@
 from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
-from src.myString import myString
+from src.utils.myString import myString
 from abc import ABC, abstractmethod
 
 

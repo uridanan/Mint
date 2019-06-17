@@ -1,4 +1,4 @@
-from src.myString import myString
+from src.utils.myString import myString
 from datetime import datetime
 from src.processors.processXlsxFile import XLSXFile
 from src.processors.processCreditReport import CreditReport

@@ -1,7 +1,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import src.dbAccess as db
+import src.db.dbAccess as db
 from dash.dependencies import Input, Output, State
 
 #Am I better off getting the data via REST API or directly from DB?

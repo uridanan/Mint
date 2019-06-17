@@ -3,7 +3,7 @@ from openpyxl import load_workbook
 from src.entities.creditEntry import CreditEntry
 from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
-from src.myString import myString
+from src.utils.myString import myString
 from datetime import datetime
 
 

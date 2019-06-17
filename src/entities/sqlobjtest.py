@@ -1,5 +1,4 @@
 from sqlobject import *
-import src.connection
 
 
 class Person(SQLObject):

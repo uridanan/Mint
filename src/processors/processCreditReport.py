@@ -1,10 +1,8 @@
 from src.entities.creditEntry import CreditEntry
 from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
-from src.myString import myString
 from abc import ABC, abstractmethod
-from datetime import datetime,timedelta
-import src.dbAccess as db
+from datetime import datetime
 from sqlobject.sqlbuilder import AND
 
 

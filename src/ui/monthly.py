@@ -2,11 +2,11 @@ from dash.dependencies import Input, Output, State, Event
 import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
-import src.dbAccess as db
+import src.db.dbAccess as db
 from src.entities.businessEntry import BusinessEntry
 import plotly.graph_objs as go
 from src.app import app
-from src.utils import *
+from src.utils.utils import *
 
 F_GETMONTHS = 'src/queries/queryMonthSelector.sql'
 F_GETCATEGORIES = 'src/queries/queryCategoryFilter.sql'

@@ -1,8 +1,6 @@
 import pandas as pd
-import sqlalchemy
 from sqlalchemy import create_engine
-import psycopg2
-from src.myString import myString
+from src.utils.myString import myString
 
 
 #Get connection to DB

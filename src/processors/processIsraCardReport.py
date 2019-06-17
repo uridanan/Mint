@@ -1,8 +1,8 @@
-from src.myString import myString
+from src.utils.myString import myString
 from datetime import datetime
 from src.processors.processXlsFile import XLSFile
 from src.processors.processCreditReport import CreditReport
-from src.processors.processCreditReport import CardData
+
 
 # This report includes multiple cards for only for a single month
 # Because it is different from the other reports, we will override processRows

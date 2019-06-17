@@ -1,5 +1,5 @@
 from src.entities.recurrentExpense import RecurrentExpense
-import src.dbAccess as db
+import src.db.dbAccess as db
 
 # https://www.python-course.eu/python3_abstract_classes.php
 

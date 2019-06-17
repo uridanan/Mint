@@ -1,6 +1,4 @@
 from sqlobject import *
-import src.connection
-import src.dbAccess as db
 # from src.myString import myString
 from src.entities.bankEntry import BankEntry
 from src.entities.businessEntry import BusinessEntry

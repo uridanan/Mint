@@ -10,11 +10,10 @@ import dash_html_components as html
 from dash import Dash
 from dash.dependencies import Input, Output
 from flask import Flask, session, abort
-from src.environment import env
+from src.discarded.environment import env
 
 from dash_google_auth import GoogleOAuth
 from flask_dance.contrib.google import (
-    make_google_blueprint,
     google,
 )
 

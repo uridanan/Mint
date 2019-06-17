@@ -1,4 +1,4 @@
-from src.myString import myString
+from src.utils.myString import myString
 from bs4 import BeautifulSoup
 from datetime import datetime
 from decimal import Decimal

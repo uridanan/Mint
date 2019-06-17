@@ -2,12 +2,11 @@ from dash.dependencies import Input, Output, State, Event
 import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
-import src.dbAccess as db
-from src.entities.businessEntry import BusinessEntry
+import src.db.dbAccess as db
 import plotly.graph_objs as go
-from src.app import app
+from src.discarded.app import app
 from src.ui.timeseries import *
-from src.utils import *
+
 
 #=============================================================================================================
 #TODO: Format using the example "Label Lines with Annotations" from https://plot.ly/python/line-charts/

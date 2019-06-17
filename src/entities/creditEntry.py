@@ -1,7 +1,5 @@
-import sqlobject
 from sqlobject import *
-import src.connection
-from src.myString import myString
+
 
 # This class encapsulates methods to manipulate data entries
 # Including import / export methods

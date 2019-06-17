@@ -1,25 +1,14 @@
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
-
-
-
-#Am I better off getting the data via REST API or directly from DB?
-#It seems more direct to use the DB, I see no need for the overhead of APIs just yet
-
-# https://dash.plot.ly/external-resources
-# https://github.com/plotly/dash/pull/171
-
-from flask import session, redirect
-from src.app import app, auth
+from src.app import *
 from src.ui import overview, monthly, recurring
-from src import signin
 
+
+#=====================================================================================================================
+# Layout
+#=====================================================================================================================
+# Main layout, this is where your app goes
 # This layout displays a sidebar and page content
 # Create each layout in a separate dedicated file
-appLayout = html.Div(children=[
-    dcc.Location(id='url', refresh=False),
+indexLayout = html.Div(id='indexContent', children=[
     html.Div(id='sidebar',className='sidebar',children=[
         html.Div(id='user'),
         dcc.Link('Overview', href='overview'),
@@ -30,45 +19,63 @@ appLayout = html.Div(children=[
     html.Div(id='content',className='content'),
 ])
 
-app.layout = appLayout
 
-
+#=====================================================================================================================
+# Callbacks
+#=====================================================================================================================
+# Main callback, return a layout with a sidebar and content page
 @app.callback(
-    Output('user', 'children'),
-    [Input('user', 'value')]
+    Output('authorizedContent', 'children'),
+    [Input('url', 'pathname')]
 )
-def on_load(value):
-    email = auth.getEmail()  #session['email']
-    id = auth.getResp().json().get('id')  #session['id']
-    name = auth.getResp().json().get('name')  #session['name']
-    picture = auth.getResp().json().get('picture')  #session['picture']
-    layout = html.Table([
-        html.Tr([
-            html.Td([html.Img(src=picture,width=64,height=64)]),
-            html.Td([html.P(name),dcc.Link('Logout', href='logout')])
-            ])
-        ])
-    return layout
+def on_load(pageName):
+    return indexLayout
 
-@app.callback(Output(app.layout, 'children'),[dash.dependencies.Input('url', 'pathname')])
-def display_app(pageName):
-    if pageName == '/logout':
-        auth.logout()
-        return signin.layout
-    else:
-        return appLayout
 
-@app.callback(Output('content', 'children'),[dash.dependencies.Input('url', 'pathname')])
+# Multi-page callback, return the right layout based on the selected page
+@app.callback(
+    Output('content', 'children'),
+    [Input('url', 'pathname')]
+)
 def display_page(pageName):
-    if pageName == '/overview' or pageName == '/':
+    if pageName == '/overview':
         return overview.layout
     elif pageName == '/monthly':
         return monthly.layout
     elif pageName == '/recurring':
         return recurring.layout
     else:
-        return '/logout'
+        return overview.layout
 
 
+# Load the user element and logout link
+# This is here as an example. You will want to replace it with your own
+@app.callback(
+    Output('user', 'children'),
+    [Input('user', 'value')]
+)
+def on_load(value):
+    picture = ''
+    name = ''
+
+    if session.currentUser is not None:
+        email = session.currentUser.email
+        id = session.currentUser.id
+        name = session.currentUser.name
+        picture = session.currentUser.picture
+
+    layout = html.Table([
+        html.Tr([
+            html.Td([html.Img(src=picture,width=64,height=64)]),
+            html.Td([html.P(name),dcc.Link('Logout', href='revoke')])
+            ])
+        ])
+
+    return layout
+
+
+#runMyApp()
+hostName = env['SERVER']['host']
 if __name__ == '__main__':
-    app.run_server(debug=True,host='localhost')
+    app.run_server(debug=True,host=hostName)
+

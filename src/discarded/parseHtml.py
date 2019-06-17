@@ -2,7 +2,7 @@ import lxml
 from lxml.html.clean import Cleaner
 from bs4 import BeautifulSoup
 import requests
-from src.myString import myString
+from src.utils.myString import myString
 from src.entities.bankEntry import BankEntry
 from src.entities.businessEntry import BusinessEntry
 from datetime import datetime
