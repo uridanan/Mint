@@ -10,7 +10,17 @@ from src.ui import overview, monthly, recurring
 # Create each layout in a separate dedicated file
 indexLayout = html.Div(id='indexContent', children=[
     html.Div(id='sidebar',className='sidebar',children=[
-        html.Div(id='user'),
+        html.Div(id='user', children=[
+            html.Table(className='user', children=[
+                html.Tr(className='user', children=[
+                    html.Td(className='user', children=[html.Img(id="userPic",src="")]),
+                    html.Td(className='user', children=[
+                        html.P(id='userName',children=""),
+                        dcc.Link(id='logout', children='Logout', href='revoke')
+                    ])
+                ])
+            ])
+        ]),
         dcc.Link('Overview', href='overview'),
         dcc.Link('Monthly Reports', href='monthly'),
         dcc.Link('Recurring Expenses', href='recurring'),
@@ -51,30 +61,26 @@ def display_page(pageName):
 # Load the user element and logout link
 # This is here as an example. You will want to replace it with your own
 @app.callback(
-    Output('user', 'children'),
+    Output('userPic', 'src'),
     [Input('user', 'value')]
 )
 def on_load(value):
     picture = ''
-    name = ''
-
     if session.currentUser is not None:
-        email = session.currentUser.email
-        id = session.currentUser.id
-        name = session.currentUser.name
         picture = session.currentUser.picture
+    return picture
 
-    layout = html.Table([
-        html.Tr([
-            html.Td([html.Img(src=picture,width=64,height=64)]),
-            html.Td([html.P(name),dcc.Link('Logout', href='revoke')])
-            ])
-        ])
+@app.callback(
+    Output('userName', 'children'),
+    [Input('user', 'value')]
+)
+def on_load(value):
+    name = ''
+    if session.currentUser is not None:
+        name = session.currentUser.name
+    return name
 
-    return layout
 
-
-#runMyApp()
 hostName = env['SERVER']['host']
 if __name__ == '__main__':
     app.run_server(debug=True,host=hostName)

@@ -52,3 +52,48 @@ div.content {
     float: none;
   }
 }
+
+
+.user {
+    padding: 0px;
+    margin: 0px;
+    font-family: Verdana;
+    font-size: 14px;
+    text-align: center;
+    border: 0px;
+    box-sizing: border-box;
+    line-height: 0;
+}
+
+table.user {
+    width: 200px;
+    height: 70px;
+    border-bottom: 1px solid #555;
+    border-spacing: 0px;
+}
+
+td.user {
+    height: 70px;
+}
+
+#userPic {
+    width: 70px;
+    height: 70px;
+    align: left;
+}
+
+#userName {
+    height: 35px;
+    width: 130px;
+    padding: 16px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#logout {
+    height: 35px;
+    width: 130px;
+    margin: 0;
+    box-sizing: border-box;
+}
+

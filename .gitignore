@@ -1,5 +1,8 @@
 /inbox
 /src/__pycache__
+/src/db/__pycache__
+/src/sessions/__pycache__
+/src/utils/__pycache__
 /src/entities/__pycache__
 /src/processors/__pycache__
 /src/ui/__pycache__

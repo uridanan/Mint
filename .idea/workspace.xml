@@ -2,43 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66d37b08-2673-44d5-a55f-b7c77b26aeb0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/discarded/landing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/discarded/signin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/sidebar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dbAccess.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/dbAccess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/discarded/monthlyReportOld.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/monthlyReportOld.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/discarded/parseHtml.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/parseHtml.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/discarded/parseXslx.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/parseXslx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/bankEntry.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/bankEntry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/businessEntry.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/businessEntry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/creditEntry.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/creditEntry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/recurrentExpense.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/recurrentExpense.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/sqlobjtest.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/sqlobjtest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/googlesignin.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/googlesignin.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/index.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/landing.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/myClass.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/myClass.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/myGoogleOAuth.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/myGoogleOAuth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/myString.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/myString.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/markRecurrentExpenses.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/markRecurrentExpenses.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/processBankReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processBankReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/processCreditReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processCreditReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/processIsraCardReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processIsraCardReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/processLeumiCardReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processLeumiCardReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/processLeumiReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processLeumiReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/processors/processVisaCalReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/processVisaCalReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/sample.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/signin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/discarded/signin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/monthly.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/monthly.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/overview.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/overview.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/recurring - backup.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/recurring - backup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/recurring.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/recurring.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/clarity.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/static/clarity.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/sidebar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/discarded/bWLwgP.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/bWLwgP.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/index.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="45" column="31" lean-forward="true" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
+            <state relative-caret-position="289">
+              <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -63,11 +32,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/templates/signin.html">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assets/sidebar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+            <state relative-caret-position="170">
+              <caret line="10" selection-start-line="10" selection-end-line="22" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assets/sidebar.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="742">
+              <caret line="96" column="27" lean-forward="true" selection-start-line="96" selection-start-column="27" selection-end-line="96" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -116,11 +94,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/ui/monthlyReport.py" />
-        <option value="$PROJECT_DIR$/src/myApp.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/queries/queryRecurringExpenses.sql" />
-        <option value="$PROJECT_DIR$/src/queries/cleanDB.sql" />
         <option value="$PROJECT_DIR$/src/queries/queryRecurringByAmount.sql" />
         <option value="$PROJECT_DIR$/src/queries/queryRecurringByBusiness.sql" />
         <option value="$PROJECT_DIR$/src/queries/markRecurringByAmount.sql" />
@@ -161,12 +134,17 @@
         <option value="$PROJECT_DIR$/src/discarded/app.py" />
         <option value="$PROJECT_DIR$/src/env.json" />
         <option value="$PROJECT_DIR$/src/skeleton/index.py" />
-        <option value="$PROJECT_DIR$/src/index.py" />
         <option value="$PROJECT_DIR$/src/sessions/environment.py" />
         <option value="$PROJECT_DIR$/src/ui/overview.py" />
         <option value="$PROJECT_DIR$/src/ui/monthly.py" />
         <option value="$PROJECT_DIR$/src/ui/recurring.py" />
+        <option value="$PROJECT_DIR$/src/templates/signin.css" />
+        <option value="$PROJECT_DIR$/src/static/signin.css" />
         <option value="$PROJECT_DIR$/src/templates/signin.html" />
+        <option value="$PROJECT_DIR$/src/templates/sidebar.html" />
+        <option value="$PROJECT_DIR$/src/assets/sidebar.html" />
+        <option value="$PROJECT_DIR$/src/assets/sidebar.css" />
+        <option value="$PROJECT_DIR$/src/index.py" />
       </list>
     </option>
   </component>
@@ -204,13 +182,13 @@
               <item name="Mint" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mint" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Mint" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mint" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -221,23 +199,23 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/assets" />
     <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitHub\Mint\src\assets" />
+      <recent name="D:\GitHub\Mint\src\static" />
+      <recent name="D:\GitHub\Mint\src\templates" />
       <recent name="D:\GitHub\Mint\src\db" />
       <recent name="D:\GitHub\Mint\src\utils" />
-      <recent name="D:\GitHub\Mint\src" />
-      <recent name="D:\GitHub\Mint\src\discarded" />
-      <recent name="D:\GitHub\Mint\src\templates" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GitHub\Mint\src\assets" />
       <recent name="D:\GitHub\Mint\src" />
       <recent name="D:\GitHub\Mint\src\ui" />
       <recent name="D:\GitHub\Mint\src\entities" />
       <recent name="D:\GitHub\Mint\src\queries" />
-      <recent name="D:\GitHub\Mint\src\assets" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -449,7 +427,7 @@
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6443625" weight="0.32827735" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="5" sideWeight="0.6101159" visible="true" weight="0.3856988" />
+      <window_info anchor="bottom" id="Debug" order="5" sideWeight="0.6101159" weight="0.3856988" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.6238145" weight="0.32827735" />
       <window_info anchor="bottom" id="Console" order="7" />
       <window_info anchor="bottom" id="DB Execution Console" order="8" sideWeight="0.5837724" weight="0.37811485" />
@@ -611,24 +589,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/discarded/tables.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="20" column="21" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/googlecredentials.json" />
-    <entry file="file://$PROJECT_DIR$/../MyDataReader/jsonFile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="13" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/discarded/environment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -969,20 +929,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.py">
+    <entry file="file://$PROJECT_DIR$/src/static/signin.css" />
+    <entry file="file://$PROJECT_DIR$/src/templates/signin.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="45" column="31" lean-forward="true" selection-start-line="45" selection-start-column="31" selection-end-line="45" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="527">
+          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/signin.html">
+    <entry file="file://$PROJECT_DIR$/src/assets/sidebar.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        <state relative-caret-position="742">
+          <caret line="96" column="27" lean-forward="true" selection-start-line="96" selection-start-column="27" selection-end-line="96" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assets/sidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="22" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
