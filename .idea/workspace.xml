@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="66d37b08-2673-44d5-a55f-b7c77b26aeb0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/clarity.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/static/clarity.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/sidebar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/discarded/bWLwgP.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/bWLwgP.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.py" afterDir="false" />
-    </list>
+    <list default="true" id="66d37b08-2673-44d5-a55f-b7c77b26aeb0" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +13,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/index.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
@@ -32,8 +25,17 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/templates/signin.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="535">
+              <caret line="73" selection-start-line="73" selection-end-line="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/assets/sidebar.html">
+        <entry file="file://$PROJECT_DIR$/src/discarded/sidebar.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
               <caret line="10" selection-start-line="10" selection-end-line="22" selection-end-column="10" />
@@ -140,11 +142,11 @@
         <option value="$PROJECT_DIR$/src/ui/recurring.py" />
         <option value="$PROJECT_DIR$/src/templates/signin.css" />
         <option value="$PROJECT_DIR$/src/static/signin.css" />
-        <option value="$PROJECT_DIR$/src/templates/signin.html" />
         <option value="$PROJECT_DIR$/src/templates/sidebar.html" />
         <option value="$PROJECT_DIR$/src/assets/sidebar.html" />
         <option value="$PROJECT_DIR$/src/assets/sidebar.css" />
         <option value="$PROJECT_DIR$/src/index.py" />
+        <option value="$PROJECT_DIR$/src/templates/signin.html" />
       </list>
     </option>
   </component>
@@ -204,11 +206,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitHub\Mint\src\discarded" />
       <recent name="D:\GitHub\Mint\src\assets" />
       <recent name="D:\GitHub\Mint\src\static" />
       <recent name="D:\GitHub\Mint\src\templates" />
       <recent name="D:\GitHub\Mint\src\db" />
-      <recent name="D:\GitHub\Mint\src\utils" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\GitHub\Mint\src\assets" />
@@ -424,7 +426,7 @@
       <window_info id="Job Explorer" order="5" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49894625" weight="0.32827735" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6443625" weight="0.32827735" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6443625" visible="true" weight="0.32827735" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Debug" order="5" sideWeight="0.6101159" weight="0.3856988" />
@@ -930,13 +932,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/static/signin.css" />
-    <entry file="file://$PROJECT_DIR$/src/templates/signin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assets/sidebar.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="742">
@@ -944,7 +939,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assets/sidebar.html">
+    <entry file="file://$PROJECT_DIR$/src/discarded/sidebar.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" selection-start-line="10" selection-end-line="22" selection-end-column="10" />
@@ -958,6 +953,13 @@
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/signin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
         </state>
       </provider>
     </entry>
