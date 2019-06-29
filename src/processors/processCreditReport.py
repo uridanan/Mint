@@ -4,6 +4,7 @@ from src.entities.bankEntry import BankEntry
 from abc import ABC, abstractmethod
 from datetime import datetime
 from sqlobject.sqlbuilder import AND
+from src.sessions.globals import session
 
 
 class CardData:
@@ -119,14 +120,14 @@ class CreditReport(ABC):
         business = self.getBusinessEntry(businessName)
         entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business.id,
                             cardNumber=cardNumber, bankId="0", credit=self.credit(amount), debit=self.debit(amount),
-                            balance=0, trackerId=0)
+                            balance=0, trackerId=0, userId=session.getUserId())
         #entry.toCSV()
         return entry
 
     def getBusinessEntry(self,businessName):
-        business = BusinessEntry.selectBy(businessName=businessName).getOne(None)
+        business = BusinessEntry.selectBy(businessName=businessName,userId=session.getUserId()).getOne(None)
         if (business == None):
-            business = BusinessEntry(businessName=businessName, marketingName=businessName, category="")
+            business = BusinessEntry(businessName=businessName, marketingName=businessName, category="", userId=session.getUserId())
         return business
 
     #lookup by month and amount
@@ -137,7 +138,7 @@ class CreditReport(ABC):
         # delta = timedelta(days=3)
         # start = reportDate - delta
         # end = reportDate + delta
-        bList = BankEntry.select( AND( BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == card.total) )
+        bList = BankEntry.select( AND( BankEntry.q.userId == session.getUserId(), BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == card.total) )
         for b in bList:
             b.hide = 1
 

@@ -5,6 +5,6 @@
 SELECT debit, COUNT(*), min(date) as first, max(date) as last
 FROM bank_entry as BA
 INNER JOIN business_entry as BU ON BU.id = BA.business
-WHERE (marketing_name ~ '.*check.*')
+WHERE (marketing_name ~ '.*check.*') AND BA.user_id = <userid>
 GROUP BY debit
 HAVING COUNT(*) > 3

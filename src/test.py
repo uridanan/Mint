@@ -1,11 +1,17 @@
+import src.db.connection
 from src.processors.markRecurrentExpenses import ExpenseTracker
 from src.processors.processLeumiReport import LeumiReport
 from src.processors.processVisaCalReport import VisaCalReport
 from src.processors.processLeumiCardReport import LeumiCardReport
 from src.processors.processIsraCardReport import IsraCardReport
 from datetime import datetime
+from src.sessions.globals import session
+from src.user import User
 
 # TODO: change to XLS instead of XLSX
+
+
+
 def testImportVISACALReport():
     fileName = "inbox/7872_8547_0205218_Transactions_30_05_2018.xlsx"
     visaCal = VisaCalReport(fileName)
@@ -31,7 +37,19 @@ def testExpenseTracker():
     run = ExpenseTracker()
     run.process()
 
+def clearDB():
+    pass
+
+def startFakeSession():
+    tokenInfo = dict()
+    tokenInfo['sub'] = '0'
+    tokenInfo['email'] = 'fakeuser@clarity.com'
+    tokenInfo['name'] = 'Fake User'
+    tokenInfo['picture'] = ''
+    session.currentUser = User(tokenInfo)
+
 def main():
+    startFakeSession()
     testImportLeumiReport()
     testImportIsraCardReport()
     testImportVISACALReport()

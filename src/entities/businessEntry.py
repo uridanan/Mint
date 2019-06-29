@@ -8,6 +8,7 @@ class BusinessEntry(SQLObject):
     businessName = StringCol()
     marketingName = StringCol()
     category = StringCol()
+    userId = StringCol()
 
 
     def toCSV(self):

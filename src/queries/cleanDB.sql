@@ -1,6 +1,7 @@
 drop table bank_entry
 drop table credit_entry
 drop table business_entry
+drop table recurrent_expense
 
 select * from bank_entry
 select * from credit_entry

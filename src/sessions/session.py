@@ -28,6 +28,12 @@ class Session:
         #If user not found in DB, create new
         return User(tokenInfo)
 
+    def getUserId(self):
+        if self.currentUser is not None:
+            return self.currentUser.id
+        else:
+            return None
+
     def logout(self):
         self.currentUser = None
         self.oAuth.revokeToken(self.token)

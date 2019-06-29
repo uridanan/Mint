@@ -2,6 +2,7 @@ from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
 from src.utils.myString import myString
 from abc import ABC, abstractmethod
+from src.sessions.globals import session
 
 
 # TODO: handle the case when the credit report is imported before the bank report
@@ -28,15 +29,15 @@ class BankReport(ABC):
             return None
 
         business = self.getBusinessEntry(businessName)
-        entry = BankEntry(date=date, business=business.id, hide=0, refId=refId, credit=credit, debit=debit, balance=balance, trackerId=0)
+        entry = BankEntry(date=date, business=business.id, hide=0, refId=refId, credit=credit, debit=debit, balance=balance, trackerId=0, userId=session.getUserId())
         entry.toCSV() # for debugging, find a better way to log only when in debug mode
         return entry
 
     def getBusinessEntry(self,businessName):
-        business = BusinessEntry.selectBy(businessName=businessName).getOne(None)
+        business = BusinessEntry.selectBy(businessName=businessName, userId=session.getUserId()).getOne(None)
         if (business == None):
             marketingName = businessName.replace('שיק','check')
-            business = BusinessEntry(businessName=businessName, marketingName=marketingName, category="")
+            business = BusinessEntry(businessName=businessName, marketingName=marketingName, category="", userId=session.getUserId())
         return business
 
     def renameChecks(self, name):

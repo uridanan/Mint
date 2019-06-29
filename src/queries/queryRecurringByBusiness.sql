@@ -10,6 +10,8 @@ FROM
     bank_entry
 WHERE
     debit > 0
+AND
+    user_id = <userid>
 GROUP BY
     business
 HAVING
@@ -28,6 +30,8 @@ FROM
     credit_entry
 WHERE
     debit > 0
+AND
+    user_id = <userid>
 GROUP BY
     business
 HAVING

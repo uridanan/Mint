@@ -1,5 +1,6 @@
 from src.entities.recurrentExpense import RecurrentExpense
 import src.db.dbAccess as db
+from src.sessions.globals import session
 
 # https://www.python-course.eu/python3_abstract_classes.php
 
@@ -23,18 +24,21 @@ class ExpenseTracker():
         RecurrentExpense.createTable(ifNotExists=True)
 
     def getExpenseTrackerByBusiness(self,businessId):
-        tracker = RecurrentExpense.selectBy(businessId=businessId).getOne(None)
+        tracker = RecurrentExpense.selectBy(businessId=businessId, userId=session.getUserId()).getOne(None)
         return tracker
 
     def getExpenseTrackerByAmount(self,amount):
-        tracker = RecurrentExpense.selectBy(amount=amount).getOne(None)
+        tracker = RecurrentExpense.selectBy(amount=amount, userId=session.getUserId()).getOne(None)
         return tracker
 
     def queryByBusiness(self):
+        # params = [
+        #     {'name': 'mincount', 'value': [self.minOccurrences]}
+        # ]
         params = [
-            {'name': 'mincount', 'value': [self.minOccurrences]}
+            {'name': 'userid', 'value': [session.getUserId()]}
         ]
-        dataSet = db.runQueryFromFile(self.F_RECURRINGBYBUSINESS) #, params)
+        dataSet = db.runQueryFromFile(self.F_RECURRINGBYBUSINESS, params)
         for row in dataSet.values:
             name = row[2] #StringCol()
             businessId = row[0] #IntCol()
@@ -51,7 +55,7 @@ class ExpenseTracker():
             if (tracker == None):
                 tracker = RecurrentExpense(businessId=businessId, name=name, type=type, amount=amount,
                                            count=count, startDate=startDate, lastDate=lastDate,
-                                           avgAmount=avgAmount, minAmount=minAmount, maxAmount=maxAmount)
+                                           avgAmount=avgAmount, minAmount=minAmount, maxAmount=maxAmount, userId=session.getUserId())
                 print('New expense tracked by business ' + str(businessId))
             else:
                 tracker.update(businessId, name, type, amount,
@@ -64,10 +68,13 @@ class ExpenseTracker():
         return
 
     def queryByAmount(self):
+        # params = [
+        #     {'name': 'mincount', 'value': [self.minOccurrences]}
+        # ]
         params = [
-            {'name': 'mincount', 'value': [self.minOccurrences]}
+            {'name': 'userid', 'value': [session.getUserId()]}
         ]
-        dataSet = db.runQueryFromFile(self.F_RECURRINGBYAMOUNT)
+        dataSet = db.runQueryFromFile(self.F_RECURRINGBYAMOUNT, params)
         for row in dataSet.values:
             # debit, COUNT(*), min(date) as first, max(date) as last
             amount = row[0]  # CurrencyCol()
@@ -92,7 +99,7 @@ class ExpenseTracker():
             if (tracker == None):
                 tracker = RecurrentExpense(businessId=0, name=name, type=type, amount=amount,
                                            count=count, startDate=startDate, lastDate=lastDate,
-                                           avgAmount=avgAmount, minAmount=minAmount, maxAmount=maxAmount)
+                                           avgAmount=avgAmount, minAmount=minAmount, maxAmount=maxAmount, userId=session.getUserId())
                 print('New expense tracked by amount ' + str(amount))
             else:
                 tracker.update(0, name, type, amount,
@@ -109,8 +116,8 @@ class ExpenseTracker():
         self.queryByBusiness()
         self.queryByAmount()
 
-    def markByBusiness(self):
-        dataSet = db.runQueryFromFile(self.F_RECURRINGBYAMOUNT)
+    # def markByBusiness(self):
+    #     dataSet = db.runQueryFromFile(self.F_RECURRINGBYAMOUNT)
 
     def markRecurringExpenses(self):
         for t in self.trackers:
