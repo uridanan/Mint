@@ -32,7 +32,10 @@ class Session:
         if self.currentUser is not None:
             return self.currentUser.id
         else:
-            return None
+            return '0'  #it's probably safer to return None. That would raise an exception
+
+    def getUserIdParam(self):
+        return [{'name': 'userid', 'value': [self.getUserId()]}]
 
     def logout(self):
         self.currentUser = None

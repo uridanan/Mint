@@ -35,10 +35,8 @@ class ExpenseTracker():
         # params = [
         #     {'name': 'mincount', 'value': [self.minOccurrences]}
         # ]
-        params = [
-            {'name': 'userid', 'value': [session.getUserId()]}
-        ]
-        dataSet = db.runQueryFromFile(self.F_RECURRINGBYBUSINESS, params)
+
+        dataSet = db.runQueryFromFile(self.F_RECURRINGBYBUSINESS, session.getUserIdParam())
         for row in dataSet.values:
             name = row[2] #StringCol()
             businessId = row[0] #IntCol()
@@ -71,10 +69,7 @@ class ExpenseTracker():
         # params = [
         #     {'name': 'mincount', 'value': [self.minOccurrences]}
         # ]
-        params = [
-            {'name': 'userid', 'value': [session.getUserId()]}
-        ]
-        dataSet = db.runQueryFromFile(self.F_RECURRINGBYAMOUNT, params)
+        dataSet = db.runQueryFromFile(self.F_RECURRINGBYAMOUNT, session.getUserIdParam())
         for row in dataSet.values:
             # debit, COUNT(*), min(date) as first, max(date) as last
             amount = row[0]  # CurrencyCol()

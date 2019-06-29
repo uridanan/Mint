@@ -7,6 +7,7 @@ from src.entities.recurrentExpense import RecurrentExpense
 import plotly.graph_objs as go
 from src.app import app
 from src.ui.timeseries import *
+from src.sessions.globals import session
 
 
 #=============================================================================================================
@@ -153,14 +154,14 @@ def getData(dataframe, max_rows=200):
 
 #=============================================================================================================
 def getTrackers():
-    df = db.runQuery(Q_GETTRACKERS)
+    df = db.runQuery(Q_GETTRACKERS,session.getUserIdParam())
     dict = {}
     dict = {v[0]: v[1] for v in df.values}
     return dict
 
 
 def getDataPoints():
-    dataFrame = db.runQueryFromFile(F_GETRECURRINGDATA)
+    dataFrame = db.runQueryFromFile(F_GETRECURRINGDATA, session.getUserIdParam())
     dataPoints = TimeSeriesData(dataFrame)
     return dataPoints
 
@@ -177,12 +178,13 @@ def getDates(dateRange):
 def generateTrackersReport(dateRange):
     params = [
         {'name': 'start', 'value': [dateRange[0]]},
-        {'name': 'stop', 'value': [dateRange[1]]}
+        {'name': 'stop', 'value': [dateRange[1]]},
+        {'name': 'userid', 'value': [session.getUserId()]}
     ]
     return db.runQueryFromFile(F_TRACKERS, params)
 
 F_TRACKERS = 'src/queries/queryTrackersFromTo.sql'
-Q_GETTRACKERS = 'select * from recurrent_expense'
+Q_GETTRACKERS = 'select * from recurrent_expense where user_id = <userid>'
 F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
 
 
@@ -192,7 +194,8 @@ trackersData = getDataPoints()
 # Layout
 layout = html.Div(children=[
     html.H4(id='title', children='Recurring Expenses - Work In Pogress',className="row"),
-    dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(), trackersData), className="row"),
+    #dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(), trackersData), className="row"),
+    dcc.Graph(id='data', className="row"),
     html.Div(id='slider', className='padded',children=[generateDatesSlider(trackersData.getDates())]),
     html.Div(id='trackers_table', className="row", children=[
         html.Div(className="one column"),
@@ -227,9 +230,10 @@ def updateGraph(dateRange,selected,data,previous,cell):
     #Update graph
     trackers = {}
     for i in selected:
-        trackerId = data[i]['id']
-        trackerName = data[i]['name']
-        trackers[trackerId]=trackerName
+        if i < len(data):
+            trackerId = data[i]['id']
+            trackerName = data[i]['name']
+            trackers[trackerId]=trackerName
     figure = generateTimeSeries(trackers, getDataPoints(), dateRange[0], dateRange[1])
     return figure
 
@@ -256,7 +260,7 @@ def highlightRows(selected):
 
 
 def updateTrackerEntry(id,newName):
-    tracker = RecurrentExpense.selectBy(id=id).getOne(None)
+    tracker = RecurrentExpense.selectBy(id=id,userId=session.getUserId()).getOne(None)
     if tracker is not None:
         tracker.set(name=newName)
 
