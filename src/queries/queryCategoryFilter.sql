@@ -1,1 +1,1 @@
-select distinct category, category from business_entry order by category
+select distinct category, category from business_entry where user_id = <userid> order by category

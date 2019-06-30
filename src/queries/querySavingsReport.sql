@@ -9,5 +9,6 @@ to_char(date, 'YYYY-MM') as month,
 sum(credit) as monthlycredit,
 sum(debit) as monthlydebit
 from bank_entry
+where user_id = <userid>
 group by month
 order by month) as A

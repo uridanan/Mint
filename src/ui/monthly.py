@@ -7,6 +7,7 @@ from src.entities.businessEntry import BusinessEntry
 import plotly.graph_objs as go
 from src.app import app
 from src.utils.utils import *
+from src.sessions.globals import session
 
 F_GETMONTHS = 'src/queries/queryMonthSelector.sql'
 F_GETCATEGORIES = 'src/queries/queryCategoryFilter.sql'
@@ -92,32 +93,35 @@ def getAllCategories(dataframe):
 def generateMonthlyReport(month,categories):
     params = [
         {'name': 'month', 'value': [month]},
-        {'name': 'filter', 'value': categories}
+        {'name': 'filter', 'value': categories},
+        {'name': 'userid', 'value': [session.getUserId()]}
     ]
     return db.runQueryFromFile(F_MONTHLY, params)
 
 def generatePieChartData(month,categories):
     params = [
         {'name': 'month', 'value': [month]},
-        {'name': 'filter', 'value': categories}
+        {'name': 'filter', 'value': categories},
+        {'name': 'userid', 'value': [session.getUserId()]}
     ]
     return db.runQueryFromFile(F_MONTHLYBYCATEGORY, params)
 
 #=============================================================================================================
 
-selectableMonths = db.runQueryFromFile(F_GETMONTHS)
-categories_df = db.runQueryFromFile(F_GETCATEGORIES)
+selectableMonths = db.runQueryFromFile(F_GETMONTHS, session.getUserIdParam())
+categories_df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
 categories_list = getAllCategories(categories_df)
 defaultMonth = selectableMonths.iloc[0][1]
 reportData = generateMonthlyReport(defaultMonth,categories_list)
 graphData = generatePieChartData(defaultMonth,categories_list)
 
+#TODO: create months and categories dropdowns in callbacks, otherwise they use userId=0
 layout = html.Div(children=[
     html.H4(children='Editable Expense Report - Work In Pogress'),
-    generateMonthSelector(selectableMonths),
-    generateCategorySelector(categories_df),
+    dcc.Dropdown(id='selectMonth', multi=False),  #generateMonthSelector(selectableMonths),
+    dcc.Dropdown(id='filterCategories', multi=True),  #generateCategorySelector(categories_df),
     generateTable(reportData),
-    dcc.Graph(id='pieChart',figure=generatePieChart(graphData)),
+    dcc.Graph(id='pieChart'),
     html.Div(id='output'),
     html.A(id='link')
 ])

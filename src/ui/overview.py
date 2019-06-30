@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 from src.app import app
 from src.ui.timeseries import *
+from src.sessions.globals import session
 
 
 
@@ -156,14 +157,12 @@ F_GETCATEGORIES = 'src/queries/queryCategoryFilter.sql'
 F_CATEGORIESOVERTIME = 'src/queries/queryExpensesByCategoryOverTime.sql'
 
 def getCategories():
-    df = db.runQueryFromFile(F_GETCATEGORIES)
+    df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
     list = [v[0] for v in df.values]
     return list
 
-balanceData = db.runQueryFromFile(F_BALANCE)
-savingsData = db.runQueryFromFile(F_SAVINGS)
 #categories = getCategories()
-categoriesData = db.runQueryFromFile(F_CATEGORIESOVERTIME)
+
 
 
 layout = html.Div(children=[
@@ -174,19 +173,22 @@ layout = html.Div(children=[
         dcc.Tab(label='IncomeVSExpenses', value='tab3')
     ]),
     html.Div(id='tabsContent'),
-    dcc.Graph(id='byCategory',figure=generateTimeSeries(getCategories(),categoriesData))
+    dcc.Graph(id='byCategory')
 ])
 
 
 @app.callback(Output('byCategory', 'figure'),
               [Input('title', 'value')])
 def updateCategoriesGraph(title):
+    categoriesData = db.runQueryFromFile(F_CATEGORIESOVERTIME, session.getUserIdParam())
     return generateTimeSeries(getCategories(), categoriesData)
 
 
 @app.callback(Output('tabsContent', 'children'),
               [Input('tabs', 'value')])
 def render_content(tab):
+    balanceData = db.runQueryFromFile(F_BALANCE, session.getUserIdParam())
+    savingsData = db.runQueryFromFile(F_SAVINGS, session.getUserIdParam())
     if tab == 'tab1':
         return html.Div([
             html.H3('Balance over time'),
