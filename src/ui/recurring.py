@@ -188,7 +188,7 @@ Q_GETTRACKERS = 'select * from recurrent_expense where user_id = <userid>'
 F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
 
 
-trackersData = getDataPoints()
+#trackersData = getDataPoints()
 
 #=============================================================================================================
 # Layout
@@ -196,7 +196,8 @@ layout = html.Div(children=[
     html.H4(id='title', children='Recurring Expenses - Work In Pogress',className="row"),
     #dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(), trackersData), className="row"),
     dcc.Graph(id='data', className="row"),
-    html.Div(id='slider', className='padded',children=[generateDatesSlider(trackersData.getDates())]),
+    #html.Div(id='slider', className='padded',children=[generateDatesSlider(trackersData.getDates())]),
+    html.Div(id='slider', className='padded'),
     html.Div(id='trackers_table', className="row", children=[
         html.Div(className="one column"),
         html.Div(className="ten columns", children=[generateTable(generateTrackersReport(getDates([13,16])))]),
@@ -208,6 +209,17 @@ layout = html.Div(children=[
 
 #=============================================================================================================
 # Callbacks
+
+
+@app.callback(
+    Output('slider', 'children'),
+    [Input('title', 'children')]
+)
+def updateSlider(title):
+    trackersData = getDataPoints()
+    slider = generateDatesSlider(trackersData.getDates())
+    return slider
+
 
 # Update the graph
 # Edit tracker name
@@ -277,3 +289,6 @@ def updateTrackerEntry(id,newName):
 # TODO: add alerts when expense deviates from expectations / norm
 # TODO: style as cards
 
+# TODO: fix the slider, extract data per user ID
+# TODO: inconsistent data, some months have trackers, some months don't ???
+# TODO: cancel commit of signin.HTML and test.py with my google ID

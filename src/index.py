@@ -1,3 +1,4 @@
+import src.db.connection
 from src.app import *
 from src.ui import overview, monthly, recurring
 

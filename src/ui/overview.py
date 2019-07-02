@@ -178,7 +178,7 @@ layout = html.Div(children=[
 
 
 @app.callback(Output('byCategory', 'figure'),
-              [Input('title', 'value')])
+              [Input('title', 'children')])
 def updateCategoriesGraph(title):
     categoriesData = db.runQueryFromFile(F_CATEGORIESOVERTIME, session.getUserIdParam())
     return generateTimeSeries(getCategories(), categoriesData)

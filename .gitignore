@@ -8,3 +8,5 @@
 /src/ui/__pycache__
 src/credentials.json
 src/env.json
+src/discarded/signin.html
+src/discarded/env.json

@@ -68,13 +68,15 @@ def getData(dataframe, max_rows=200):
 def generateDropDown(name,values,enableMultipleSelect,default):
     selector = dcc.Dropdown(
         id=name,
-        options=[
-            {'label': values.values[i][0], 'value': values.values[i][1]}
-            for i in range(len(values))],
+        options=getDropDownData(values),
         multi=enableMultipleSelect,
         value=default
     )
     return selector
+
+def getDropDownData(values):
+    return [ {'label': values.values[i][0], 'value': values.values[i][1]}
+            for i in range(len(values)) ]
 
 # Inject output into the monthly report query
 def generateMonthSelector(months):
@@ -108,16 +110,18 @@ def generatePieChartData(month,categories):
 
 #=============================================================================================================
 
-selectableMonths = db.runQueryFromFile(F_GETMONTHS, session.getUserIdParam())
-categories_df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
-categories_list = getAllCategories(categories_df)
-defaultMonth = selectableMonths.iloc[0][1]
-reportData = generateMonthlyReport(defaultMonth,categories_list)
-graphData = generatePieChartData(defaultMonth,categories_list)
+### Run all these queries on load and update layout accordingly
+#categories_df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
+#categories_list = getAllCategories(categories_df)
+#selectableMonths = db.runQueryFromFile(F_GETMONTHS, session.getUserIdParam())
+#defaultMonth = selectableMonths.iloc[0][1]
+#reportData = generateMonthlyReport(defaultMonth,categories_list)
+#graphData = generatePieChartData(defaultMonth,categories_list)
+reportData = generateMonthlyReport(None,[''])
 
-#TODO: create months and categories dropdowns in callbacks, otherwise they use userId=0
+### Create months and categories dropdowns in callbacks, otherwise they use userId=0
 layout = html.Div(children=[
-    html.H4(children='Editable Expense Report - Work In Pogress'),
+    html.H4(id='title', children='Editable Expense Report - Work In Pogress'),
     dcc.Dropdown(id='selectMonth', multi=False),  #generateMonthSelector(selectableMonths),
     dcc.Dropdown(id='filterCategories', multi=True),  #generateCategorySelector(categories_df),
     generateTable(reportData),
@@ -134,6 +138,36 @@ layout = html.Div(children=[
 #TODO: add a label for undefined category
 #TODO: handle exceptions
 #https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
+
+
+@app.callback(
+    Output('selectMonth', 'options'),
+    [Input('title', 'children')]
+)
+def updateMonthSelector(title):
+    selectableMonths = db.runQueryFromFile(F_GETMONTHS, session.getUserIdParam())
+    months = getDropDownData(selectableMonths)
+    return months
+
+
+@app.callback(
+    Output('selectMonth', 'value'),
+    [Input('selectMonth', 'options')]
+)
+def updateDefaultMonth(selectableMonths):
+    defaultMonth = selectableMonths[0]['value']
+    return defaultMonth
+
+
+@app.callback(
+    Output('filterCategories', 'options'),
+    [Input('title', 'children'),Input('output', 'data-*')]
+)
+def updateCategoryFilter(title,newCategory):
+    categories_df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
+    filter = getDropDownData(categories_df)
+    return filter
+
 
 @app.callback(
     Output('output', 'data-*'),
@@ -155,18 +189,26 @@ def processInput(data,previous,cell):
         print("")
         return newCategory
 
+
+#TODO: apply category to Check (not a regular business, it doesn't stick)
+#The problem is that the marketing name was taken from the recurring expenses
+#When updating it needs to be applied there too
 def updateBusinessEntry(oldName,newName,newCategory):
-    business = BusinessEntry.selectBy(marketingName=oldName).getOne(None)
+    business = BusinessEntry.selectBy(marketingName=oldName, userId=session.getUserId()).getOne(None)
     if (business != None):
         business.set(marketingName=newName, category=newCategory)
 
 def getSelectedCategories(filter):
-    selectedCategories = categories_list
     if (filter != None and len(filter) > 0):
         selectedCategories = filter
+    else:
+        categories_df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
+        selectedCategories = getAllCategories(categories_df)
     return selectedCategories
 
 def addCategory(category):
+    categories_df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
+    categories_list = getAllCategories(categories_df)
     if category not in categories_list:
         categories_list.append(category)
 

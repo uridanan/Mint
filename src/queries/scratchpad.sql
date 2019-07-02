@@ -2,7 +2,7 @@ select * from bank_entry
 select * from credit_entry
 select * from business_entry
 
-
+select * from business_entry where marketing_name like '%check%'
 
 select c.id, c.debit, b.id, b.debit, b,hide from credit_entry c, bank_entry b
 where c.debit = b.debit
