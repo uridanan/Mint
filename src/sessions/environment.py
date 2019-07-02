@@ -8,6 +8,6 @@ def loadjsondata(filename):
     return data
 
 
-ENV_FILE = os.getcwd()+'/src/env.json'
+ENV_FILE = os.getcwd()+'/env.json'
 env = loadjsondata(ENV_FILE)
 

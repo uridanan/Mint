@@ -9,10 +9,10 @@ from src.app import app
 from src.utils.utils import *
 from src.sessions.globals import session
 
-F_GETMONTHS = 'src/queries/queryMonthSelector.sql'
-F_GETCATEGORIES = 'src/queries/queryCategoryFilter.sql'
-F_MONTHLY = 'src/queries/queryMonthlyReport.sql'
-F_MONTHLYBYCATEGORY = 'src/queries/queryMonthlyReportByCategory.sql'
+F_GETMONTHS = 'queries/queryMonthSelector.sql'
+F_GETCATEGORIES = 'queries/queryCategoryFilter.sql'
+F_MONTHLY = 'queries/queryMonthlyReport.sql'
+F_MONTHLYBYCATEGORY = 'queries/queryMonthlyReportByCategory.sql'
 
 
 # dt.DataTable(

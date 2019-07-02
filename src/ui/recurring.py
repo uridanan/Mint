@@ -183,9 +183,9 @@ def generateTrackersReport(dateRange):
     ]
     return db.runQueryFromFile(F_TRACKERS, params)
 
-F_TRACKERS = 'src/queries/queryTrackersFromTo.sql'
+F_TRACKERS = 'queries/queryTrackersFromTo.sql'
 Q_GETTRACKERS = 'select * from recurrent_expense where user_id = <userid>'
-F_GETRECURRINGDATA = 'src/queries/queryRecurringDataPoints.sql'
+F_GETRECURRINGDATA = 'queries/queryRecurringDataPoints.sql'
 
 
 #trackersData = getDataPoints()
