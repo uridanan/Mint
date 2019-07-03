@@ -1,5 +1,5 @@
 select U.date,U.ref_id,U.debit,
-CASE WHEN R.name <> '' THEN R.name ELSE B.marketing_name END as marketing_name, B.category
+CASE WHEN R.name <> '' THEN R.name ELSE B.marketing_name END as marketing_name, B.category, B.id as business_id, R.id as tracker_id
 from (
 select report_date as date, business,card_number as ref_id,debit,tracker_id
 from credit_entry

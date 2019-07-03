@@ -1,6 +1,7 @@
 select * from bank_entry
 select * from credit_entry
 select * from business_entry
+select * from recurrent_expense
 
 select * from business_entry where marketing_name like '%check%'
 
@@ -129,7 +130,7 @@ and business_name <> '__TOTAL__'
 order by date asc
 
 
-select U.date,U.ref_id,U.debit, CASE WHEN R.name <> '' THEN R.name ELSE B.marketing_name END as marketing_name, B.category
+select U.date,U.ref_id,U.debit, CASE WHEN R.name <> '' THEN R.name ELSE B.marketing_name END as marketing_name, B.category, B.id as business_id, R.id as tracker_id
 from (select report_date as date, business,card_number as ref_id,debit,tracker_id
         from credit_entry
         where to_char(report_date, 'YYYY-MM') = '2018-05'
@@ -175,3 +176,29 @@ select report_date as monthName, tracker_id, debit from credit_entry where track
 where to_date(to_char(U.monthName,'Mon YYYY'),'Mon YYYY') >= to_date('201802','Mon YYYY')
 and to_date(to_char(U.monthName,'Mon YYYY'),'Mon YYYY') <=  to_date('201805','Mon YYYY')
 group by tracker_id) as Q on Q.tracker_id = id where recurrent_expense.user_id = '0'
+
+
+
+select U.id, U.date,U.ref_id,U.debit,
+CASE WHEN R.name <> '' THEN R.name ELSE B.marketing_name END as marketing_name, B.category
+from (
+select report_date as date, business,card_number as ref_id,debit,tracker_id
+from credit_entry
+where to_char(report_date, 'YYYY-MM') = <month>
+and user_id = <userid>
+union
+select date, business, ref_id, debit,tracker_id
+from bank_entry
+where to_char(date, 'YYYY-MM') = <month>
+and hide = 0
+and user_id = <userid>
+)
+as U
+inner join business_entry as B on B.id = U.business
+inner join recurrent_expense as R on R.id = U.tracker_id
+where debit > 0
+and B.user_id = <userid>
+and R.user_id = <userid>
+and category in (<filter>)
+and business_name <> '__TOTAL__'
+order by date asc

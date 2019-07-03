@@ -288,6 +288,3 @@ def updateTrackerEntry(id,newName):
 # TODO: use grid and columns to position and resize the graph and table
 # TODO: add alerts when expense deviates from expectations / norm
 # TODO: style as cards
-
-# TODO: fix the slider, extract data per user ID
-# TODO: inconsistent data, some months have trackers, some months don't ???

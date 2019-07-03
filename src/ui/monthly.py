@@ -43,19 +43,19 @@ def generatePieChart(dataFrame):
     return figure
 
 #=============================================================================================================
-def generateTable(dataframe, max_rows=200):
+def generateTable(dataframe, editable=[], hidden=[], max_rows=200):
     return dash_table.DataTable(
         id='monthlyReport',
         # Header
-        columns=getColumns(dataframe),
+        columns=getColumns(dataframe, editable, hidden),
         # Body
         #data=getData(dataframe, max_rows),
         data=[],
         editable=True,
     )
 
-def getColumns(dataframe):
-    return ([{'id': p, 'name': p} for p in dataframe.columns])
+def getColumns(dataframe, editable=[], hidden=[]):
+    return ([{'id': p, 'name': p, 'editable': p in editable, 'hidden': p in hidden} for p in dataframe.columns])
 
 def getData(dataframe, max_rows=200):
     return [
@@ -124,7 +124,7 @@ layout = html.Div(children=[
     html.H4(id='title', children='Editable Expense Report - Work In Pogress'),
     dcc.Dropdown(id='selectMonth', multi=False),  #generateMonthSelector(selectableMonths),
     dcc.Dropdown(id='filterCategories', multi=True),  #generateCategorySelector(categories_df),
-    generateTable(reportData),
+    generateTable(reportData,['marketing_name','category'],['business_id','tracker_id']),
     dcc.Graph(id='pieChart'),
     html.Div(id='output'),
     html.A(id='link')
@@ -180,12 +180,15 @@ def processInput(data,previous,cell):
         col=cell[1]+1
         headers = list(data[row].keys())
         new=data[row]
-        old=previous[row]
-        oldName=old['marketing_name']
+        #old=previous[row]
+        #oldName=old['marketing_name']
         newName = new['marketing_name']
         newCategory = new['category']
-        if(headers[col] in ('marketing_name','category')):
-            updateBusinessEntry(oldName,newName,newCategory)
+        businessId = new['business_id']
+        # if(headers[col] in ('marketing_name','category')):
+        #     updateBusinessEntry(businessId,newName,newCategory)
+        # If only the relevant columns are editable, no need to test for them
+        updateBusinessEntry(businessId, newName, newCategory)
         print("")
         return newCategory
 
@@ -193,8 +196,8 @@ def processInput(data,previous,cell):
 #TODO: apply category to Check (not a regular business, it doesn't stick)
 #The problem is that the marketing name was taken from the recurring expenses
 #When updating it needs to be applied there too
-def updateBusinessEntry(oldName,newName,newCategory):
-    business = BusinessEntry.selectBy(marketingName=oldName, userId=session.getUserId()).getOne(None)
+def updateBusinessEntry(businessId,newName,newCategory):
+    business = BusinessEntry.selectBy(id=businessId, userId=session.getUserId()).getOne(None)
     if (business != None):
         business.set(marketingName=newName, category=newCategory)
 
