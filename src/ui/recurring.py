@@ -291,4 +291,3 @@ def updateTrackerEntry(id,newName):
 
 # TODO: fix the slider, extract data per user ID
 # TODO: inconsistent data, some months have trackers, some months don't ???
-# TODO: cancel commit of signin.HTML and test.py with my google ID
