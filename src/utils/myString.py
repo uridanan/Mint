@@ -6,6 +6,8 @@ class myString:
     # Remove all \n characters to flatten the string
     @staticmethod
     def stripNewLine(s):
+        if not isinstance(s, str):
+            return ""
         if (s == None):
             return ""
         return s.replace("\n", "")

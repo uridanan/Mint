@@ -71,6 +71,7 @@ class CreditReport(ABC):
 
     def processRows(self):
         for row in self.getRows():
+            #row = list(r.values())
             self.processRow(row)
 
     def processMonthlyTotals(self):
@@ -85,6 +86,10 @@ class CreditReport(ABC):
 
         # This was a monthly total row, not an actual entry
         return True
+
+    # Return a value from a dict by index
+    def getValue(self,row,index):
+        return list(row.values())[index]
 
     @staticmethod
     def credit(amount):

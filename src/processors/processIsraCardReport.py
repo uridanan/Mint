@@ -1,6 +1,7 @@
 from src.utils.myString import myString
 from datetime import datetime
 from src.processors.processXlsFile import XLSFile
+from src.processors.processExcel import ExcelContent
 from src.processors.processCreditReport import CreditReport
 
 
@@ -18,8 +19,119 @@ from src.processors.processCreditReport import CreditReport
 # Total and end of report in the first row with cell 1 empty
 # Next card number starts on total + 2 or next non-empty cell 1
 
-
 class IsraCardReport(CreditReport):
+    data = None
+    cardNumber = None
+    reportDate = None
+
+    def __init__(self,fileContent):
+        self.data = ExcelContent(fileContent).getData()
+
+    def processRows(self):
+        start = 1
+        while start > 0:
+            start = self.processCard(start)
+        print("stop")
+
+    def processCard(self, start):
+        stop = False
+        skip = 1
+        nrow = start
+        rows = self.getRowsFromX(start)
+
+        for r in rows:
+            row = list(r.values())
+            if nrow == start:
+                self.processHeader(row)
+            elif nrow < start + 3:
+                stop = False
+            else:
+                stop = self.processRow(row)
+            nrow = nrow + 1
+            if stop:
+                return nrow + skip  # add one to skip the empty row
+        return 0  # reached the end of the sheet, no more rows
+
+    def getRowsFromX(self,start):
+        rows = self.data[start:]
+        return rows
+
+    def processHeader(self,row):
+        cardString = row[0]
+        dateString = row[2]
+        end = len(cardString)
+        start = end-4
+        cardNumber = cardString[start:end]
+        reportDate = datetime.strptime(dateString, '%d/%m/%y').date().strftime("%Y-%m-%d")
+        self.setCardNumber(cardNumber)
+        self.setReportDate(reportDate)
+
+    def getReportDate(self):
+        return self.reportDate
+
+    def setReportDate(self, date):
+        self.reportDate = date
+
+    ####################################################################################################################
+    # Methods to override
+    ####################################################################################################################
+
+    def getCardNumber(self):
+        return self.cardNumber
+
+    def setCardNumber(self, number):
+        self.cardNumber = number
+
+    def getRows(self):
+        #rows = self.data.iter_rows(min_row=4, min_col=1, max_col=8)
+        return None
+
+    def extractPurchaseDate(self,row):
+        dateString = row[0]
+        if (myString.isEmpty(dateString)):
+            return None
+        try:
+            date = datetime.strptime(dateString, '%d/%m/%Y').date().strftime("%Y-%m-%d")
+        except:
+            date = None
+        return date
+
+    def extractReportDate(self,row):
+        return self.getReportDate()
+
+    def extractAmount(self,row):
+        amount = row[4]
+        return amount
+
+    def extractBusinessName(self, row):
+        name = row[1]
+        return name
+
+    def extractComment(self,row):
+        comment = row[7]
+        return comment
+
+    def extractCurrency(self,row):
+        currency = row[5]
+        return currency
+
+    def isMonthlyTotal(self,row):
+        purchaseDate = self.extractPurchaseDate(row)
+        return purchaseDate is None
+
+    def computeMonthlyTotal(self, row):
+        reportDate = self.extractReportDate(row)
+        amount = self.extractAmount(row)
+        cardNumber = self.getCardNumber()
+        if (self.isMonthlyTotal(row)):
+            self.addMonthlyTotal(cardNumber, reportDate, amount)
+            return True
+        return False
+
+
+
+
+class IsraCardReportFile(CreditReport):
     data = None
     cardNumber = None
     reportDate = None

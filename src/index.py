@@ -1,6 +1,6 @@
 import src.db.connection
 from src.app import *
-from src.ui import overview, monthly, recurring
+from src.ui import overview, monthly, recurring, upload
 
 
 #=====================================================================================================================
@@ -25,6 +25,7 @@ indexLayout = html.Div(id='indexContent', children=[
         dcc.Link('Overview', href='overview'),
         dcc.Link('Monthly Reports', href='monthly'),
         dcc.Link('Recurring Expenses', href='recurring'),
+        dcc.Link('Uploads', href='upload'),
         dcc.Link('About', href='about')
         ]),
     html.Div(id='content',className='content'),
@@ -55,6 +56,8 @@ def display_page(pageName):
         return monthly.layout
     elif pageName == '/recurring':
         return recurring.layout
+    elif pageName == '/upload':
+        return upload.layout
     else:
         return overview.layout
 

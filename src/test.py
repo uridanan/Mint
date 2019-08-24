@@ -1,12 +1,12 @@
-import src.db.connection
 from src.processors.markRecurrentExpenses import ExpenseTracker
+from src.processors.processHTMLFile import HTMLFile
 from src.processors.processLeumiReport import LeumiReport
 from src.processors.processVisaCalReport import VisaCalReport
 from src.processors.processLeumiCardReport import LeumiCardReport
 from src.processors.processIsraCardReport import IsraCardReport
-from datetime import datetime
 from src.sessions.globals import session
 from src.user import User
+from src.tests import htmlBankLeumi, xlsIsraCard, xlsLeumiCard, xlsVisaCal
 
 # TODO: change to XLS instead of XLSX
 
@@ -18,14 +18,15 @@ def testImportVISACALReport():
     visaCal.process()
 
 def testImportLeumiCardReport():
-    fileName = "inbox/4014_Deals.xlsx"
+    fileName = "../inbox/4014_Deals.xlsx"
     cardNum = "4014"
     visaCal = LeumiCardReport(fileName,cardNum)
     visaCal.process()
 
 def testImportLeumiReport():
     htmlFile ='inbox/bankleumi30052018.html'
-    leumi = LeumiReport(htmlFile)
+    htmlContent = HTMLFile(htmlFile).getData()
+    leumi = LeumiReport(htmlContent)
     leumi.process()
 
 def testImportIsraCardReport():
@@ -48,6 +49,39 @@ def startFakeSession():
     tokenInfo['picture'] = ''
     session.currentUser = User(tokenInfo)
 
+
+
+def importLeumiCardContent():
+    content = xlsLeumiCard.content
+    card = LeumiCardReport(content,'4014')
+    card.process()
+
+
+def importIsraCardContent():
+    content = xlsIsraCard.content
+    card = IsraCardReport(content)
+    card.process()
+
+
+def importVisaCalContent():
+    content = xlsVisaCal.content
+    card = VisaCalReport(content)
+    card.process()
+
+
+def importBankLeumiContent():
+    content = htmlBankLeumi.content
+    card = LeumiReport(content)
+    card.process()
+
+
+def importContent():
+    importLeumiCardContent()
+    importIsraCardContent()
+    importVisaCalContent
+    importBankLeumiContent()
+
+
 def main():
     startFakeSession()
     testImportLeumiReport()
@@ -56,4 +90,4 @@ def main():
     testImportLeumiCardReport()
     testExpenseTracker()
 
-main()
+#main()

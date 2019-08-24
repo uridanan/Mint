@@ -1,13 +1,109 @@
 from src.utils.myString import myString
 from datetime import datetime
 from src.processors.processXlsxFile import XLSXFile
+from src.processors.processExcel import ExcelContent
 from src.processors.processCreditReport import CreditReport
 import re
 
 # This report includes a single card for a single month
 # TODO: Convert from XLS to XLSX automatically
+# TODO: refactor so usage is VisaCalReport(ExcelContent(content)) or VisaCalReport(FileContent(xlsFile)) but not urgent
 
 class VisaCalReport(CreditReport):
+    data = None
+    reportDate = None
+    cardNumber = None
+
+    def __init__(self,fileContent):
+        self.data = ExcelContent(fileContent).getData()
+        self.parseCardNumberAndReportDate()
+
+    # In cell A2
+    # פירוט עסקות הכל לכרטיס ויזה זהב עסקי, המסתיים בספרות 7872, בבנק לאומי לישראל, חשבון מס' 678-8841076, לתאריך חיוב 05/2018, לעסקות שבוצעו בארץ ובחו''ל
+    def parseCardNumberAndReportDate(self):
+        cell = list(self.data[0].values())[0]
+        numbers = re.findall('\d+', cell)
+        card = numbers[0]
+        branch = numbers[1]
+        account = numbers[2]
+        month = numbers[3]
+        year = numbers[4]
+        self.setCardNumber(card)
+        self.setReportDate(datetime(int(year),int(month),1).date().strftime("%Y-%m-%d"))
+
+    def getReportDate(self):
+        return self.reportDate
+
+    def setReportDate(self, date):
+        self.reportDate = date
+
+    ####################################################################################################################
+    # Methods to override
+    ####################################################################################################################
+
+    def getCardNumber(self):
+        return self.cardNumber
+
+    def setCardNumber(self, number):
+        self.cardNumber = number
+
+    def getRows(self):
+        rows = self.data[2:]
+        return rows
+
+    def extractPurchaseDate(self,row):
+        dateString = self.getValue(row,0)
+        try:
+            date = dateString.date().strftime("%Y-%m-%d")
+        except:
+            date = None
+        return date
+
+    def extractReportDate(self,row):
+        return self.getReportDate()
+
+
+    def extractAmount(self,row):
+        amount = self.getValue(row, 3)
+        if (myString.isEmpty(amount)):
+            return None
+        amount = amount.replace(',', '')
+        creditStr = amount[1:len(amount)]
+        credit = float(creditStr)
+        return credit
+
+    def extractBusinessName(self, row):
+        name = self.getValue(row, 1)
+        return name
+
+    def extractComment(self,row):
+        comment = self.getValue(row, 4)
+        return comment
+
+    def extractCurrency(self,row):
+        amount = self.getValue(row, 3)
+        if (myString.isEmpty(amount)):
+            return None
+        currency = amount[0:1]
+        return currency
+
+    def isMonthlyTotal(self,row):
+        businessName = self.extractBusinessName(row)
+        return myString.isEmpty(businessName)
+
+    def computeMonthlyTotal(self, row):
+        reportDate = self.extractReportDate(row)
+        amount = self.extractAmount(row)
+        cardNumber = self.getCardNumber()
+        if (self.isMonthlyTotal(row)):
+            self.addMonthlyTotal(cardNumber, reportDate, amount)
+            return True
+        return False
+
+
+
+
+class VisaCalReportFile(CreditReport):
     data = None
     reportDate = None
     cardNumber = None

@@ -7,15 +7,22 @@ class HTMLFile(object):
     def __init__(self,htmlFile):
         self.data = self.cleanInputFile(htmlFile)
 
-    def cleanInputFile(self, htmlFile):
+    def loadInputFile(self, htmlFile):
+        # "WITH JAVASCRIPT & STYLES"
+        htmlString = lxml.html.parse(htmlFile)
+        return htmlString
+
+    def cleanInputString(self, htmlString):
+        # "WITH JAVASCRIPT & STYLES"
         cleaner = Cleaner()
         cleaner.javascript = True  # This is True because we want to activate the javascript filter
         cleaner.style = True  # This is True because we want to activate the styles & stylesheet filter
-        # "WITH JAVASCRIPT & STYLES"
-        htmlString = lxml.html.tostring(lxml.html.parse(htmlFile))
         # "WITHOUT JAVASCRIPT & STYLES"
-        htmlClean = lxml.html.tostring(cleaner.clean_html(lxml.html.parse(htmlFile)))
+        htmlClean = lxml.html.tostring(cleaner.clean_html(htmlString))
         return htmlClean
+
+    def cleanInputFile(self, htmlFile):
+        return self.cleanInputString(self.loadInputFile(htmlFile))
 
     def getData(self):
         return self.data

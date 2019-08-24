@@ -10,10 +10,11 @@ from src.processors.processHTMLFile import HTMLFile
 class LeumiReport(BankReport):
     data = None
 
-    def __init__(self,filename):
-        html = HTMLFile(filename).getData()
-        assert isinstance(html, object)
-        self.data = BeautifulSoup(html, "lxml")
+    def __init__(self,htmlContent):
+        # html = HTMLFile(filename).getData()
+        # assert isinstance(html, object)
+        # self.data = BeautifulSoup(html, "lxml")
+        self.data = BeautifulSoup(htmlContent, "lxml")
 
     def getDataTable(self,soup):
         # In the leumi files, the data is in a table with id=ctlActivityTable
