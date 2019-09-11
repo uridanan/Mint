@@ -120,7 +120,7 @@ class CreditReport(ABC):
         purchaseDate = self.extractPurchaseDate(row)
         businessName = self.extractBusinessName(row)
         amount = self.extractAmount(row)
-        cardNumber = self.getCardNumber()
+        cardNumber = self.getCardNumber(row)
 
         business = self.getBusinessEntry(businessName)
         entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business.id,
@@ -148,7 +148,7 @@ class CreditReport(ABC):
             b.hide = 1
 
     @abstractmethod
-    def getCardNumber(self):
+    def getCardNumber(self, row):
         pass
 
     @abstractmethod

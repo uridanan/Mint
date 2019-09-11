@@ -16,8 +16,8 @@ from src.sessions.globals import session
 
 class ExpenseTracker():
     minOccurrences = 3
-    F_RECURRINGBYBUSINESS = 'src/queries/queryRecurringByBusiness.sql'
-    F_RECURRINGBYAMOUNT = 'src/queries/queryRecurringByAmount.sql'
+    F_RECURRINGBYBUSINESS = 'queries/queryRecurringByBusiness.sql'
+    F_RECURRINGBYAMOUNT = 'queries/queryRecurringByAmount.sql'
     trackers = []
 
     def initTable(self):

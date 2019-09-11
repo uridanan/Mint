@@ -4,69 +4,58 @@ from src.processors.processXlsxFile import XLSXFile
 from src.processors.processExcel import ExcelContent
 from src.processors.processCreditReport import CreditReport
 
-#This report includes a single card over multiple months
+#This report includes multiple cards over multiple months
 # TODO: replace dict and param names with list and indices then fix processRows()
 # TODO: rework the interface to allow switching between file and string
 
 
-class LeumiCardReport(CreditReport):
+class MaxReport(CreditReport):
     data = None
     cardNumber = None
 
-    def __init__(self,fileContent,cardNumber):
+    def __init__(self,fileContent):
         self.data = ExcelContent(fileContent).getData()
-        self.setCardNumber(cardNumber)
 
+    def extractCardNumber(self, row):
+        return self.getValue(row,3)
 
     ####################################################################################################################
     # Methods to override
     ####################################################################################################################
 
     def getCardNumber(self, row):
-        return self.cardNumber
+        return self.extractCardNumber(row)
 
     def setCardNumber(self, number):
         self.cardNumber = number
 
     def getRows(self):
-        rows = self.data
+        rows = self.data[3:]
         return rows
 
     def extractPurchaseDate(self,row):
-        dateString = row['תאריך עסקה']
-        if (myString.isEmpty(dateString)):
-            return None
-        try:
-            date = datetime.strptime(dateString, '%d/%m/%Y').date().strftime("%Y-%m-%d")
-        except:
-            date = None
-        return date
+        dateString = self.getValue(row,0)
+        return dateString
 
     def extractReportDate(self,row):
-        dateString = row['תאריך חיוב']
-        if (myString.isEmpty(dateString)):
-            return None
-        try:
-            date = datetime.strptime(dateString, '%d/%m/%Y').date().strftime("%Y-%m-%d")
-        except:
-            date = None
-        return date
+        dateString = self.getValue(row,9)
+        return dateString
 
     #TODO: handle +/- in conversion to float
     def extractAmount(self,row):
-        amount = row['סכום חיוב ₪']  #returns as float
+        amount = self.getValue(row,5)  #returns as float
         return amount
 
     def extractBusinessName(self, row):
-        name = row['שם בית העסק']
+        name = self.getValue(row,1)
         return name
 
     def extractComment(self,row):
-        comment = row['הערות']
+        comment =self.getValue(row,10)
         return comment
 
     def extractCurrency(self,row):
-        currency = row['מטבע עסקה']
+        currency = self.getValue(row,6)
         return currency
 
     def computeMonthlyTotal(self, row):
@@ -79,7 +68,7 @@ class LeumiCardReport(CreditReport):
 
 
 
-class LeumiCardReportFile(CreditReport):
+class MaxReportFile(CreditReport):
     data = None
     cardNumber = None
 
@@ -87,23 +76,25 @@ class LeumiCardReportFile(CreditReport):
         self.data = XLSXFile(filename).getData()
         self.setCardNumber(cardNumber)
 
+    def extractCardNumber(self, row):
+        return self.getValue(row,3)
 
     ####################################################################################################################
     # Methods to override
     ####################################################################################################################
 
     def getCardNumber(self, row):
-        return self.cardNumber
+        return self.extractCardNumber(row)
 
     def setCardNumber(self, number):
         self.cardNumber = number
 
     def getRows(self):
-        rows = self.data.iter_rows(min_row=2, min_col=1, max_col=8)
+        rows = self.data[3:]
         return rows
 
     def extractPurchaseDate(self,row):
-        dateString = str(row[0].internal_value)
+        dateString = self.getValue(row,0)
         if (myString.isEmpty(dateString)):
             return None
         try:
@@ -113,7 +104,7 @@ class LeumiCardReportFile(CreditReport):
         return date
 
     def extractReportDate(self,row):
-        dateString = str(row[1].internal_value)
+        dateString = self.getValue(row,9)
         if (myString.isEmpty(dateString)):
             return None
         try:
@@ -124,24 +115,19 @@ class LeumiCardReportFile(CreditReport):
 
     #TODO: handle +/- in conversion to float
     def extractAmount(self,row):
-        amount = str(row[6].internal_value)
-        if myString.isEmpty(amount):
-            return None
-        amount = amount.replace(',', '')
-        #credit = amount[1:len(amount)]
-        credit = float(amount)
-        return credit
+        amount = self.getValue(row,5)  #returns as float
+        return amount
 
     def extractBusinessName(self, row):
-        name = row[2].internal_value
+        name = self.getValue(row,1)
         return name
 
     def extractComment(self,row):
-        comment = row[7].internal_value
+        comment =self.getValue(row,10)
         return comment
 
     def extractCurrency(self,row):
-        currency = row[4].internal_value
+        currency = self.getValue(row,6)
         return currency
 
     def computeMonthlyTotal(self, row):

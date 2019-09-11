@@ -9,6 +9,8 @@ import re
 # TODO: Convert from XLS to XLSX automatically
 # TODO: refactor so usage is VisaCalReport(ExcelContent(content)) or VisaCalReport(FileContent(xlsFile)) but not urgent
 
+#<class 'dict'>: {'כל המשתמשים (2)': 'תאריך עסקה', 'Unnamed: 1': 'שם בית העסק', 'Unnamed: 2': 'קטגוריה', 'Unnamed: 3': '4 ספרות אחרונות של כרטיס האשראי', 'Unnamed: 4': 'סוג עסקה', 'Unnamed: 5': 'סכום חיוב', 'Unnamed: 6': 'מטבע חיוב', 'Unnamed: 7': 'סכום עסקה מקורי', 'Unnamed: 8': 'מטבע עסקה מקורי', 'Unnamed: 9': 'תאריך חיוב', 'Unnamed: 10': 'הערות', 'Unnamed: 11': 'מועדון הנחות', 'Unnamed: 12': 'מפתח דיסקונט', 'Unnamed: 13': 'אופן ביצוע ההעסקה', 'Unnamed: 14': 'שער המרה ממטבע מקור/התחשבנות לש"ח'}
+
 class VisaCalReport(CreditReport):
     data = None
     reportDate = None
@@ -41,7 +43,7 @@ class VisaCalReport(CreditReport):
     # Methods to override
     ####################################################################################################################
 
-    def getCardNumber(self):
+    def getCardNumber(self, row):
         return self.cardNumber
 
     def setCardNumber(self, number):
@@ -94,7 +96,7 @@ class VisaCalReport(CreditReport):
     def computeMonthlyTotal(self, row):
         reportDate = self.extractReportDate(row)
         amount = self.extractAmount(row)
-        cardNumber = self.getCardNumber()
+        cardNumber = self.getCardNumber(row)
         if (self.isMonthlyTotal(row)):
             self.addMonthlyTotal(cardNumber, reportDate, amount)
             return True
@@ -135,7 +137,7 @@ class VisaCalReportFile(CreditReport):
     # Methods to override
     ####################################################################################################################
 
-    def getCardNumber(self):
+    def getCardNumber(self, row):
         return self.cardNumber
 
     def setCardNumber(self, number):
@@ -190,7 +192,7 @@ class VisaCalReportFile(CreditReport):
     def computeMonthlyTotal(self, row):
         reportDate = self.extractReportDate(row)
         amount = self.extractAmount(row)
-        cardNumber = self.getCardNumber()
+        cardNumber = self.getCardNumber(row)
         if (self.isMonthlyTotal(row)):
             self.addMonthlyTotal(cardNumber, reportDate, amount)
             return True

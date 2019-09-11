@@ -1,4 +1,7 @@
+from src.processUpload import processFile, uploadType, uploadTypes
 from src.processors.processExcel import ExcelContent
+from src.processors.processLeumiReport import LeumiReport
+from src.processors.processMaxReport import MaxReport
 from src.processors.processVisaCalReport import VisaCalReport
 from src.processors.processHTMLFile import HTMLFile
 from src.app import app
@@ -17,7 +20,11 @@ import io
 
 layout = html.Div([
     html.H4(id='title', children='Upload Files - Work In Pogress'),
-    dcc.Upload(html.Button('Upload File')),
+    html.Div(className="row", children=[
+        html.Div(className="two columns",children=dcc.Dropdown(id='upload-type', multi=False, options=uploadTypes)),
+        html.Div(className="two columns",children=dcc.Upload(id='upload-button',children=html.Button('Upload File',style={'backgroundColor': '#d6fbff'}),multiple=True)),
+        html.Div(className="eight columns")
+    ]),
     html.Hr(),
     dcc.Upload(
         id='upload-data',
@@ -42,23 +49,23 @@ layout = html.Div([
 ])
 
 
-def parse_contents(contents, filename, date):
+def parse_contents(contents, filename, date, type):
     content_type, content_string = contents.split(',')
 
     decoded = base64.b64decode(content_string)
     try:
+        processFile(type, decoded)
+
         if 'csv' in filename:
             # Assume that the user uploaded a CSV file
-            df = pd.read_csv(
-                io.StringIO(decoded.decode('utf-8')))
+            df = pd.read_csv(io.StringIO(decoded.decode('utf-8')))
         elif 'xls' in filename:
             # Assume that the user uploaded an excel file
             df = pd.read_excel(io.BytesIO(decoded))
-            upload = VisaCalReport(decoded)
-            upload.process()
+            #processFile(uploadType.MAX, decoded)
         elif 'html' in filename:
-            h = HTMLFile(io.BytesIO(decoded))
             df = pd.read_html(io.BytesIO(decoded))
+            #processFile(uploadType.BANKLEUMI, decoded)
 
     except Exception as e:
         print(e)
@@ -87,13 +94,15 @@ def parse_contents(contents, filename, date):
 
 
 @app.callback(Output('output-data-upload', 'children'),
-              [Input('upload-data', 'contents')],
-              [State('upload-data', 'filename'),
-               State('upload-data', 'last_modified')])
-def update_output(list_of_contents, list_of_names, list_of_dates):
+              [Input('upload-button', 'contents')],
+              [State('upload-button', 'filename'),
+               State('upload-button', 'last_modified'),
+               State('upload-type','value')])
+def update_output(list_of_contents, list_of_names, list_of_dates, upload_type):
     if list_of_contents is not None:
         children = [
-            parse_contents(c, n, d) for c, n, d in
+            parse_contents(c, n, d, upload_type) for c, n, d in
             zip(list_of_contents, list_of_names, list_of_dates)]
         return children
+
 

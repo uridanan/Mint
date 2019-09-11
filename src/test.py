@@ -1,9 +1,10 @@
+import src.db.connection
 from src.processors.markRecurrentExpenses import ExpenseTracker
 from src.processors.processHTMLFile import HTMLFile
 from src.processors.processLeumiReport import LeumiReport
-from src.processors.processVisaCalReport import VisaCalReport
-from src.processors.processLeumiCardReport import LeumiCardReport
-from src.processors.processIsraCardReport import IsraCardReport
+from src.processors.processVisaCalReport import VisaCalReport, VisaCalReportFile
+from src.processors.processLeumiCardReport import LeumiCardReport, LeumiCardReportFile
+from src.processors.processIsraCardReport import IsraCardReport, IsraCardReportFile
 from src.sessions.globals import session
 from src.user import User
 from src.tests import htmlBankLeumi, xlsIsraCard, xlsLeumiCard, xlsVisaCal
@@ -14,13 +15,13 @@ from src.tests import htmlBankLeumi, xlsIsraCard, xlsLeumiCard, xlsVisaCal
 
 def testImportVISACALReport():
     fileName = "inbox/7872_8547_0205218_Transactions_30_05_2018.xlsx"
-    visaCal = VisaCalReport(fileName)
+    visaCal = VisaCalReportFile(fileName)
     visaCal.process()
 
 def testImportLeumiCardReport():
     fileName = "../inbox/4014_Deals.xlsx"
     cardNum = "4014"
-    visaCal = LeumiCardReport(fileName,cardNum)
+    visaCal = LeumiCardReportFile(fileName,cardNum)
     visaCal.process()
 
 def testImportLeumiReport():
@@ -31,7 +32,7 @@ def testImportLeumiReport():
 
 def testImportIsraCardReport():
     fileName ='inbox/AMEX_Export_03_2018.xls'
-    amex = IsraCardReport(fileName)
+    amex = IsraCardReportFile(fileName)
     amex.process()
 
 def testExpenseTracker():
@@ -58,7 +59,7 @@ def importLeumiCardContent():
 
 
 def importIsraCardContent():
-    content = xlsIsraCard.content
+    content = xlsIsraCard.content2019
     card = IsraCardReport(content)
     card.process()
 
@@ -91,3 +92,5 @@ def main():
     testExpenseTracker()
 
 #main()
+startFakeSession()
+importIsraCardContent()
