@@ -10,3 +10,7 @@ src/credentials.json
 src/env.json
 src/discarded/signin.html
 src/discarded/env.json
+src/tests/htmlBankLeumi.py
+src/tests/xlsIsraCard.py
+src/tests/xlsLeumiCard.py
+src/tests/xlsVisaCal.py
