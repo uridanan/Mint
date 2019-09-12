@@ -94,3 +94,4 @@ def main():
 #main()
 startFakeSession()
 importIsraCardContent()
+ExpenseTracker().process()

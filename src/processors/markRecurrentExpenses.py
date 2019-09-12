@@ -1,3 +1,5 @@
+import math
+
 from src.entities.recurrentExpense import RecurrentExpense
 import src.db.dbAccess as db
 from src.sessions.globals import session
@@ -89,6 +91,9 @@ class ExpenseTracker():
             # if (tracker != None):
             #     print('Recurring expense already tracked by business ' + str(businessId))
             #     continue
+
+            if math.isnan(amount):
+                continue
 
             tracker = self.getExpenseTrackerByAmount(amount)
             if (tracker == None):

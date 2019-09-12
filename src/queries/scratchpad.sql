@@ -202,3 +202,13 @@ and R.user_id = <userid>
 and category in (<filter>)
 and business_name <> '__TOTAL__'
 order by date asc
+
+
+SELECT debit, COUNT(*), min(date) as first, max(date) as last
+FROM bank_entry as BA
+INNER JOIN business_entry as BU ON BU.id = BA.business
+WHERE (marketing_name ~ '.*check.*') AND BA.user_id = '0'
+GROUP BY debit
+HAVING COUNT(*) > 3
+
+select count(*) from bank_entry where debit is null

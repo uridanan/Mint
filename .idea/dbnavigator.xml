@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -16,7 +16,7 @@
       <scope value="GLOBAL" />
       <destination value="FILE" />
       <format value="EXCEL" />
-      <charset value="windows-1252" />
+      <charset value="windows-1255" />
     </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -25,9 +25,8 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="80c4402e-a3e2-4f3d-9eb3-3a7817733dec">
-        <schema name="information_schema" object-types="view, table, function" />
-        <schema name="pg_catalog" object-types="view, table, function" />
-        <schema name="public" object-types="view, table, column, function" />
+        <schema name="pg_catalog" object-types="function, view, table" />
+        <schema name="public" object-types="function, view, column, table" />
       </connection>
     </loaded-nodes>
   </component>
@@ -82,8 +81,7 @@
           <host value="localhost" />
           <port value="5432" />
           <database value="mintdb" />
-          <os-authentication value="false" />
-          <empty-authentication value="true" />
+          <type value="USER" />
           <user value="postgres" />
           <deprecated-pwd value="" />
         </database>
@@ -121,7 +119,7 @@
           <max-connection-pool-size value="7" />
           <alternative-statement-delimiter value="" />
         </details>
-        <object-filters hide-empty-schemas="false">
+        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
           <object-type-filter use-master-settings="true">
             <object-type name="SCHEMA" enabled="true" />
             <object-type name="USER" enabled="true" />

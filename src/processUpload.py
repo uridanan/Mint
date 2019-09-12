@@ -34,5 +34,5 @@ def processFile(type, content):
     if type == uploadType.MAX:
         upload = MaxReport(content)
     upload.process()
-    #ExpenseTracker().process()
+    ExpenseTracker().process()
 
