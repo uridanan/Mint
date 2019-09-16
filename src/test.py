@@ -7,14 +7,14 @@ from src.processors.processLeumiCardReport import LeumiCardReport, LeumiCardRepo
 from src.processors.processIsraCardReport import IsraCardReport, IsraCardReportFile
 from src.sessions.globals import session
 from src.user import User
-from src.tests import htmlBankLeumi, xlsIsraCard, xlsLeumiCard, xlsVisaCal
+from src.tests import htmlBankLeumi, xlsIsraCard, xlsLeumiCard, xlsVisaCal, originalxlsVisaCal
 
 # TODO: change to XLS instead of XLSX
 
 
 
 def testImportVISACALReport():
-    fileName = "inbox/7872_8547_0205218_Transactions_30_05_2018.xlsx"
+    fileName = "../inbox/7872_Transactions_03_09_2019.xls"
     visaCal = VisaCalReportFile(fileName)
     visaCal.process()
 
@@ -69,6 +69,10 @@ def importVisaCalContent():
     card = VisaCalReport(content)
     card.process()
 
+def importOriginalVisaCalContent():
+    content = originalxlsVisaCal.content
+    card = VisaCalReport(content)
+    card.process()
 
 def importBankLeumiContent():
     content = htmlBankLeumi.content
@@ -93,5 +97,7 @@ def main():
 
 #main()
 startFakeSession()
-importIsraCardContent()
-ExpenseTracker().process()
+#importVisaCalContent()
+importOriginalVisaCalContent()
+#testImportVISACALReport()
+#ExpenseTracker().process()

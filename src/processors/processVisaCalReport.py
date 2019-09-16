@@ -23,7 +23,8 @@ class VisaCalReport(CreditReport):
     # In cell A2
     # פירוט עסקות הכל לכרטיס ויזה זהב עסקי, המסתיים בספרות 7872, בבנק לאומי לישראל, חשבון מס' 678-8841076, לתאריך חיוב 05/2018, לעסקות שבוצעו בארץ ובחו''ל
     def parseCardNumberAndReportDate(self):
-        cell = list(self.data[0].values())[0]
+        #cell = list(self.data[0].values())[0]
+        cell = self.data[1][0]
         numbers = re.findall('\d+', cell)
         card = numbers[0]
         branch = numbers[1]
@@ -50,13 +51,14 @@ class VisaCalReport(CreditReport):
         self.cardNumber = number
 
     def getRows(self):
-        rows = self.data[2:]
+        rows = self.data[3:]
         return rows
 
     def extractPurchaseDate(self,row):
-        dateString = self.getValue(row,0)
+        dateString = row[0]
         try:
-            date = dateString.date().strftime("%Y-%m-%d")
+            #date = dateString.date().strftime("%Y-%m-%d")
+            date = datetime.strptime(dateString, '%d/%m/%y').date().strftime("%Y-%m-%d")
         except:
             date = None
         return date
@@ -66,7 +68,7 @@ class VisaCalReport(CreditReport):
 
 
     def extractAmount(self,row):
-        amount = self.getValue(row, 3)
+        amount = row[3]
         if (myString.isEmpty(amount)):
             return None
         amount = amount.replace(',', '')
@@ -75,15 +77,15 @@ class VisaCalReport(CreditReport):
         return credit
 
     def extractBusinessName(self, row):
-        name = self.getValue(row, 1)
+        name = row[1]
         return name
 
     def extractComment(self,row):
-        comment = self.getValue(row, 4)
+        comment = row[4]
         return comment
 
     def extractCurrency(self,row):
-        amount = self.getValue(row, 3)
+        amount = row[3]
         if (myString.isEmpty(amount)):
             return None
         currency = amount[0:1]
@@ -94,10 +96,10 @@ class VisaCalReport(CreditReport):
         return myString.isEmpty(businessName)
 
     def computeMonthlyTotal(self, row):
-        reportDate = self.extractReportDate(row)
-        amount = self.extractAmount(row)
-        cardNumber = self.getCardNumber(row)
         if (self.isMonthlyTotal(row)):
+            reportDate = self.extractReportDate(row)
+            amount = self.extractAmount(row)
+            cardNumber = self.getCardNumber(row)
             self.addMonthlyTotal(cardNumber, reportDate, amount)
             return True
         return False
