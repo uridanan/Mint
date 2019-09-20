@@ -3,6 +3,7 @@ from datetime import datetime
 from src.processors.processXlsxFile import XLSXFile
 from src.processors.processExcel import ExcelContent
 from src.processors.processCreditReport import CreditReport
+from src.uploadTypes import uploadType
 
 #This report includes a single card over multiple months
 # TODO: replace dict and param names with list and indices then fix processRows()
@@ -16,6 +17,7 @@ class LeumiCardReport(CreditReport):
     def __init__(self,fileContent,cardNumber):
         self.data = ExcelContent(fileContent).getData()
         self.setCardNumber(cardNumber)
+        self.type = uploadType.LEUMICARD
 
 
     ####################################################################################################################

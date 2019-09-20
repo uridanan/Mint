@@ -3,6 +3,7 @@ from datetime import datetime, date
 from src.processors.processXlsFile import XLSFile
 from src.processors.processExcel import ExcelContent
 from src.processors.processCreditReport import CreditReport
+from src.uploadTypes import uploadType
 
 
 # This report includes multiple cards for only for a single month
@@ -27,6 +28,7 @@ class IsraCardReport(CreditReport):
 
     def __init__(self,fileContent):
         self.data = ExcelContent(fileContent).getData()
+        self.type = uploadType.ISRACARD
 
     # def processRows(self):
     #     start = 1

@@ -1,6 +1,7 @@
 from src.entities.creditEntry import CreditEntry
 from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
+from src.entities.fileEntry import FileEntry
 from abc import ABC, abstractmethod
 from datetime import datetime
 from sqlobject.sqlbuilder import AND
@@ -58,16 +59,19 @@ class Cards:
 # TODO: handle +/-
 # TODO: handle currency? what do I do with it?
 class CreditReport(ABC):
+    type = None
     cards = Cards()
 
     def initTables(self):
         CreditEntry.createTable(ifNotExists=True)
         BusinessEntry.createTable(ifNotExists=True)
+        FileEntry.createTable(ifNotExists=True)
 
     def process(self):
         self.initTables()
         self.processRows()
         self.processMonthlyTotals()
+        self.processSummary()
 
     def processRows(self):
         for row in self.getRows():
@@ -77,6 +81,11 @@ class CreditReport(ABC):
     def processMonthlyTotals(self):
         for card in self.cards.getAll():
             self.processMonthlyTotal(card)
+
+    #TODO: pass filename along?
+    def processSummary(self):
+        for card in self.cards.getAll():
+            entry = FileEntry(userId=session.getUserId(), source=self.type, reportDate=card.reportDate, total=card.total, refId=card.cardNumber)
 
     def processRow(self,row):
         # ComputeTotals returns False if an entry should be created (i.e. this is an actual entry, not a monthly total)

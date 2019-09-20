@@ -4,6 +4,7 @@ from src.processors.processXlsxFile import XLSXFile
 from src.processors.processExcel import ExcelContent
 from src.processors.processCreditReport import CreditReport
 import re
+from src.uploadTypes import uploadType
 
 # This report includes a single card for a single month
 # TODO: Convert from XLS to XLSX automatically
@@ -19,6 +20,7 @@ class VisaCalReport(CreditReport):
     def __init__(self,fileContent):
         self.data = ExcelContent(fileContent).getData()
         self.parseCardNumberAndReportDate()
+        self.type = uploadType.VISACAL
 
     # In cell A2
     # פירוט עסקות הכל לכרטיס ויזה זהב עסקי, המסתיים בספרות 7872, בבנק לאומי לישראל, חשבון מס' 678-8841076, לתאריך חיוב 05/2018, לעסקות שבוצעו בארץ ובחו''ל

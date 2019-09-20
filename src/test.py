@@ -97,7 +97,8 @@ def main():
 
 #main()
 startFakeSession()
+importBankLeumiContent()
 #importVisaCalContent()
-importOriginalVisaCalContent()
+#importOriginalVisaCalContent()
 #testImportVISACALReport()
 #ExpenseTracker().process()

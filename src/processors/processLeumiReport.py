@@ -4,7 +4,7 @@ from datetime import datetime
 from decimal import Decimal
 from src.processors.processBankReport import BankReport
 from src.processors.processHTMLFile import HTMLFile
-
+from src.uploadTypes import uploadType
 
 # Process Leumi HTML input file
 class LeumiReport(BankReport):
@@ -14,7 +14,24 @@ class LeumiReport(BankReport):
         # html = HTMLFile(filename).getData()
         # assert isinstance(html, object)
         # self.data = BeautifulSoup(html, "lxml")
+        self.type = uploadType.BANKLEUMI
         self.data = BeautifulSoup(htmlContent, "lxml")
+        self.setMetaData(self.data)
+
+    def getMetaDataTable(self,soup):
+        # In the leumi files, the data is in a table with id=ctlActivityTable
+        table = soup.find("table", {"id": "FilterBox"})
+        return table
+
+    def setMetaData(self,soup):
+        table = self.getMetaDataTable(soup)
+        account = myString.stripNewLine(soup.find(id='accountTd').text)
+        start = self.formatDate(soup.find(id='dtFromDate').text)
+        end = self.formatDate(soup.find(id='dtToDate').text)
+        self.setAccount(account)
+        self.setStart(start)
+        self.setEnd(end)
+        return
 
     def getDataTable(self,soup):
         # In the leumi files, the data is in a table with id=ctlActivityTable
@@ -24,17 +41,30 @@ class LeumiReport(BankReport):
     ####################################################################################################################
     # Methods to override
     ####################################################################################################################
+    def setAccount(self,val):
+        self.account = val.replace(u"\u200E", "")
+
+    def setStart(self,val):
+        self.start = val
+
+    def setEnd(self,val):
+        self.end = val
+
     def getRows(self):
         table = self.getDataTable(self.data)
         rows = table.find_all('tr')
         return rows
 
+    def formatDate(self,dateString):
+        if (myString.isEmpty(dateString)):
+            return None
+        date = datetime.strptime(dateString, '%d/%m/%y').date().strftime("%Y-%m-%d")
+        return date
+
     def extractDate(self,row):
         # In the leumi files, the date is in a td with class=ExtendedActivityColumnDate
         dateString = myString.strip(row.find("td", {"class": "ExtendedActivityColumnDate"}))
-        if(myString.isEmpty(dateString)):
-            return None
-        date = datetime.strptime(dateString, '%d/%m/%y').date().strftime("%Y-%m-%d")
+        date = self.formatDate(dateString)
         return date
 
     def extractBusiness(self,row):

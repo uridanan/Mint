@@ -2,6 +2,9 @@ select * from bank_entry
 select * from credit_entry
 select * from business_entry
 select * from recurrent_expense
+select * from file_entry
+
+delete from file_entry
 
 select * from business_entry where marketing_name like '%check%'
 

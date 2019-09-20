@@ -3,6 +3,7 @@ from datetime import datetime
 from src.processors.processXlsxFile import XLSXFile
 from src.processors.processExcel import ExcelContent
 from src.processors.processCreditReport import CreditReport
+from src.uploadTypes import uploadType
 
 #This report includes multiple cards over multiple months
 # TODO: replace dict and param names with list and indices then fix processRows()
@@ -15,6 +16,7 @@ class MaxReport(CreditReport):
 
     def __init__(self,fileContent):
         self.data = ExcelContent(fileContent).getData()
+        self.type = uploadType.MAX
 
     def extractCardNumber(self, row):
         return self.getValue(row,3)

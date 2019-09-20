@@ -1,5 +1,6 @@
 from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
+from src.entities.fileEntry import FileEntry
 from src.utils.myString import myString
 from abc import ABC, abstractmethod
 from src.sessions.globals import session
@@ -11,12 +12,29 @@ from src.sessions.globals import session
 
 # https://www.python-course.eu/python3_abstract_classes.php
 class BankReport(ABC):
+    type = None
+    account = None
+    start = None
+    end = None
+
     def process(self):
+        self.initTables()
+        self.processRows()
+        self.processSummary()
+
+    def initTables(self):
         BankEntry.createTable(ifNotExists=True)
         BusinessEntry.createTable(ifNotExists=True)
+        FileEntry.createTable(ifNotExists=True)
 
+    def processRows(self):
         for row in self.getRows():
             self.processRow(row)
+
+    def processSummary(self):
+        reportDate = self.start + ' to ' + self.end
+        entry = FileEntry(userId=session.getUserId(), source=self.type, reportDate=reportDate, total=None,
+                          refId=self.account)
 
     def processRow(self,row):
         date = self.extractDate(row)
@@ -42,6 +60,18 @@ class BankReport(ABC):
 
     def renameChecks(self, name):
         name.replace('שיק','check')
+
+    @abstractmethod
+    def setAccount(self,val):
+        pass
+
+    @abstractmethod
+    def setStart(self,val):
+        pass
+
+    @abstractmethod
+    def setEnd(self,val):
+        pass
 
     @abstractmethod
     def getRows(self):
