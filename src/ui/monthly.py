@@ -1,4 +1,4 @@
-from dash.dependencies import Input, Output, State, Event
+from dash.dependencies import Input, Output, State
 import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
@@ -54,8 +54,14 @@ def generateTable(dataframe, editable=[], hidden=[], max_rows=200):
         editable=True,
     )
 
+#hidden is deprecated, instead add the columns in data but not in columns
 def getColumns(dataframe, editable=[], hidden=[]):
-    return ([{'id': p, 'name': p, 'editable': p in editable, 'hidden': p in hidden} for p in dataframe.columns])
+    #return ([{'id': p, 'name': p, 'editable': p in editable, 'hidden': p in hidden} for p in dataframe.columns])
+    cols = []
+    for p in dataframe.columns:
+        if p not in hidden:
+            cols.append({'id': p, 'name': p, 'editable': p in editable})
+    return cols
 
 def getData(dataframe, max_rows=200):
     return [
@@ -171,10 +177,10 @@ def updateCategoryFilter(title,newCategory):
 
 @app.callback(
     Output('output', 'data-*'),
-    [Input('monthlyReport', 'data')],
-    [State('monthlyReport', 'data_previous'),State('monthlyReport', 'active_cell')],
-    [Event('link', 'click')])
-def processInput(data,previous,cell):
+    [Input('monthlyReport', 'data'),Input('link', 'n_clicks ')],
+    [State('monthlyReport', 'data_previous'),State('monthlyReport', 'active_cell')]
+)
+def processInput(data,clicks,previous,cell):
     if(cell != None):
         row=cell[0]
         col=cell[1]+1
