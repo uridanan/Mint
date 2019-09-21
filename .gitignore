@@ -14,3 +14,4 @@ src/tests/htmlBankLeumi.py
 src/tests/xlsIsraCard.py
 src/tests/xlsLeumiCard.py
 src/tests/xlsVisaCal.py
+*.pyc
