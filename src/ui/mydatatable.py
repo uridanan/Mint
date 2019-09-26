@@ -1,4 +1,5 @@
 import dash_table
+from src.ui.colors import Colors
 
 
 class Column:
@@ -57,6 +58,11 @@ class myDataTable:
             for i in range(min(len(dataframe), max_rows))
         ]
 
+    @staticmethod
+    def setRowColor(condition, color):
+        return {'if': {'row_index': condition},'backgroundColor': color}
+
+
     def initColumns(self):
         #self.columns = [{'id': p, 'name': p} for p in self.df.columns[1:]]
         self.columns = [Column(p,p) for p in self.df.columns[1:]]
@@ -101,31 +107,44 @@ class myDataTable:
             selected_rows=self.selectedRows,
             style_as_list_view=self.listView,
 
+            css=[
+                {
+                    'selector': 'td.cell--selected, td.focused',
+                    #'rule': 'background-color: ' + Colors.light_cyan + '; --accent: ' + Colors.dark_cyan + '; text-align: left',
+                    'rule': 'text-align: left'
+                },
+                {
+                    'selector': 'td.cell--selected *, td.focused *',
+                    #'rule': 'background-color: ' + Colors.light_cyan + '; --accent: ' + Colors.dark_cyan + '; text-align: left',
+                    'rule': 'text-align: left'
+                }
+            ],
+
             style_table={
                 #'overflowY': 'scroll',
                 #'maxHeight': '600',
                 #'maxWidth': '1500',
-                '--accent':'#78daf1',
-                '--hover': '#d6fbff',
-                '--selected-row': '#d6fbff',
-                '--selected-background': '#d6fbff'
+                '--accent': Colors.dark_cyan,
+                '--hover': Colors.light_cyan,
+                '--selected-row': Colors.light_cyan,
+                #'--selected-background': Colors.light_cyan
             },
             style_cell={
                 'whiteSpace': 'normal',
                 'text-align': 'left',
-                'hover': 'hotpink'
+                'hover': Colors.light_cyan
             },
             style_header={
                 'whiteSpace': 'normal',
-                'background-color': '#555',
+                'background-color': Colors.dark_grey,
                 'color': 'white',
                 'font-weight': 'bold',
                 'height': '50px',
                 'textAlign': 'left'
             },
             style_data={
-                'accent': '#78daf1',
-                'hover': '#d6fbff'
+                'accent': Colors.dark_cyan,
+                'hover': Colors.light_cyan
             },
 
             #style_filter=self.getColumnStyles(),
@@ -136,8 +155,8 @@ class myDataTable:
             #Alternate row colors
             style_data_conditional=[
                 #{'if': {'row_index': i}, 'backgroundColor': '#3D9970', 'color': 'white'} for i in selected_rows
-                {'if': {'row_index': 'odd'},'backgroundColor': 'rgb(255,255,255)'},
-                {'if': {'row_index': 'even'}, 'backgroundColor': 'rgb(242, 254, 255)'}
+                myDataTable.setRowColor('odd', 'white'),
+                myDataTable.setRowColor('even', Colors.light_grey)
             ]
         )
 

@@ -8,6 +8,8 @@ import plotly.graph_objs as go
 from src.app import app
 from src.ui.timeseries import *
 from src.sessions.globals import session
+from src.ui.mydatatable import myDataTable, Column
+from src.ui.colors import Colors
 
 
 #=============================================================================================================
@@ -51,106 +53,17 @@ def generateDatesSlider(dates):
 #=============================================================================================================
 
 #=============================================================================================================
-def generateTable(dataframe, max_rows=200):
-    return dash_table.DataTable(
-        id='trackers',
-        # Header
-        columns=getColumns(dataframe),
-        # Body
-        #data=[],
-        data=getData(dataframe, max_rows),
-        editable=True,
-        row_selectable="multi",
-        selected_rows=[0,1,2],
-        style_as_list_view=True,
-        # css=[{'selector': '.dash-cell div.dash-cell-value',
-        #       'rule': 'display: inline; white-space: inherit; overflow: inherit; text-overflow: inherit;'}],
-        # n_fixed_rows=1,
-        css=[
-            {
-                'selector': 'td.cell--selected, td.focused',
-                'rule': 'background-color: #d6fbff; --accent: #78daf1; text-align: left'
-            },
-            {
-                'selector': 'td.cell--selected *, td.focused *',
-                'rule': 'background-color: #d6fbff; --accent: #78daf1; text-align: left'
-            }
-        ],
-        style_table={
-            #'overflowY': 'scroll',
-            #'maxHeight': '600',
-            #'maxWidth': '1500',
-            '--accent':'#78daf1',
-            '--hover': '#d6fbff',
-            '--selected-row': '#d6fbff',
-            '--selected-background': '#d6fbff'
-        },
-        style_cell={
-            'whiteSpace': 'normal',
-            'text-align': 'left',
-            'hover': 'hotpink'
-        },
-        style_header={
-            'whiteSpace': 'normal',
-            'background-color': '#555',
-            'color': 'white',
-            'font-weight': 'bold',
-            'height': '50px',
-            'textAlign': 'left'
-        },
-        style_header_conditional=[
-            {'if': {'column_id': c}, 'width': w} for c,w in getColumnWidths()
-        ],
-        style_cell_conditional=[
-            {'if': {'column_id': c}, 'width': w} for c,w in getColumnWidths()
-        ],
-        style_data={
-            'accent': '#78daf1',
-            'hover': '#d6fbff'
-        }
+def generateTable(dataframe):
+    columns = [Column('name', 'Expense', True, 'left'), Column('start', 'First', False, 'left', '10%'),
+               Column('stop', 'Last', False, 'left', '10%'), Column('occurences', 'Count', False, 'right', '6%'),
+               Column('average', 'Avg Amount', False, 'right', '10%'),Column('minimum', 'Min Amount', False, 'right', '10%'),
+               Column('maximum', 'Max Amount', False, 'right', '10%')]
 
-        # ,
-        # style_data_conditional=[
-        #     {'if': {'row_index': i}, 'backgroundColor': '#3D9970', 'color': 'white'} for i in selected_rows
-        # ]
-        # content_style
-        # style_cell, style_cell_conditional
-        # style_data, style_data_conditional,
-        # style_header, style_header_conditional,
-        # style_table
-    )
-# https://dash.plot.ly/datatable/sizing
-# Allowed arguments: active_cell, column_conditional_dropdowns, column_static_dropdown, columns, content_style, css,
-# data, data_previous, data_timestamp, derived_viewport_data, derived_viewport_indices, derived_virtual_data,
-# derived_virtual_indices, dropdown_properties, editable, end_cell, filtering, filtering_settings, filtering_type,
-# filtering_types, id, is_focused, merge_duplicate_headers, n_fixed_columns, n_fixed_rows, navigation, pagination_mode,
-# pagination_settings, row_deletable, row_selectable, selected_cells, selected_rows, sorting, sorting_settings,
-# sorting_treat_empty_string_as_none, sorting_type, start_cell, style_as_list_view, style_cell, style_cell_conditional,
-# style_data, style_data_conditional, style_filter, style_filter_conditional, style_header, style_header_conditional, style_table
-
-
-def getColumnWidths():
-    return [{'start','10%'},{'stop','10%'},{'occurences','6%'},{'average','10%'},{'minimum','10%'},{'maximum','10%'}]
-
-
-def getColumns(dataframe):
-    #([{'id': p, 'name': p} for p in dataframe.columns[1:]])
-    columns = [
-        {'id': 'name', 'name': 'Expense'},
-        {'id': 'start', 'name': 'First'},
-        {'id': 'stop', 'name': 'Last'},
-        {'id': 'occurences', 'name': 'Count'},
-        {'id': 'average', 'name': 'Avg Amount'},
-        {'id': 'minimum', 'name': 'Min Amount'},
-        {'id': 'maximum', 'name': 'Max Amount'}
-    ]
-    return columns
-
-def getData(dataframe, max_rows=200):
-    return [
-            dict(entry=i,**{col: dataframe.iloc[i][col] for col in dataframe.columns})
-            for i in range(min(len(dataframe), max_rows))
-        ]
+    table = myDataTable('trackers',dataframe,columns)
+    table.enableSort()
+    table.setSelectRows([0,1,2])
+    #table.enableFilter()
+    return table.generate()
 
 #=============================================================================================================
 def getTrackers():
@@ -230,11 +143,11 @@ def updateSlider(title):
 def updateGraph(dateRange,selected,data,previous,cell):
     #Update tracker name in DB
     if cell is not None:
-        row=cell[0]
-        new=data[row]
-        old=previous[row]
-        id=new['id']
-        newName=new['name']
+        row = cell['row']
+        new = data[row]
+        old = previous[row]
+        id = new['id']
+        newName = new['name']
         oldName = old['name']
         if newName != oldName:
             updateTrackerEntry(id, newName)
@@ -256,7 +169,7 @@ def updateGraph(dateRange,selected,data,previous,cell):
     [Input('dateRange', 'value')])
 def updateTrackers(dateRange):
     df = generateTrackersReport(getDates(dateRange))
-    data = getData(df)
+    data = myDataTable.getData(df)
     return data
 
 
@@ -266,8 +179,11 @@ def updateTrackers(dateRange):
     [Input('trackers','selected_rows')])
 def highlightRows(selected):
     style=[
-        {'if': {'row_index': i}, 'backgroundColor': '#d6fbff'} for i in selected
+        myDataTable.setRowColor('odd', 'white'),
+        myDataTable.setRowColor('even', Colors.light_grey)
     ]
+    for i in selected:
+        style.append({'if': {'row_index': i}, 'backgroundColor': Colors.light_cyan})
     return style
 
 
@@ -284,7 +200,6 @@ def updateTrackerEntry(id,newName):
 
 # TODO: fix hover color
 # TODO: add currency symbols
-# TODO: make other columns non editable
 # TODO: use grid and columns to position and resize the graph and table
 # TODO: add alerts when expense deviates from expectations / norm
 # TODO: style as cards

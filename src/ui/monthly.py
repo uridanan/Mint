@@ -8,25 +8,13 @@ import plotly.graph_objs as go
 from src.app import app
 from src.utils.utils import *
 from src.sessions.globals import session
+from src.ui.mydatatable import myDataTable, Column
 
 F_GETMONTHS = 'queries/queryMonthSelector.sql'
 F_GETCATEGORIES = 'queries/queryCategoryFilter.sql'
 F_MONTHLY = 'queries/queryMonthlyReport.sql'
 F_MONTHLYBYCATEGORY = 'queries/queryMonthlyReportByCategory.sql'
 
-
-# dt.DataTable(
-# rows=df.to_dict(‘records’),
-# columns=(df.columns),
-# filters=True,
-# resizable=True,
-# sortColumn=True,
-# editable=True,
-# row_selectable=True,
-# filterable=True,
-# sortable=True,
-# selected_row_indices=[],
-# id=‘datatable-gapminder’)
 
 #=============================================================================================================
 #=============================================================================================================
@@ -43,31 +31,18 @@ def generatePieChart(dataFrame):
     return figure
 
 #=============================================================================================================
-def generateTable(dataframe, editable=[], hidden=[], max_rows=200):
-    return dash_table.DataTable(
-        id='monthlyReport',
-        # Header
-        columns=getColumns(dataframe, editable, hidden),
-        # Body
-        #data=getData(dataframe, max_rows),
-        data=[],
-        editable=True,
-    )
-
-#hidden is deprecated, instead add the columns in data but not in columns
-def getColumns(dataframe, editable=[], hidden=[]):
-    #return ([{'id': p, 'name': p, 'editable': p in editable, 'hidden': p in hidden} for p in dataframe.columns])
-    cols = []
-    for p in dataframe.columns:
-        if p not in hidden:
-            cols.append({'id': p, 'name': p, 'editable': p in editable})
-    return cols
-
-def getData(dataframe, max_rows=200):
-    return [
-            dict(entry=i,**{col: dataframe.iloc[i][col] for col in dataframe.columns})
-            for i in range(min(len(dataframe), max_rows))
-        ]
+def generateTable(dataframe):
+    # date,ref_id,debit,marketing_name,category
+    columns = [Column('date', 'Date', False, 'left'),
+               Column('ref_id', 'ID', False, 'left'),
+               Column('marketing_name', 'Expense', True, 'left'),
+               Column('category', 'Category', True, 'left'),
+               Column('debit', 'Amount', False, 'right')
+               ]
+    table = myDataTable('monthlyReport',dataframe,columns)
+    table.enableSort()
+    #table.enableFilter()
+    return table.generate()
 
 #=============================================================================================================
 
@@ -130,7 +105,7 @@ layout = html.Div(children=[
     html.H4(id='title', children='Editable Expense Report - Work In Pogress'),
     dcc.Dropdown(id='selectMonth', multi=False),  #generateMonthSelector(selectableMonths),
     dcc.Dropdown(id='filterCategories', multi=True),  #generateCategorySelector(categories_df),
-    generateTable(reportData,['marketing_name','category'],['business_id','tracker_id']),
+    generateTable(reportData),
     dcc.Graph(id='pieChart'),
     html.Div(id='output'),
     html.A(id='link')
@@ -182,22 +157,13 @@ def updateCategoryFilter(title,newCategory):
 )
 def processInput(data,clicks,previous,cell):
     if(cell != None):
-        row=cell[0]
-        col=cell[1]+1
-        headers = list(data[row].keys())
+        row=cell['row']
         new=data[row]
-        #old=previous[row]
-        #oldName=old['marketing_name']
         newName = new['marketing_name']
         newCategory = new['category']
         businessId = new['business_id']
-        # if(headers[col] in ('marketing_name','category')):
-        #     updateBusinessEntry(businessId,newName,newCategory)
-        # If only the relevant columns are editable, no need to test for them
         updateBusinessEntry(businessId, newName, newCategory)
-        print("")
         return newCategory
-
 
 #TODO: apply category to Check (not a regular business, it doesn't stick)
 #The problem is that the marketing name was taken from the recurring expenses
@@ -231,7 +197,7 @@ def onMonthSelected(month,filter):
 def updateTable(month,filter):
     selectedCategories = getSelectedCategories(filter)
     reportData = generateMonthlyReport(month,selectedCategories)
-    tableData = getData(reportData)
+    tableData = myDataTable.getData(reportData)
     return tableData
 
 
