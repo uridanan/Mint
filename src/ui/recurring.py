@@ -39,15 +39,32 @@ def generateTimeSeries(trackers,timeSeries,start=0,stop=None):
     return figure
 
 #=============================================================================================================
+# Max number of marks that can actually display nicely is 30
+# Above 30, start alternating with empty labels
 # Range slider
+MAGIC_NUMBER = 30
+def createLabels(dates):
+    iMax = len(dates)
+    skip = 1 + iMax // MAGIC_NUMBER
+    labels = []
+    for i in range(iMax):
+        labels.append("")
+        if i % skip == 0:
+            labels[i] = dates[i]
+    return labels
+
 def generateDatesSlider(dates):
     iMax = len(dates)-1
+    labels = createLabels(dates)
     slider = dcc.RangeSlider(
         id='dateRange',
-        marks={i:dates[i] for i in range(iMax+1)}, # range excludes the last index
+        marks={i: {'label': labels[i], 'style': {'transform':'matrix(0.8,0.8,-0.8,0.8,-5,15)', 'height': 'fit-content', 'width': 'fit-content'}} for i in range(iMax + 1)},  # range excludes the last index
         min=0,
         max=iMax,
-        value=[iMax-3,iMax])
+        value=[iMax-3,iMax],
+        allowCross=False,
+        step=None
+    )
     return slider
 
 #=============================================================================================================
@@ -107,11 +124,13 @@ F_GETRECURRINGDATA = 'queries/queryRecurringDataPoints.sql'
 # Layout
 layout = html.Div(children=[
     html.H4(id='title', children='Recurring Expenses - Work In Pogress',className="row"),
-    #dcc.Graph(id='data', figure=generateTimeSeries(getTrackers(), trackersData), className="row"),
-    dcc.Graph(id='data', className="row"),
-    #html.Div(id='slider', className='padded',children=[generateDatesSlider(trackersData.getDates())]),
-    html.Div(id='slider', className='padded'),
-    html.Div(id='trackers_table', className="row", children=[
+    dcc.Graph(id='data', className='row'),
+    html.Div(className='row', children=[
+        html.Div(className="one column"),
+        html.Div(className="ten columns", children=[html.Div(id='slider', className='padded')]),
+        html.Div(className="one column")
+    ]),
+    html.Div(id='trackers_table', className='row', children=[
         html.Div(className="one column"),
         html.Div(className="ten columns", children=[generateTable(generateTrackersReport(getDates([13,16])))]),
         html.Div(className="one column")
