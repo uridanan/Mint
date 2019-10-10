@@ -8,8 +8,9 @@ import plotly.graph_objs as go
 from src.app import app
 from src.ui.timeseries import *
 from src.sessions.globals import session
-from src.ui.mydatatable import myDataTable, Column
+from src.ui.mydatatable import myDataTable, Column, Currency
 from src.ui.colors import Colors
+
 
 
 #=============================================================================================================
@@ -73,8 +74,8 @@ def generateDatesSlider(dates):
 def generateTable(dataframe):
     columns = [Column('name', 'Expense', True, 'left'), Column('start', 'First', False, 'left', '10%'),
                Column('stop', 'Last', False, 'left', '10%'), Column('occurences', 'Count', False, 'right', '6%'),
-               Column('average', 'Avg Amount', False, 'right', '10%'),Column('minimum', 'Min Amount', False, 'right', '10%'),
-               Column('maximum', 'Max Amount', False, 'right', '10%')]
+               Column('average', 'Avg Amount', False, 'right', '10%', Currency.NIS),Column('minimum', 'Min Amount', False, 'right', '10%', Currency.NIS),
+               Column('maximum', 'Max Amount', False, 'right', '10%', Currency.NIS)]
 
     table = myDataTable('trackers',dataframe,columns)
     table.enableSort()

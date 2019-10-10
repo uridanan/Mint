@@ -25,9 +25,8 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="80c4402e-a3e2-4f3d-9eb3-3a7817733dec">
-        <schema name="information_schema" object-types="view, function, table" />
-        <schema name="pg_catalog" object-types="view, function, table" />
-        <schema name="public" object-types="view, function, table, column" />
+        <schema name="pg_catalog" object-types="table, view, function" />
+        <schema name="public" object-types="table, view, function, column" />
       </connection>
     </loaded-nodes>
   </component>
@@ -460,7 +459,7 @@
     </code-completion-settings>
     <execution-engine-settings>
       <statement-execution>
-        <fetch-block-size value="100" />
+        <fetch-block-size value="1000" />
         <execution-timeout value="20" />
         <debug-execution-timeout value="600" />
         <focus-result value="false" />

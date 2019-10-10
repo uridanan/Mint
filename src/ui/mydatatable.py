@@ -2,22 +2,56 @@ import dash_table
 from src.ui.colors import Colors
 
 
+class Currency:
+    USD = u'$'
+    NIS = u'₪'
+
+    @staticmethod
+    def format(symbol):
+        format = {
+            'locale': {
+                'symbol': [symbol, '']
+            },
+            'specifier': '$.2f'
+        }
+        return format
+
+
 class Column:
     id = None
     name = None
     edit = False
     width = None
     align = 'left'
+    currency = None
 
-    def __init__(self, id, name, edit=False, align='left', width=None):
+    def __init__(self, id, name, edit=False, align='left', width=None, currency = None):
         self.id = id
         self.name = name
         self.edit = edit
         self.align = align
         self.width = width
+        self.currency = currency
+
+    # 'id': 'average_04_2018',
+    # 'name': 'Average Price ($)',
+    # 'type': 'numeric',
+    # 'format': FormatTemplate.money(0)
 
     def toDict(self):
-        return {'id': self.id, 'name': self.name, 'editable': self.edit}
+        if self.currency is None:
+            return {'id': self.id, 'name': self.name, 'editable': self.edit}
+        else:
+            format = Currency.format(self.currency)
+
+            # format = {
+            #     'locale': {
+            #         'symbol': [Currency.NIS, '']
+            #     },
+            #     'specifier': '$.2f'
+            # }
+
+            return {'id': self.id, 'name': self.name, 'editable': self.edit, 'type': 'numeric', 'format': format}
 
     def style(self):
         if self.width is None:
