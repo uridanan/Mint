@@ -3,7 +3,7 @@ from src.uploadTypes import uploadTypes
 from src.app import app
 import src.db.dbAccess as db
 from src.sessions.globals import session
-from src.ui.mydatatable import myDataTable, Column
+from src.ui.mydatatable import myDataTable, Column, Currency
 
 import dash
 from dash.dependencies import Input, Output, State
@@ -34,7 +34,7 @@ def getReportsTable():
 
 def generateTable(dataframe):
     columns = [Column('source', 'Report', False, 'left', '55%'), Column('ref_id', 'Account or Card', False, 'left', '15%'),
-               Column('report_date', 'Date', False, 'left', '15%'), Column('total', 'Amount', False, 'right', '15%')]
+               Column('report_date', 'Date', False, 'left', '15%'), Column('total', 'Amount', False, 'right', '15%', Currency.NIS)]
 
     table = myDataTable('files',dataframe,columns)
     table.enableSort()

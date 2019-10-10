@@ -1,5 +1,4 @@
 from dash.dependencies import Input, Output, State
-import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
 import src.db.dbAccess as db
@@ -8,7 +7,7 @@ import plotly.graph_objs as go
 from src.app import app
 from src.utils.utils import *
 from src.sessions.globals import session
-from src.ui.mydatatable import myDataTable, Column
+from src.ui.mydatatable import myDataTable, Column, Currency
 
 F_GETMONTHS = 'queries/queryMonthSelector.sql'
 F_GETCATEGORIES = 'queries/queryCategoryFilter.sql'
@@ -37,7 +36,7 @@ def generateTable(dataframe):
                Column('ref_id', 'ID', False, 'left'),
                Column('marketing_name', 'Expense', True, 'left'),
                Column('category', 'Category', True, 'left'),
-               Column('debit', 'Amount', False, 'right')
+               Column('debit', 'Amount', False, 'right', currency=Currency.NIS)
                ]
     table = myDataTable('monthlyReport',dataframe,columns)
     table.enableSort()
