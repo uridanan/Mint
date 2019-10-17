@@ -85,9 +85,8 @@ def generateTable(dataframe):
 #=============================================================================================================
 def getTrackers():
     df = db.runQuery(Q_GETTRACKERS,session.getUserIdParam())
-    dict = {}
-    dict = {v[0]: v[1] for v in df.values}
-    return dict
+    rDict = {v[0]: v[1] for v in df.values}
+    return rDict
 
 
 def getDataPoints():
@@ -132,7 +131,7 @@ layout = html.Div(children=[
     ]),
     html.Div(id='trackers_table', className='row', children=[
         html.Div(className="one column"),
-        html.Div(className="ten columns", children=[generateTable(generateTrackersReport(getDates([13,16])))]),
+        html.Div(className="ten columns", children=[generateTable(generateTrackersReport(getDates([13,16])))]), # What is 13,16 ??????
         html.Div(className="one column")
     ]),
     html.Div(id='hidden'),
@@ -217,8 +216,4 @@ def updateTrackerEntry(id,newName):
 #https://stackoverflow.com/questions/9067892/how-to-align-two-elements-on-the-same-line-without-changing-html
 #https://community.plot.ly/t/two-graphs-side-by-side/5312
 
-# TODO: fix hover color
-# TODO: add currency symbols
-# TODO: use grid and columns to position and resize the graph and table
 # TODO: add alerts when expense deviates from expectations / norm
-# TODO: style as cards
