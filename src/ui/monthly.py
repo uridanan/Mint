@@ -90,13 +90,6 @@ def generatePieChartData(month,categories):
 
 #=============================================================================================================
 
-### Run all these queries on load and update layout accordingly
-#categories_df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
-#categories_list = getAllCategories(categories_df)
-#selectableMonths = db.runQueryFromFile(F_GETMONTHS, session.getUserIdParam())
-#defaultMonth = selectableMonths.iloc[0][1]
-#reportData = generateMonthlyReport(defaultMonth,categories_list)
-#graphData = generatePieChartData(defaultMonth,categories_list)
 reportData = generateMonthlyReport(None,[''])
 
 ### Create months and categories dropdowns in callbacks, otherwise they use userId=0
@@ -116,7 +109,10 @@ layout = html.Div(children=[
 #TODO: format the table
 #TODO: format the pie chart
 #TODO: add a label for undefined category
-#TODO: handle exceptions
+#TODO: When updating marketing name or category, I need to update all the entries with the same business ID (update the table)
+#DONE: entries only appear if they have a tracker, entries without tracker don't appear in the report
+#TODO: edit marketing name won't work if the name comes from a tracker. I should have an indication or make it RO
+#TODO: trackers are created even if the expenses happen in the same month
 #https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
 
 
@@ -216,3 +212,5 @@ def updatePieChart(month,filter):
 
 #On how to display a pie chart in tabs
 #https://community.plot.ly/t/how-to-create-a-pie-chart-in-dash-app-under-a-particular-tab/7700
+
+
