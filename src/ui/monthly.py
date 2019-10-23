@@ -3,11 +3,13 @@ import dash_core_components as dcc
 import dash_html_components as html
 import src.db.dbAccess as db
 from src.entities.businessEntry import BusinessEntry
+from src.entities.recurrentExpense import RecurrentExpense
 import plotly.graph_objs as go
 from src.app import app
 from src.utils.utils import *
 from src.sessions.globals import session
 from src.ui.mydatatable import myDataTable, Column, Currency
+from src.utils.myString import myString
 
 F_GETMONTHS = 'queries/queryMonthSelector.sql'
 F_GETCATEGORIES = 'queries/queryCategoryFilter.sql'
@@ -99,21 +101,20 @@ layout = html.Div(children=[
     dcc.Dropdown(id='filterCategories', multi=True),  #generateCategorySelector(categories_df),
     generateTable(reportData),
     dcc.Graph(id='pieChart'),
-    html.Div(id='output'),
-    html.A(id='link')
+    html.Div(id='output',hidden=True),
 ])
 
 #=============================================================================================================
 #=============================================================================================================
 
-#TODO: format the table
-#TODO: format the pie chart
-#TODO: add a label for undefined category
-#TODO: When updating marketing name or category, I need to update all the entries with the same business ID (update the table)
-#DONE: entries only appear if they have a tracker, entries without tracker don't appear in the report
-#TODO: edit marketing name won't work if the name comes from a tracker. I should have an indication or make it RO
-#TODO: trackers are created even if the expenses happen in the same month
-#https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
+# TODO: format the table
+# TODO: format the pie chart
+# TODO: add a label for undefined category
+# DONE: When updating marketing name or category, I need to update all the entries with the same business ID (update the table)
+# DONE: entries only appear if they have a tracker, entries without tracker don't appear in the report
+# DONE: edit marketing name won't work if the name comes from a tracker. I need to change the name of the tracker too
+# TODO: trackers are created even if the expenses happen in the same month
+# https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
 
 
 @app.callback(
@@ -147,22 +148,30 @@ def updateCategoryFilter(title,newCategory):
 
 @app.callback(
     Output('output', 'data-*'),
-    [Input('monthlyReport', 'data'),Input('link', 'n_clicks ')],
-    [State('monthlyReport', 'data_previous'),State('monthlyReport', 'active_cell')]
+    [Input('monthlyReport', 'data_timestamp')],
+    [State('monthlyReport', 'data'),State('monthlyReport', 'active_cell')]
 )
-def processInput(data,clicks,previous,cell):
+def processInput(timestamp,data,cell):
     if(cell != None):
         row=cell['row']
         new=data[row]
         newName = new['marketing_name']
         newCategory = new['category']
         businessId = new['business_id']
+        trackerId = new['tracker_id']
         updateBusinessEntry(businessId, newName, newCategory)
+        updateTrackerEntry(trackerId, newName)
         return newCategory
 
+def updateTrackerEntry(trackerId, newName):
+    tracker = RecurrentExpense.selectBy(id=trackerId, userId=session.getUserId()).getOne(None)
+    if (tracker != None):
+        tracker.set(name=newName)
+
 #TODO: apply category to Check (not a regular business, it doesn't stick)
-#The problem is that the marketing name was taken from the recurring expenses
-#When updating it needs to be applied there too
+# The problem is that the marketing name was taken from the recurring expenses
+# When updating it needs to be applied there too - does this work now or is it still an issue?
+# The problem was because I was looking up the entry by name. Now that the lookup is by Id it should be fine
 def updateBusinessEntry(businessId,newName,newCategory):
     business = BusinessEntry.selectBy(id=businessId, userId=session.getUserId()).getOne(None)
     if (business != None):
@@ -182,11 +191,11 @@ def addCategory(category):
     if category not in categories_list:
         categories_list.append(category)
 
-
+# TODO: try using output.children rather than data-* to updateTable on edit
 @app.callback(
     Output('monthlyReport', 'data'),
-    [Input('selectMonth', 'value'),Input('filterCategories', 'value')])
-def onMonthSelected(month,filter):
+    [Input('selectMonth', 'value'),Input('filterCategories', 'value'),Input('output', 'data-*')])
+def onMonthSelected(month,filter,input):
     return updateTable(month, filter)
 
 def updateTable(month,filter):
@@ -200,7 +209,8 @@ def updateTable(month,filter):
     Output('pieChart', 'figure'),
     [Input('selectMonth', 'value'),Input('filterCategories', 'value'),Input('output', 'data-*')])
 def onMonthSelected(month,filter,newCategory):
-    addCategory(newCategory)
+    if newCategory is not None and myString.isEmpty(newCategory):
+            addCategory(newCategory)
     return updatePieChart(month, filter)
 
 def updatePieChart(month,filter):
