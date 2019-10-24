@@ -103,7 +103,7 @@ class CreditReport(ABC):
     @staticmethod
     def credit(amount):
         if amount < 0:
-            return amount
+            return -amount
         else:
             return 0
 
