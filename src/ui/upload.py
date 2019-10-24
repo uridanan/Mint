@@ -72,7 +72,9 @@ layout = html.Div([
     #     # Allow multiple files to be uploaded
     #     multiple=True
     # ),
-    html.Div(id='output-data-upload',children=[getReportsTable()])
+    dcc.Loading(id="loading-files", type="default", children=[
+        html.Div(id='output-data-upload',children=[getReportsTable()])
+    ])
 ])
 
 

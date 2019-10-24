@@ -110,10 +110,11 @@ layout = html.Div(children=[
 # TODO: format the table
 # TODO: format the pie chart
 # TODO: add a label for undefined category
+# TODO: trackers are created even if the expenses happen in the same month
 # DONE: When updating marketing name or category, I need to update all the entries with the same business ID (update the table)
 # DONE: entries only appear if they have a tracker, entries without tracker don't appear in the report
 # DONE: edit marketing name won't work if the name comes from a tracker. I need to change the name of the tracker too
-# TODO: trackers are created even if the expenses happen in the same month
+
 # https://community.plot.ly/t/solved-updating-a-dash-datatable-rows-with-row-update-and-rows/6573/2
 
 
@@ -168,10 +169,6 @@ def updateTrackerEntry(trackerId, newName):
     if (tracker != None):
         tracker.set(name=newName)
 
-#TODO: apply category to Check (not a regular business, it doesn't stick)
-# The problem is that the marketing name was taken from the recurring expenses
-# When updating it needs to be applied there too - does this work now or is it still an issue?
-# The problem was because I was looking up the entry by name. Now that the lookup is by Id it should be fine
 def updateBusinessEntry(businessId,newName,newCategory):
     business = BusinessEntry.selectBy(id=businessId, userId=session.getUserId()).getOne(None)
     if (business != None):
@@ -191,7 +188,7 @@ def addCategory(category):
     if category not in categories_list:
         categories_list.append(category)
 
-# TODO: try using output.children rather than data-* to updateTable on edit
+
 @app.callback(
     Output('monthlyReport', 'data'),
     [Input('selectMonth', 'value'),Input('filterCategories', 'value'),Input('output', 'data-*')])
