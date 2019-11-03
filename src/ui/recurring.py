@@ -9,6 +9,7 @@ from src.ui.timeseries import *
 from src.sessions.globals import session
 from src.ui.mydatatable import myDataTable, Column, Currency
 from src.ui.colors import Colors
+from datetime import datetime
 
 
 
@@ -97,10 +98,25 @@ def getDataPoints():
 
 def getDates(dateRange):
     trackersData = getDataPoints()
+    datesCount = len(trackersData.getDates())
+    today = datetime.now().strftime('Mon YYYY')
+
+    if datesCount == 0:
+        return [today,today]
+
     if dateRange is None:
         dateRange = [0, len(trackersData.getDates())-1]
-    start = trackersData.getDates()[dateRange[0]]
-    stop = trackersData.getDates()[dateRange[1]]
+
+    if dateRange[0] > datesCount -1:
+        start = today
+    else:
+        start = trackersData.getDates()[dateRange[0]]
+
+    if dateRange[1] > datesCount -1:
+        stop = today
+    else:
+        stop = trackersData.getDates()[dateRange[1]]
+
     return [start,stop]
 
 
@@ -131,7 +147,7 @@ layout = html.Div(children=[
     ]),
     html.Div(id='trackers_table', className='row', children=[
         html.Div(className="one column"),
-        html.Div(className="ten columns", children=[generateTable(generateTrackersReport(getDates([13,16])))]), # What is 13,16 ??????
+        html.Div(className="ten columns"),
         html.Div(className="one column")
     ]),
     html.Div(id='hidden'),

@@ -2,6 +2,7 @@ from src.entities.creditEntry import CreditEntry
 from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
 from src.entities.fileEntry import FileEntry
+from src.processors.markCreditCardReports import BankEntriesPostProcessor
 from abc import ABC, abstractmethod
 from datetime import datetime
 from sqlobject.sqlbuilder import AND
@@ -12,17 +13,22 @@ class CardData:
     cardNumber = ""
     reportDate = None
     total = 0
+    flagged = False
 
     def __init__(self, cardNumber, reportDate, total=0):
         self.cardNumber = cardNumber
         self.reportDate = reportDate
         self.total = total
+        self.flagged = False
 
     def setTotal(self,total):
         self.total = total
 
     def update(self,amount):
         self.total += amount
+
+    def flag(self):
+        self.flagged = True
 
 
 # A matrix of card data as a dictionary by date then by card number
@@ -56,7 +62,6 @@ class Cards:
         return arrayOfCards
 
 
-# TODO: handle +/-
 # TODO: handle currency? what do I do with it?
 class CreditReport(ABC):
     type = None
@@ -65,6 +70,7 @@ class CreditReport(ABC):
     def initTables(self):
         CreditEntry.createTable(ifNotExists=True)
         BusinessEntry.createTable(ifNotExists=True)
+        BankEntry.createTable(ifNotExists=True)
         FileEntry.createTable(ifNotExists=True)
 
     def process(self):
@@ -80,12 +86,13 @@ class CreditReport(ABC):
 
     def processMonthlyTotals(self):
         for card in self.cards.getAll():
-            self.processMonthlyTotal(card)
+            if BankEntriesPostProcessor.hideCreditCardReport(card.reportDate, card.total):
+                card.flag()
 
     #TODO: pass filename along?
     def processSummary(self):
         for card in self.cards.getAll():
-            entry = FileEntry(userId=session.getUserId(), source=self.type, reportDate=card.reportDate, total=card.total, refId=card.cardNumber)
+            entry = FileEntry(userId=session.getUserId(), source=self.type, reportDate=card.reportDate, total=card.total, refId=card.cardNumber, flagged=card.flagged)
 
     def processRow(self,row):
         # ComputeTotals returns False if an entry should be created (i.e. this is an actual entry, not a monthly total)
@@ -135,7 +142,6 @@ class CreditReport(ABC):
         entry = CreditEntry(reportDate=reportDate, purchaseDate=purchaseDate, business=business.id,
                             cardNumber=cardNumber, bankId="0", credit=self.credit(amount), debit=self.debit(amount),
                             balance=0, trackerId=0, userId=session.getUserId())
-        #entry.toCSV()
         return entry
 
     def getBusinessEntry(self,businessName):
@@ -143,18 +149,6 @@ class CreditReport(ABC):
         if (business == None):
             business = BusinessEntry(businessName=businessName, marketingName=businessName, category="", userId=session.getUserId())
         return business
-
-    #lookup by month and amount
-    def processMonthlyTotal(self, card):
-        reportDate = datetime.strptime(card.reportDate, '%Y-%m-%d').date()
-        start = datetime(reportDate.year,reportDate.month,1).date()
-        end = datetime(reportDate.year,reportDate.month,28).date()
-        # delta = timedelta(days=3)
-        # start = reportDate - delta
-        # end = reportDate + delta
-        bList = BankEntry.select( AND( BankEntry.q.userId == session.getUserId(), BankEntry.q.date >= start , BankEntry.q.date <= end, BankEntry.q.debit == card.total) )
-        for b in bList:
-            b.hide = 1
 
     @abstractmethod
     def getCardNumber(self, row):

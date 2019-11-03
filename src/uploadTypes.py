@@ -1,5 +1,4 @@
-
-class uploadType():
+class uploadType:
     VISACAL = 'Visa CAL'
     LEUMICARD = 'LeumiCard'
     ISRACARD = 'IsraCard'

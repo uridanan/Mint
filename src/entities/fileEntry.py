@@ -10,6 +10,7 @@ class FileEntry(SQLObject):
     reportDate = StringCol()
     refId = StringCol()  #card or account number
     total = FloatCol()
+    flagged = BoolCol()
     # startDate = DateCol()
     # endDate = DateCol()
     # fileName = StringCol()

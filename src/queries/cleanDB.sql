@@ -15,3 +15,4 @@ delete from bank_entry
 delete from credit_entry
 delete from business_entry
 delete from recurrent_expense
+delete from file_entry

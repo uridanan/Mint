@@ -1,3 +1,4 @@
+from src.processors.markCreditCardReports import BankEntriesPostProcessor
 from src.entities.businessEntry import BusinessEntry
 from src.entities.bankEntry import BankEntry
 from src.entities.fileEntry import FileEntry
@@ -21,6 +22,7 @@ class BankReport(ABC):
         self.initTables()
         self.processRows()
         self.processSummary()
+        self.processCreditCardEntries()
 
     def initTables(self):
         BankEntry.createTable(ifNotExists=True)
@@ -34,7 +36,7 @@ class BankReport(ABC):
     def processSummary(self):
         reportDate = self.start + ' to ' + self.end
         entry = FileEntry(userId=session.getUserId(), source=self.type, reportDate=reportDate, total=None,
-                          refId=self.account)
+                          refId=self.account, flagged=True)
 
     def processRow(self,row):
         date = self.extractDate(row)
@@ -60,6 +62,11 @@ class BankReport(ABC):
 
     def renameChecks(self, name):
         name.replace('שיק','check')
+
+    #lookup entries that match credit reports
+    def processCreditCardEntries(self):
+        BankEntriesPostProcessor.hideCreditCardReports()
+
 
     @abstractmethod
     def setAccount(self,val):
