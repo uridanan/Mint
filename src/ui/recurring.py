@@ -22,14 +22,17 @@ def generateTimeSeries(trackers,timeSeries,start=0,stop=None):
     data = []
     if stop != None:
         stop = stop + 1  # the [x:y] notation excludes the last index
-    for key,name in trackers.items():
-        trace = go.Scatter(
-            x=timeSeries.getDates()[start:stop],
-            y=timeSeries.getSeriesByName(key)[start:stop],
-            name = name,
-            #line = dict(color = '#17BECF'),
-            opacity = 0.8)
-        data.append(trace)
+
+    if trackers is not None and timeSeries is not None:
+        for key,name in trackers.items():
+            trace = go.Scatter(
+                x=timeSeries.getDates()[start:stop],
+                y=timeSeries.getSeriesByName(key)[start:stop],
+                name = name,
+                #line = dict(color = '#17BECF'),
+                opacity = 0.8)
+            data.append(trace)
+
     layout = dict(
         title = "",
         xaxis = dict(title='Month'),
@@ -99,28 +102,29 @@ def getDataPoints():
 def getDates(dateRange):
     trackersData = getDataPoints()
     datesCount = len(trackersData.getDates())
-    today = datetime.now().strftime('Mon YYYY')
 
-    if datesCount == 0:
-        return [today,today]
+    if datesCount < 2:
+        return None
 
     if dateRange is None:
-        dateRange = [0, len(trackersData.getDates())-1]
+        dateRange = [0, datesCount-1]
 
-    if dateRange[0] > datesCount -1:
-        start = today
-    else:
-        start = trackersData.getDates()[dateRange[0]]
+    if dateRange[0] < 0:
+        dateRange[0] = 0
 
     if dateRange[1] > datesCount -1:
-        stop = today
-    else:
-        stop = trackersData.getDates()[dateRange[1]]
+        dateRange[1] = datesCount -1
+
+    start = trackersData.getDates()[dateRange[0]]
+    stop = trackersData.getDates()[dateRange[1]]
 
     return [start,stop]
 
 
 def generateTrackersReport(dateRange):
+    if dateRange is None:
+        return None
+
     params = [
         {'name': 'start', 'value': [dateRange[0]]},
         {'name': 'stop', 'value': [dateRange[1]]},
@@ -147,7 +151,7 @@ layout = html.Div(children=[
     ]),
     html.Div(id='trackers_table', className='row', children=[
         html.Div(className="one column"),
-        html.Div(className="ten columns"),
+        html.Div(className="ten columns", children=[generateTable(None)]),
         html.Div(className="one column")
     ]),
     html.Div(id='hidden'),
@@ -187,12 +191,14 @@ def updateGraph(dateRange,selected,data,previous,cell):
             updateTrackerEntry(id, newName)
 
     #Update graph
-    trackers = {}
-    for i in selected:
-        if i < len(data):
-            trackerId = data[i]['id']
-            trackerName = data[i]['name']
-            trackers[trackerId]=trackerName
+    if data is not None:
+        trackers = {}
+        for i in selected:
+            if i < len(data):
+                trackerId = data[i]['id']
+                trackerName = data[i]['name']
+                trackers[trackerId]=trackerName
+
     figure = generateTimeSeries(trackers, getDataPoints(), dateRange[0], dateRange[1])
     return figure
 
@@ -202,7 +208,8 @@ def updateGraph(dateRange,selected,data,previous,cell):
     Output('trackers', 'data'),
     [Input('dateRange', 'value')])
 def updateTrackers(dateRange):
-    df = generateTrackersReport(getDates(dateRange))
+    dates = getDates(dateRange)
+    df = generateTrackersReport(dates)
     data = myDataTable.getData(df)
     return data
 

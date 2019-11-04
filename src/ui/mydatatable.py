@@ -87,6 +87,8 @@ class myDataTable:
 
     @staticmethod
     def getData(dataframe, max_rows=200):
+        if dataframe is None:
+            return []
         return [
             dict(entry=i, **{col: dataframe.iloc[i][col] for col in dataframe.columns})
             for i in range(min(len(dataframe), max_rows))
