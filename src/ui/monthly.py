@@ -133,6 +133,8 @@ def updateMonthSelector(title):
     [Input('selectMonth', 'options')]
 )
 def updateDefaultMonth(selectableMonths):
+    if len(selectableMonths) < 1:
+        return ""
     defaultMonth = selectableMonths[0]['value']
     return defaultMonth
 
@@ -180,6 +182,10 @@ def getSelectedCategories(filter):
     else:
         categories_df = db.runQueryFromFile(F_GETCATEGORIES, session.getUserIdParam())
         selectedCategories = getAllCategories(categories_df)
+
+    #Empty list triggers SQL syntax error, append value ''
+    if len(selectedCategories) < 1:
+        selectedCategories.append('')
     return selectedCategories
 
 def addCategory(category):

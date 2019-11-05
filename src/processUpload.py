@@ -13,11 +13,11 @@ def processFile(type, content):
         upload = LeumiReport(content)
     if type == uploadType.VISACAL:
         upload = VisaCalReport(content)
-    if type == uploadType.LEUMICARD:
-        cardNum = "4014"
-        upload = LeumiCardReport(content,cardNum)
     if type == uploadType.ISRACARD:
         upload = IsraCardReport(content)
+    if type == uploadType.LEUMICARD:
+        cardNum = "0000"
+        upload = LeumiCardReport(content,cardNum)
     if type == uploadType.MAX:
         upload = MaxReport(content)
     upload.process()

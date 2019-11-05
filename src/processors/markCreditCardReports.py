@@ -28,4 +28,4 @@ class BankEntriesPostProcessor:
         #Bank entries are flagged on creation so they will not appear here
         for f in fList:
             if BankEntriesPostProcessor.hideCreditCardReport(f.reportDate, f.total):
-                f.flag()
+                f.flagged = True

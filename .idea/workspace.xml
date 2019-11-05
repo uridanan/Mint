@@ -4,11 +4,12 @@
     <list default="true" id="a68196b6-ceb7-4976-ae79-9cd9035f182c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/processUpload.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processUpload.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/processors/markCreditCardReports.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/processors/markCreditCardReports.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/queries/scratchpad.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/queries/scratchpad.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/templates/signin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/signin.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/mydatatable.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/mydatatable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/recurring.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/recurring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/monthly.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/monthly.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,52 +23,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/mydatatable.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="88" column="8" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/upload.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="50" column="102" selection-start-line="50" selection-start-column="102" selection-end-line="50" selection-end-column="102" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/queries/scratchpad.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="461">
-              <caret line="450" selection-start-line="450" selection-end-line="450" selection-end-column="37" />
+            <state relative-caret-position="1008">
+              <caret line="517" column="25" selection-start-line="517" selection-start-column="25" selection-end-line="517" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/queries/queryRecurringDataPoints.sql">
+        <entry file="file://$PROJECT_DIR$/src/processors/markRecurrentExpenses.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="30" lean-forward="true" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/queries/queryTrackersFromTo.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="490">
+              <caret line="74" selection-start-line="74" selection-end-line="74" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -75,26 +46,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/queries/cleanDB.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="17" selection-end-column="22" />
+            <state relative-caret-position="289">
+              <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/sqlalchemy/engine/default.py">
+        <entry file="file://$PROJECT_DIR$/src/ui/monthly.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8500">
-              <caret line="508" selection-start-line="508" selection-end-line="508" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ui/recurring.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1066">
-              <caret line="131" column="5" selection-start-line="131" selection-start-column="4" selection-end-line="131" selection-end-column="5" />
+            <state relative-caret-position="622">
+              <caret line="187" column="35" selection-start-line="187" selection-start-column="35" selection-end-line="187" selection-end-column="35" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
@@ -103,12 +65,64 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/queries/queryMonthlyReport.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-488" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ui/recurring.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3247">
+              <caret line="202" selection-start-line="202" selection-end-line="202" />
+              <folding>
+                <element signature="e#0#50#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/processUpload.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/processors/processCreditReport.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="135" column="28" selection-start-line="135" selection-start-column="28" selection-end-line="135" selection-end-column="28" />
+            <state relative-caret-position="299">
+              <caret line="89" column="27" lean-forward="true" selection-start-line="89" selection-start-column="27" selection-end-line="89" selection-end-column="27" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/processors/markCreditCardReports.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+              <folding>
+                <element signature="e#0#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="799">
+              <caret line="57" column="42" selection-start-line="57" selection-start-column="42" selection-end-line="57" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -158,7 +172,6 @@
         <option value="$PROJECT_DIR$/src/processors/markRecurrentExpenses.py" />
         <option value="$PROJECT_DIR$/src/tests/originalxlsVisaCal.py" />
         <option value="$PROJECT_DIR$/src/processors/processExcel.py" />
-        <option value="$PROJECT_DIR$/src/processUpload.py" />
         <option value="$PROJECT_DIR$/src/processors/processIsraCardReport.py" />
         <option value="$PROJECT_DIR$/src/processors/processVisaCalReport.py" />
         <option value="$PROJECT_DIR$/src/processors/processMaxReport.py" />
@@ -169,22 +182,23 @@
         <option value="$PROJECT_DIR$/src/queries/queryTrackersFromTo.sql" />
         <option value="$PROJECT_DIR$/src/ui/timeseries.py" />
         <option value="$PROJECT_DIR$/src/queries/queryMonthlyReport.sql" />
-        <option value="$PROJECT_DIR$/src/ui/monthly.py" />
         <option value="$PROJECT_DIR$/src/ui/upload.py" />
         <option value="$PROJECT_DIR$/src/entities/fileEntry.py" />
         <option value="$PROJECT_DIR$/src/processors/processCreditReport.py" />
         <option value="$PROJECT_DIR$/src/processors/processBankReport.py" />
-        <option value="$PROJECT_DIR$/src/test.py" />
         <option value="$PROJECT_DIR$/src/uploadTypes.py" />
         <option value="$PROJECT_DIR$/src/queries/cleanDB.sql" />
-        <option value="$PROJECT_DIR$/src/processors/markCreditCardReports.py" />
         <option value="$PROJECT_DIR$/src/ui/mydatatable.py" />
-        <option value="$PROJECT_DIR$/src/queries/scratchpad.sql" />
         <option value="$PROJECT_DIR$/src/ui/recurring.py" />
+        <option value="$PROJECT_DIR$/src/test.py" />
+        <option value="$PROJECT_DIR$/src/queries/scratchpad.sql" />
+        <option value="$PROJECT_DIR$/src/ui/monthly.py" />
+        <option value="$PROJECT_DIR$/src/processors/markCreditCardReports.py" />
+        <option value="$PROJECT_DIR$/src/processUpload.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="974" />
@@ -195,7 +209,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -207,12 +220,6 @@
               <item name="Clarity" type="b2602c69:ProjectViewProjectNode" />
               <item name="Clarity" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Clarity" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Clarity" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="processors" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Clarity" type="b2602c69:ProjectViewProjectNode" />
@@ -230,6 +237,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -338,7 +346,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49819493" weight="0.24973656" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49819493" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" sideWeight="0.50180507" side_tool="true" weight="0.24973656" />
       <window_info id="Favorites" order="2" sideWeight="0.50080776" side_tool="true" weight="0.24973656" />
       <window_info id="DB Browser" order="3" weight="0.32982087" />
@@ -366,12 +374,12 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3997833" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="DB Execution Console" order="8" weight="0.32936078" />
+      <window_info anchor="bottom" id="DB Execution Console" order="8" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="11" weight="0.32936078" />
@@ -409,24 +417,9 @@
           <option name="timeStamp" value="84" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/ui/recurring.py</url>
-          <line>221</line>
-          <option name="timeStamp" value="92" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/ui/recurring.py</url>
-          <line>231</line>
-          <option name="timeStamp" value="93" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/ui/recurring.py</url>
-          <line>210</line>
-          <option name="timeStamp" value="95" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/ui/recurring.py</url>
-          <line>201</line>
-          <option name="timeStamp" value="99" />
+          <url>file://$PROJECT_DIR$/src/processUpload.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="112" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -441,6 +434,8 @@
         <watch expression="self.data[1]" language="Python" />
         <watch expression="trackersData.getDates()" language="Python" />
         <watch expression="datetime.now().strftime(&quot;%b %Y&quot;)" language="Python" />
+        <watch expression="dataSet._AXIS_SLICEMAP" />
+        <watch expression="selectableMonths[0]" language="Python" />
       </configuration>
     </watches-manager>
   </component>
@@ -458,6 +453,11 @@
       </expression>
     </expressions>
     <expressions id="watch">
+      <expression>
+        <expression-string>selectableMonths[0]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>datetime.now().strftime(&quot;%b %Y&quot;)</expression-string>
         <language-id>Python</language-id>
@@ -500,11 +500,6 @@
       </expression>
       <expression>
         <expression-string>trackersData.getDates()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>self.data[1]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -681,9 +676,6 @@
     <entry file="file://$PROJECT_DIR$/src/queries/queryMonthlyReportByCategory.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/queries/queryMonthlyReport.sql">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/queries/queryRecurringByAmount.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -707,27 +699,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/monthly.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="112" column="74" selection-start-line="112" selection-start-column="74" selection-end-line="112" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/processors/processMaxReport.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1574">
           <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/processUpload.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -751,16 +726,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/processors/markRecurrentExpenses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2125">
-          <caret line="125" column="8" selection-start-line="125" selection-start-column="8" selection-end-line="125" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files (x86)/Python36-32/Lib/_strptime.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="197">
@@ -775,16 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="100" selection-start-line="100" selection-end-line="100" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/processors/processBankReport.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -795,47 +750,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/processors/markCreditCardReports.py">
+    <entry file="file://$PROJECT_DIR$/src/uploadTypes.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/processors/processIsraCardReport.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        <state relative-caret-position="271">
+          <caret line="67" column="62" lean-forward="true" selection-start-line="67" selection-start-column="62" selection-end-line="67" selection-end-column="90" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/uploadTypes.py">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/src/ui/mydatatable.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="88" column="8" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ui/upload.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
+        <state relative-caret-position="850">
           <caret line="50" column="102" selection-start-line="50" selection-start-column="102" selection-end-line="50" selection-end-column="102" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/queries/cleanDB.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="17" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/sqlalchemy/engine/default.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8500">
-          <caret line="508" selection-start-line="508" selection-end-line="508" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/queries/scratchpad.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="450" selection-start-line="450" selection-end-line="450" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -853,43 +797,96 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/processors/processIsraCardReport.py">
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/sqlalchemy/engine/default.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="67" column="62" lean-forward="true" selection-start-line="67" selection-start-column="62" selection-end-line="67" selection-end-column="90" />
+        <state relative-caret-position="167">
+          <caret line="508" selection-start-line="508" selection-end-line="508" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/recurring.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3247">
+          <caret line="202" selection-start-line="202" selection-end-line="202" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="57" column="42" selection-start-line="57" selection-start-column="42" selection-end-line="57" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/queries/cleanDB.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/queries/queryMonthlyReport.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-488" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/queries/scratchpad.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="517" column="25" selection-start-line="517" selection-start-column="25" selection-end-line="517" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ui/monthly.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="622">
+          <caret line="187" column="35" selection-start-line="187" selection-start-column="35" selection-end-line="187" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/processors/markRecurrentExpenses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/processors/processCreditReport.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="135" column="28" selection-start-line="135" selection-start-column="28" selection-end-line="135" selection-end-column="28" />
+        <state relative-caret-position="299">
+          <caret line="89" column="27" lean-forward="true" selection-start-line="89" selection-start-column="27" selection-end-line="89" selection-end-column="27" />
           <folding>
             <element signature="e#0#48#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/mydatatable.py">
+    <entry file="file://$PROJECT_DIR$/src/processors/markCreditCardReports.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="88" column="8" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
+        <state relative-caret-position="401">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
           <folding>
-            <element signature="e#0#17#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/recurring.py">
+    <entry file="file://$PROJECT_DIR$/src/processUpload.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1066">
-          <caret line="131" column="5" selection-start-line="131" selection-start-column="4" selection-end-line="131" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="238">
+          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
         </state>
       </provider>
     </entry>
